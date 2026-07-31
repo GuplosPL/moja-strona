@@ -332,11 +332,15 @@
             emptyMsg.classList.remove('hidden');
         });
 
+    let searchTimer = null;
     searchInput.addEventListener('input', () => {
-        searchQuery = searchInput.value.trim();
-        currentMake = null;
-        document.querySelectorAll('.make-tab').forEach(b => b.classList.remove('active'));
-        render();
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            searchQuery = searchInput.value.trim();
+            currentMake = null;
+            document.querySelectorAll('.make-tab').forEach(b => b.classList.remove('active'));
+            render();
+        }, 400);
     });
 
     document.getElementById('year').textContent = new Date().getFullYear();
