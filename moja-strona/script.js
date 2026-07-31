@@ -613,6 +613,10 @@ document.getElementById('share-btn').addEventListener('click', () => {
     requestAnimationFrame(tick);
 })();
 
+// Footer year
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+
 console.log(
     '%c   ____ _   _ ____  ____   ___   ____   ____    _    \n  / ___| | | |  _ \\|  _ \\ / _ \\ |___ \\ / ___|  / \\   \n | |  _| | | | |_) | |_) | | | |  __) | |  _  / _ \\  \n | |_| | |_| |  __/|  __/| |_| | / __/| |_| |/ ___ \\ \n  \\____|\\___/|_|   |_|    \\___/ |_____|\\____/_/   \\_\\\n\n%cGUPLOS PL\n%cFotografia, Cinematografia & Edycja',
     'color: #5865F2; font-size: 12px; font-weight: bold;',

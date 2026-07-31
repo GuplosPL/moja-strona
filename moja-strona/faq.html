@@ -204,7 +204,7 @@
         </section>
 
         <footer class="text-center py-6 text-sm border-t" style="color: var(--muted-2); border-color: var(--card-border);">
-            &copy; 2026 Guplos PL
+            &copy; <span id="year">2026</span> Guplos PL
         </footer>
 
     </div>
@@ -368,6 +368,7 @@
     document.getElementById('lang-toggle').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
     document.getElementById('lang-toggle-mobile').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
     applyLang(lang);
+    document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>

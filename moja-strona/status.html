@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <p class="text-center text-xs mt-6" style="color: var(--muted-2);">&copy; 2026 Guplos PL</p>
+        <p class="text-center text-xs mt-6" style="color: var(--muted-2);">&copy; <span id="year">2026</span> Guplos PL</p>
     </div>
 
     <script>
@@ -153,6 +153,7 @@
     loadStatus();
     loadHistory();
     setInterval(loadStatus, 60000);
+    document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
