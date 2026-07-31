@@ -387,8 +387,8 @@ function toggleLang() {
 function applyLang() {
     document.documentElement.lang = currentLang;
     const label = currentLang === 'pl' ? 'EN' : 'PL';
-    langToggle.textContent = label;
-    langToggleMobile.textContent = label;
+    if (langToggle) langToggle.textContent = label;
+    if (langToggleMobile) langToggleMobile.textContent = label;
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.dataset.i18n;
         if (translations[currentLang] && translations[currentLang][key]) {
@@ -397,8 +397,8 @@ function applyLang() {
     });
     localStorage.setItem('lang', currentLang);
 }
-langToggle.addEventListener('click', toggleLang);
-langToggleMobile.addEventListener('click', toggleLang);
+if (langToggle) langToggle.addEventListener('click', toggleLang);
+if (langToggleMobile) langToggleMobile.addEventListener('click', toggleLang);
 applyLang();
 
 // Email copy
