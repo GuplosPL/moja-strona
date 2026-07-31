@@ -120,7 +120,7 @@
             <div id="makes-bar" class="flex flex-wrap justify-center gap-2 mb-8 fade-in"></div>
 
             <div id="colors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-            <p id="empty-msg" class="hidden text-center text-sm py-16" data-i18n="colors-empty" style="color: var(--muted-2);">Brak wyników</p>
+            <p id="empty-msg" class="text-center text-sm py-16" data-i18n="colors-pick" style="color: var(--muted-2);">Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory</p>
         </section>
 
         <footer class="text-center py-6 text-sm border-t" style="color: var(--muted-2); border-color: var(--card-border);">
@@ -199,7 +199,8 @@
             'theme-dark': 'Czarny',
             'colors-title': 'Kolory producentów',
             'colors-search': 'Szukaj koloru…',
-            'colors-empty': 'Brak wyników'
+            'colors-empty': 'Brak wyników',
+            'colors-pick': 'Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory'
         },
         en: {
             'nav-home': 'Home', 'nav-gallery': 'Gallery', 'nav-faq': 'FAQ',
@@ -207,7 +208,8 @@
             'theme-dark': 'Dark',
             'colors-title': 'Producer colors',
             'colors-search': 'Search color…',
-            'colors-empty': 'No results'
+            'colors-empty': 'No results',
+            'colors-pick': 'Choose a brand or type a color to see results'
         }
     };
     let lang = (function(){try{return localStorage.getItem('lang')}catch(e){return null}})() || (navigator.language.startsWith('pl') ? 'pl' : 'en');
@@ -249,24 +251,13 @@
         return 'hsl(' + h + ',' + s + '%,' + l + '%)';
     }
 
-    function isLight(h, s, b) {
-        return b > 0.7;
-    }
-
     function makeCard(c) {
         const card = document.createElement('div');
         card.className = 'rounded-2xl border p-4';
         card.style.cssText = 'background: var(--card); border-color: var(--card-border);';
-        const color = hslColor(c);
-        const light = isLight(c.h, c.s, c.b);
         const sw = document.createElement('div');
-        sw.className = 'swatch rounded-lg h-16 mb-3 flex items-end';
-        sw.style.background = color;
-        const hexLabel = document.createElement('span');
-        hexLabel.className = 'text-[10px] font-mono font-bold px-2 py-1';
-        hexLabel.style.cssText = 'color:' + (light ? '#000' : '#fff') + '; text-shadow: 0 1px 2px rgba(0,0,0,0.35);';
-        hexLabel.textContent = color;
-        sw.appendChild(hexLabel);
+        sw.className = 'swatch rounded-lg h-16 mb-3';
+        sw.style.background = hslColor(c);
         card.appendChild(sw);
         const title = document.createElement('h2');
         title.className = 'text-sm font-bold mb-0.5';
@@ -288,6 +279,11 @@
 
     function render() {
         grid.innerHTML = '';
+        if (!currentMake && !searchQuery) {
+            emptyMsg.textContent = translations[lang]['colors-pick'];
+            emptyMsg.classList.remove('hidden');
+            return;
+        }
         let list = allColors;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
@@ -296,6 +292,7 @@
             list = list.filter(c => c.m === currentMake);
         }
         if (list.length === 0) {
+            emptyMsg.textContent = translations[lang]['colors-empty'];
             emptyMsg.classList.remove('hidden');
             return;
         }
