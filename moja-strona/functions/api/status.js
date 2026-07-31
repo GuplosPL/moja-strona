@@ -20,6 +20,7 @@ export async function onRequest(context) {
     }
 
     try {
+        const start = Date.now();
         const res = await fetch(base + '/api/count', { signal: AbortSignal.timeout(8000) });
         const data = await res.json();
         results.checks.counter = {
@@ -28,6 +29,19 @@ export async function onRequest(context) {
         };
     } catch (e) {
         results.checks.counter = { status: 'offline', count: null };
+    }
+
+    try {
+        const start = Date.now();
+        const res = await fetch(base + '/api/count', { signal: AbortSignal.timeout(8000) });
+        const ct = res.headers.get('content-type') || '';
+        const ok = res.ok && ct.includes('application/json');
+        results.checks.api = {
+            status: ok ? 'online' : 'degraded',
+            responseTime: Date.now() - start,
+        };
+    } catch (e) {
+        results.checks.api = { status: 'offline', responseTime: null };
     }
 
     try {
