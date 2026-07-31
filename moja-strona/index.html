@@ -31,6 +31,12 @@
         nav a.active { color: #ffffff !important; }
         html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
         html, body { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (hover: none), (pointer: coarse) {
+            .blur-\[120px\] { display: none; }
+            .blur-\[100px\] { display: none; }
+            nav { backdrop-filter: none !important; background: rgba(17,18,20,0.95) !important; }
+            .page-reveal, .fade-in { filter: none !important; transition: opacity 0.5s ease-out, transform 0.5s ease-out !important; }
+        }
     </style>
     <script>history.scrollRestoration='manual'</script>
 </head>

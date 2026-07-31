@@ -404,19 +404,22 @@ const heroCheck = setInterval(() => {
 }, 100);
 
 // Particles
-tsParticles.load('particles-js', {
-    fpsLimit: 60,
-    particles: {
-        number: { value: 40, density: { enable: true } },
-        color: { value: '#ffffff' },
-        opacity: { value: 0.25, random: true },
-        size: { value: 2, random: true },
-        move: { enable: true, speed: 0.4, direction: 'none', random: true },
-        links: { enable: true, distance: 150, color: '#ffffff', opacity: 0.08, width: 1 },
-    },
-    interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.15 } } } },
-    background: { color: 'transparent' },
-});
+const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+if (!isTouch) {
+    tsParticles.load('particles-js', {
+        fpsLimit: 60,
+        particles: {
+            number: { value: 40, density: { enable: true } },
+            color: { value: '#ffffff' },
+            opacity: { value: 0.25, random: true },
+            size: { value: 2, random: true },
+            move: { enable: true, speed: 0.4, direction: 'none', random: true },
+            links: { enable: true, distance: 150, color: '#ffffff', opacity: 0.08, width: 1 },
+        },
+        interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.15 } } } },
+        background: { color: 'transparent' },
+    });
+}
 
 // Visit counter
 const counterEl = document.getElementById('visit-count');
@@ -462,7 +465,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
 sections.forEach(s => sectionObserver.observe(s));
 
 // 3D tilt
-document.querySelectorAll('.gallery-item').forEach(item => {
+if (!isTouch) document.querySelectorAll('.gallery-item').forEach(item => {
     item.addEventListener('mousemove', e => {
         const rect = item.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -477,7 +480,7 @@ document.querySelectorAll('.gallery-item').forEach(item => {
 });
 
 // Click sparkle
-document.addEventListener('click', e => {
+if (!isTouch) document.addEventListener('click', e => {
     const colors = ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'];
     for (let i = 0; i < 14; i++) {
         const dot = document.createElement('div');
