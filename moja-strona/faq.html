@@ -22,6 +22,11 @@
         .faq-answer-inner { overflow: hidden; }
         .faq-icon { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .faq-item.open .faq-icon { transform: rotate(45deg); }
+        @media (hover: none), (pointer: coarse) {
+            .blur-\[120px\] { filter: blur(60px); }
+            .blur-\[100px\] { filter: blur(50px); }
+            nav { backdrop-filter: none !important; background: rgba(17,18,20,0.95) !important; }
+        }
     </style>
     <script>history.scrollRestoration='manual'</script>
 </head>
@@ -200,29 +205,31 @@
     });
 
     // Particles
+    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
     particlesJS('particles-js', {
         particles: {
-            number: { value: 50, density: { enable: true, value_area: 800 } },
+            number: { value: isTouch ? 20 : 50, density: { enable: true, value_area: 800 } },
             color: { value: '#ffffff' },
             shape: { type: 'circle' },
             opacity: { value: 0.25, random: true },
             size: { value: 2, random: true },
-            line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.08, width: 1 },
-            move: { enable: true, speed: 0.7, direction: 'none', out_mode: 'out' }
+            line_linked: { enable: !isTouch, distance: 150, color: '#ffffff', opacity: 0.08, width: 1 },
+            move: { enable: true, speed: isTouch ? 0.3 : 0.7, direction: 'none', out_mode: 'out' }
         },
         interactivity: {
             detect_on: 'canvas',
-            events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: false } },
+            events: { onhover: { enable: !isTouch, mode: 'grab' }, onclick: { enable: false } },
             modes: { grab: { distance: 150, line_linked: { opacity: 0.15 } } }
         },
-        retina_detect: true
+        retina_detect: !isTouch
     });
 
     // Click sparkle
     document.addEventListener('click', e => {
-        for (let i = 0; i < 14; i++) {
+        const n = isTouch ? 4 : 14;
+        for (let i = 0; i < n; i++) {
             const dot = document.createElement('div');
-            const size = 4 + Math.random() * 6;
+            const size = isTouch ? 3 : 4 + Math.random() * 6;
             const angle = Math.random() * 360;
             const dist = 40 + Math.random() * 80;
             dot.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;border-radius:50%;background:#ffffff;pointer-events:none;z-index:9999;transition:all 0.6s cubic-bezier(0,.8,.5,1);opacity:1;`;
