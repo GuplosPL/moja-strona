@@ -613,6 +613,56 @@ document.getElementById('share-btn').addEventListener('click', () => {
     requestAnimationFrame(tick);
 })();
 
+// Analog clock
+(function() {
+    const wrap = document.getElementById('analog-clock');
+    const canvas = document.getElementById('analog-clock-canvas');
+    if (!wrap || !canvas) return;
+    wrap.classList.remove('hidden');
+    const ctx = canvas.getContext('2d');
+    const size = 64, cx = size / 2, cy = size / 2, R = 26;
+    function draw() {
+        const now = new Date();
+        const s = now.getSeconds(), m = now.getMinutes(), h = now.getHours() % 12;
+        ctx.clearRect(0, 0, size, size);
+        const text = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#ffffff';
+        const muted = getComputedStyle(document.documentElement).getPropertyValue('--muted').trim() || '#888888';
+        ctx.strokeStyle = muted;
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 12; i++) {
+            const a = i * Math.PI / 6;
+            ctx.beginPath();
+            ctx.moveTo(cx + Math.cos(a) * (R - 3), cy + Math.sin(a) * (R - 3));
+            ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
+            ctx.stroke();
+        }
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = text;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.sin((h + m / 60) * Math.PI / 6) * 14, cy - Math.cos((h + m / 60) * Math.PI / 6) * 14);
+        ctx.stroke();
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.sin((m + s / 60) * Math.PI / 30) * 20, cy - Math.cos((m + s / 60) * Math.PI / 30) * 20);
+        ctx.stroke();
+        ctx.strokeStyle = '#5865F2';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.sin(s * Math.PI / 30) * 23, cy - Math.cos(s * Math.PI / 30) * 23);
+        ctx.stroke();
+        ctx.fillStyle = text;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    draw();
+    setInterval(draw, 1000);
+})();
+
 console.log(
     '%c   ____ _   _ ____  ____   ___   ____   ____    _    \n  / ___| | | |  _ \\|  _ \\ / _ \\ |___ \\ / ___|  / \\   \n | |  _| | | | |_) | |_) | | | |  __) | |  _  / _ \\  \n | |_| | |_| |  __/|  __/| |_| | / __/| |_| |/ ___ \\ \n  \\____|\\___/|_|   |_|    \\___/ |_____|\\____/_/   \\_\\\n\n%cGUPLOS PL\n%cFotografia, Cinematografia & Edycja',
     'color: #5865F2; font-size: 12px; font-weight: bold;',
