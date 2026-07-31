@@ -313,23 +313,21 @@ setTimeout(() => document.getElementById('hero').classList.add('visible'), 200);
 // Language
 const translations = {
     pl: {
-        'nav-about': 'O mnie', 'nav-gallery': 'Galeria', 'nav-gear': 'Sprzęt', 'nav-faq': 'FAQ', 'nav-contact': 'Kontakt',
+        'nav-about': 'O mnie', 'nav-gallery': 'Galeria', 'nav-faq': 'FAQ', 'nav-contact': 'Kontakt',
         'hero-tagline': 'Virtual Photographer, Cinematographer & Editor',
         'hero-cta': 'Zobacz prace', 'hero-write': 'Napisz',
         'about-title': 'O mnie', 'about-text': 'Tutaj informacje beda o mnie',
         'stat-photos': 'zdjęć',
         'gallery-title': 'Galeria', 'gallery-count': '8 zdjęć', 'new-badge': 'Ostatnio przesłane',
-        'gear-title': 'Sprzęt', 'gear-parts': 'Podzespoły', 'gear-cpu': 'Procesor', 'gear-gpu': 'Karta graficzna', 'gear-ram': 'Pamięć RAM', 'gear-disk1': 'Dysk 1', 'gear-disk2': 'Dysk 2', 'gear-mon1': 'Monitor główny', 'gear-mon2': 'Monitor drugi',
         'contact-title': 'Kontakt', 'contact-discord': 'Discord – Guplos PL', 'contact-email-copy': 'Skopiowano!', 'footer-visits': 'odwiedzin',
     },
     en: {
-        'nav-about': 'About', 'nav-gallery': 'Gallery', 'nav-gear': 'Gear', 'nav-faq': 'FAQ', 'nav-contact': 'Contact',
+        'nav-about': 'About', 'nav-gallery': 'Gallery', 'nav-faq': 'FAQ', 'nav-contact': 'Contact',
         'hero-tagline': 'Virtual Photographer, Cinematographer & Editor',
         'hero-cta': 'View work', 'hero-write': 'Write',
         'about-title': 'About', 'about-text': 'Information about me will be here',
         'stat-photos': 'photos',
         'gallery-title': 'Gallery', 'gallery-count': '8 photos', 'new-badge': 'Recently uploaded',
-        'gear-title': 'Gear', 'gear-parts': 'Components', 'gear-cpu': 'Processor', 'gear-gpu': 'Graphics card', 'gear-ram': 'RAM', 'gear-disk1': 'Disk 1', 'gear-disk2': 'Disk 2', 'gear-mon1': 'Main monitor', 'gear-mon2': 'Second monitor',
         'contact-title': 'Contact', 'contact-discord': 'Discord – Guplos PL', 'contact-email-copy': 'Copied!', 'footer-visits': 'visits',
     }
 };
