@@ -346,7 +346,7 @@ setTimeout(() => document.getElementById('hero').classList.add('visible'), 200);
 // Language
 const translations = {
     pl: {
-        'nav-about': 'O mnie', 'nav-gallery': 'Galeria', 'nav-faq': 'FAQ', 'nav-contact': 'Kontakt',
+        'nav-about': 'O mnie', 'nav-gallery': 'Galeria', 'nav-faq': 'FAQ',
         'hero-tagline': 'Virtual Photographer, Cinematographer & Editor',
         'hero-cta': 'Zobacz prace', 'hero-write': 'Napisz',
         'about-title': 'O mnie', 'about-text': 'Tutaj informacje beda o mnie',
@@ -357,7 +357,7 @@ const translations = {
         'theme-dark': 'Czarny',
     },
     en: {
-        'nav-about': 'About', 'nav-gallery': 'Gallery', 'nav-faq': 'FAQ', 'nav-contact': 'Contact',
+        'nav-about': 'About', 'nav-gallery': 'Gallery', 'nav-faq': 'FAQ',
         'hero-tagline': 'Virtual Photographer, Cinematographer & Editor',
         'hero-cta': 'View work', 'hero-write': 'Write',
         'about-title': 'About', 'about-text': 'Information about me will be here',
