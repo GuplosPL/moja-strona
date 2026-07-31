@@ -335,15 +335,14 @@ let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith
 const langToggle = document.getElementById('lang-toggle');
 const langToggleMobile = document.getElementById('lang-toggle-mobile');
 const menuBtn = document.getElementById('menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
+const mobileMenu = document.querySelector('.mobile-menu-wrap');
 menuBtn.addEventListener('click', () => {
-    const open = mobileMenu.classList.toggle('hidden');
-    mobileMenu.classList.toggle('flex', open);
-    menuBtn.classList.toggle('active');
+    const open = mobileMenu.classList.contains('grid-rows-[1fr]');
+    mobileMenu.classList.toggle('grid-rows-[1fr]', !open);
+    menuBtn.classList.toggle('active', !open);
 });
 mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mobileMenu.classList.add('hidden');
-    mobileMenu.classList.remove('flex');
+    mobileMenu.classList.remove('grid-rows-[1fr]');
     menuBtn.classList.remove('active');
 }));
 function toggleLang() {
