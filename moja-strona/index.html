@@ -51,6 +51,7 @@
             <div class="flex items-center gap-2">
                 <a href="#about" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-about">O mnie</a>
                 <a href="#gallery" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-gallery">Galeria</a>
+                <a href="#gear" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-gear">Sprzęt</a>
                 <a href="/faq" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-faq">FAQ</a>
                 <a href="#contact" class="px-4 py-2 text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] rounded-full transition-colors" data-i18n="nav-contact">Kontakt</a>
                 <button id="lang-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
@@ -162,6 +163,64 @@
                     <img src="zdjecia/8.png" alt="zdjecie 8" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <span class="absolute top-2 left-2 px-2.5 py-1 rounded-full bg-[#5865F2]/90 text-white text-[11px] font-semibold" data-i18n="new-badge">Ostatnio przesłane</span>
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gear" class="max-w-5xl mx-auto px-6 py-20 w-full fade-in">
+            <h2 class="text-2xl font-bold text-white tracking-tight mb-8" data-i18n="gear-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Sprzęt</h2>
+            <div class="p-8 rounded-2xl bg-white/[0.03] border border-white/[0.06] ring-1 ring-white/[0.03]">
+                <h3 class="text-sm font-bold text-white/[0.9] uppercase tracking-widest mb-4" data-i18n="gear-parts">Podzespoły</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05] transition-colors flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">CPU</span>
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest text-[#949ba4] font-semibold" data-i18n="gear-cpu">Procesor</p>
+                            <p class="text-white font-semibold text-sm mt-1">AMD Ryzen 5 7600X</p>
+                        </div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05] transition-colors flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">GPU</span>
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest text-[#949ba4] font-semibold" data-i18n="gear-gpu">Karta graficzna</p>
+                            <p class="text-white font-semibold text-sm mt-1">RTX 4070 Super 12GB</p>
+                        </div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05] transition-colors flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">RAM</span>
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest text-[#949ba4] font-semibold" data-i18n="gear-ram">Pamięć RAM</p>
+                            <p class="text-white font-semibold text-sm mt-1">32GB 6000MHz</p>
+                        </div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05] transition-colors flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">SSD</span>
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest text-[#949ba4] font-semibold" data-i18n="gear-disk1">Dysk 1</p>
+                            <p class="text-white font-semibold text-sm mt-1">2TB SSD Kingston</p>
+                        </div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05] transition-colors flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">SSD</span>
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest text-[#949ba4] font-semibold" data-i18n="gear-disk2">Dysk 2</p>
+                            <p class="text-white font-semibold text-sm mt-1">1TB SSD</p>
+                        </div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05] transition-colors flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">MON</span>
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest text-[#949ba4] font-semibold" data-i18n="gear-mon1">Monitor główny</p>
+                            <p class="text-white font-semibold text-sm mt-1">MSI 2560x1440 200Hz</p>
+                        </div>
+                    </div>
+                    <div class="p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05] transition-colors flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">MON</span>
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest text-[#949ba4] font-semibold" data-i18n="gear-mon2">Monitor drugi</p>
+                            <p class="text-white font-semibold text-sm mt-1">MSI 1920x1080 100Hz</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
