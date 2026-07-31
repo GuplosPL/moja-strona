@@ -417,12 +417,14 @@ function toggleLang() {
     currentLang = currentLang === 'pl' ? 'en' : 'pl';
     applyLang();
 }
+let typingActive = false;
 function applyLang() {
     document.documentElement.lang = currentLang;
     const label = currentLang === 'pl' ? 'EN' : 'PL';
     if (langToggle) langToggle.textContent = label;
     if (langToggleMobile) langToggleMobile.textContent = label;
     document.querySelectorAll('[data-i18n]').forEach(el => {
+        if (el.dataset.i18n === 'hero-tagline' && typingActive) return;
         const key = el.dataset.i18n;
         if (translations[currentLang] && translations[currentLang][key]) {
             el.textContent = translations[currentLang][key];
@@ -451,6 +453,7 @@ window.addEventListener('scroll', () => {
 
 // Typing effect
 function typeText(el, text, speed = 50) {
+    typingActive = true;
     el.textContent = '';
     let i = 0;
     function type() {
@@ -458,6 +461,8 @@ function typeText(el, text, speed = 50) {
             el.textContent += text.charAt(i);
             i++;
             setTimeout(type, speed);
+        } else {
+            typingActive = false;
         }
     }
     type();
