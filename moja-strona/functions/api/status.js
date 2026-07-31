@@ -31,18 +31,6 @@ export async function onRequest(context) {
     }
 
     try {
-        const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`, { signal: AbortSignal.timeout(8000) });
-        const data = await res.json();
-        const ok = res.ok && data.success && data.data;
-        results.checks.discord = {
-            status: ok ? 'online' : 'degraded',
-            discordStatus: ok ? data.data.discord_status : null,
-        };
-    } catch (e) {
-        results.checks.discord = { status: 'offline', discordStatus: null };
-    }
-
-    try {
         const historyKey = 'status_history';
         const history = JSON.parse((await env.COUNTER.get(historyKey)) || '[]');
         if (url.searchParams.get('history') === '1') {
