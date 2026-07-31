@@ -333,9 +333,28 @@ const translations = {
 };
 let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
 const langToggle = document.getElementById('lang-toggle');
+const langToggleMobile = document.getElementById('lang-toggle-mobile');
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+menuBtn.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('flex', open);
+    menuBtn.classList.toggle('active');
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
+    menuBtn.classList.remove('active');
+}));
+function toggleLang() {
+    currentLang = currentLang === 'pl' ? 'en' : 'pl';
+    applyLang();
+}
 function applyLang() {
     document.documentElement.lang = currentLang;
-    langToggle.textContent = currentLang === 'pl' ? 'EN' : 'PL';
+    const label = currentLang === 'pl' ? 'EN' : 'PL';
+    langToggle.textContent = label;
+    langToggleMobile.textContent = label;
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.dataset.i18n;
         if (translations[currentLang] && translations[currentLang][key]) {
@@ -344,10 +363,8 @@ function applyLang() {
     });
     localStorage.setItem('lang', currentLang);
 }
-langToggle.addEventListener('click', () => {
-    currentLang = currentLang === 'pl' ? 'en' : 'pl';
-    applyLang();
-});
+langToggle.addEventListener('click', toggleLang);
+langToggleMobile.addEventListener('click', toggleLang);
 applyLang();
 
 // Email copy
