@@ -551,6 +551,66 @@ document.getElementById('share-btn').addEventListener('click', () => {
     }
 });
 
+// Snowflakes
+(function() {
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9990;';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    const reduce = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    const COUNT = reduce ? 25 : 55;
+    const flakes = [];
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function makeFlake(init) {
+        return {
+            x: rand(0, W),
+            y: init ? rand(0, H) : rand(-20, -5),
+            r: rand(1, 3.2),
+            vy: rand(0.5, 1.8),
+            vx: rand(-0.4, 0.4),
+            sway: rand(0, Math.PI * 2),
+            swaySpeed: rand(0.01, 0.03),
+            swayAmp: rand(10, 35),
+            o: rand(0.3, 0.9)
+        };
+    }
+    function init() {
+        resize();
+        flakes.length = 0;
+        for (let i = 0; i < COUNT; i++) flakes.push(makeFlake(true));
+    }
+    let last = 0;
+    function tick(t) {
+        const dt = Math.min((t - last) / 16.67, 3) || 1;
+        last = t;
+        ctx.clearRect(0, 0, W, H);
+        for (const f of flakes) {
+            f.sway += f.swaySpeed * dt;
+            f.y += f.vy * dt;
+            f.x += f.vx * dt + Math.sin(f.sway) * f.swayAmp * 0.02 * dt;
+            if (f.y > H + 10) Object.assign(f, makeFlake(false));
+            if (f.x > W + 10) f.x = -10;
+            if (f.x < -10) f.x = W + 10;
+            ctx.beginPath();
+            ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,255,255,' + f.o + ')';
+            ctx.fill();
+        }
+        requestAnimationFrame(tick);
+    }
+    window.addEventListener('resize', init);
+    init();
+    requestAnimationFrame(tick);
+})();
+
 console.log(
     '%c   ____ _   _ ____  ____   ___   ____   ____    _    \n  / ___| | | |  _ \\|  _ \\ / _ \\ |___ \\ / ___|  / \\   \n | |  _| | | | |_) | |_) | | | |  __) | |  _  / _ \\  \n | |_| | |_| |  __/|  __/| |_| | / __/| |_| |/ ___ \\ \n  \\____|\\___/|_|   |_|    \\___/ |_____|\\____/_/   \\_\\\n\n%cGUPLOS PL\n%cFotografia, Cinematografia & Edycja',
     'color: #5865F2; font-size: 12px; font-weight: bold;',
