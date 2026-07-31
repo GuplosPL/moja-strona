@@ -11,7 +11,6 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root { --bg: #111214; --text: #dbdee1; --muted: #949ba4; --text-bright: #ffffff; color-scheme: dark; }
-        [data-theme="light"] { --bg: #f2f3f5; --text: #2e3035; --muted: #5c5e66; --text-bright: #1f2125; color-scheme: light; }
         [data-theme="oled"] { --bg: #000000; --text: #e0e0e0; --muted: #888888; --text-bright: #ffffff; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
         .glow { text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15); }
@@ -24,7 +23,7 @@
     <p id="msg" style="font-size: 1.2rem; color: var(--muted); margin-top: 0.5rem;">Strona nie została znaleziona</p>
     <a id="btn" href="/" class="btn">Wróć do strony głównej</a>
     <script>
-        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+        var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'dark');
         const lang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
         if (lang !== 'pl') {
             document.getElementById('msg').textContent = 'Page not found';

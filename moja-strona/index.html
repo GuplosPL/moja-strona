@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
+    <script>var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'dark');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guplos PL</title>
@@ -65,7 +65,7 @@
                 </button>
                 <div id="theme-menu" class="hidden absolute top-14 right-6 z-[60] w-40 p-2 rounded-xl border" style="background: var(--bg-elev); border-color: var(--card-border);">
                     <button data-theme-opt="dark" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Dark</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
-                    <button data-theme-opt="light" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Light</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                    
                     <button data-theme-opt="oled" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>OLED</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
                 </div>
                 <button id="lang-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold icon-btn transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
@@ -76,7 +76,7 @@
                 </button>
                 <div id="theme-menu-mobile" class="hidden absolute top-14 right-6 z-[60] w-40 p-2 rounded-xl border" style="background: var(--bg-elev); border-color: var(--card-border);">
                     <button data-theme-opt="dark" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Dark</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
-                    <button data-theme-opt="light" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Light</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                    
                     <button data-theme-opt="oled" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>OLED</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
                 </div>
                 <button id="menu-btn" class="w-11 h-11 rounded-full flex flex-col items-center justify-center gap-[6px] icon-btn transition-all" aria-label="Menu">

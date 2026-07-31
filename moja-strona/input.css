@@ -16,20 +16,6 @@
     --particle: #ffffff;
     color-scheme: dark;
 }
-[data-theme="light"] {
-    --bg: #f2f3f5;
-    --bg-elev: #ffffff;
-    --overlay: rgba(242,243,245,0.85);
-    --text: #2e3035;
-    --text-bright: #1f2125;
-    --muted: #5c5e66;
-    --muted-2: #9b9da5;
-    --card: rgba(0,0,0,0.03);
-    --card-hover: rgba(0,0,0,0.06);
-    --card-border: rgba(0,0,0,0.08);
-    --particle: #4a4d55;
-    color-scheme: light;
-}
 [data-theme="oled"] {
     --bg: #000000;
     --bg-elev: #000000;

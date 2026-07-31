@@ -339,6 +339,7 @@ const langToggleMobile = document.getElementById('lang-toggle-mobile');
 const themeBtns = [document.getElementById('theme-btn'), document.getElementById('theme-btn-mobile')].filter(Boolean);
 const themeMenus = [document.getElementById('theme-menu'), document.getElementById('theme-menu-mobile')].filter(Boolean);
 let currentTheme = localStorage.getItem('theme') || 'dark';
+if (currentTheme !== 'dark' && currentTheme !== 'oled') currentTheme = 'dark';
 function applyTheme(t, save = true) {
     currentTheme = t;
     document.documentElement.setAttribute('data-theme', t);
