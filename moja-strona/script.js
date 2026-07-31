@@ -353,6 +353,7 @@ const translations = {
         'stat-photos': 'zdjęć',
         'gallery-title': 'Galeria', 'gallery-count': '8 zdjęć', 'new-badge': 'Ostatnio przesłane',
         'contact-title': 'Kontakt', 'contact-discord': 'Discord – Guplos PL', 'contact-email-copy': 'Skopiowano!', 'footer-visits': 'odwiedzin',
+        'tools-colors': 'Kolory producentów',
         'theme-dark': 'Czarny',
     },
     en: {
@@ -363,6 +364,7 @@ const translations = {
         'stat-photos': 'photos',
         'gallery-title': 'Gallery', 'gallery-count': '8 photos', 'new-badge': 'Recently uploaded',
         'contact-title': 'Contact', 'contact-discord': 'Discord – Guplos PL', 'contact-email-copy': 'Copied!', 'footer-visits': 'visits',
+        'tools-colors': 'Producer colors',
         'theme-dark': 'Dark',
     }
 };
@@ -401,6 +403,17 @@ themeMenus.forEach(menu => menu.querySelectorAll('[data-theme-opt]').forEach(opt
 }));
 document.addEventListener('click', () => themeMenus.forEach(m => m.classList.add('hidden')));
 applyTheme(currentTheme, false);
+
+// Tools dropdown
+const toolsBtn = document.getElementById('tools-btn');
+const toolsMenu = document.getElementById('tools-menu');
+if (toolsBtn && toolsMenu) {
+    toolsBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        toolsMenu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', () => toolsMenu.classList.add('hidden'));
+}
 
 const menuBtn = document.getElementById('menu-btn');
 const mobileMenu = document.querySelector('.mobile-menu-wrap');
