@@ -334,6 +334,38 @@ const translations = {
 let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
 const langToggle = document.getElementById('lang-toggle');
 const langToggleMobile = document.getElementById('lang-toggle-mobile');
+
+// Theme switcher
+const themeBtns = [document.getElementById('theme-btn'), document.getElementById('theme-btn-mobile')].filter(Boolean);
+const themeMenus = [document.getElementById('theme-menu'), document.getElementById('theme-menu-mobile')].filter(Boolean);
+let currentTheme = localStorage.getItem('theme') || 'dark';
+function applyTheme(t, save = true) {
+    currentTheme = t;
+    document.documentElement.setAttribute('data-theme', t);
+    if (save) localStorage.setItem('theme', t);
+    themeMenus.forEach(m => m.querySelectorAll('.theme-check').forEach(c => c.classList.add('hidden')));
+    themeMenus.forEach(m => {
+        const opt = m.querySelector(`[data-theme-opt="${t}"]`);
+        if (opt) opt.querySelector('.theme-check').classList.remove('hidden');
+    });
+    if (typeof initParticles === 'function' && !window.matchMedia('(hover: none), (pointer: coarse)').matches) initParticles();
+}
+themeBtns.forEach(btn => btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const menu = btn.id === 'theme-btn' ? themeMenus[0] : themeMenus[1];
+    themeMenus.forEach(m => { if (m !== menu) m.classList.add('hidden'); });
+    menu.classList.toggle('hidden');
+}));
+themeMenus.forEach(menu => menu.querySelectorAll('[data-theme-opt]').forEach(opt => {
+    opt.addEventListener('click', e => {
+        e.stopPropagation();
+        applyTheme(opt.dataset.themeOpt);
+        menu.classList.add('hidden');
+    });
+}));
+document.addEventListener('click', () => themeMenus.forEach(m => m.classList.add('hidden')));
+applyTheme(currentTheme, false);
+
 const menuBtn = document.getElementById('menu-btn');
 const mobileMenu = document.querySelector('.mobile-menu-wrap');
 menuBtn.addEventListener('click', () => {
@@ -405,21 +437,23 @@ const heroCheck = setInterval(() => {
 
 // Particles
 const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-if (!isTouch) {
+function initParticles() {
+    const color = getComputedStyle(document.documentElement).getPropertyValue('--particle').trim() || '#ffffff';
     tsParticles.load('particles-js', {
         fpsLimit: 60,
         particles: {
             number: { value: 40, density: { enable: true } },
-            color: { value: '#ffffff' },
+            color: { value: color },
             opacity: { value: 0.25, random: true },
             size: { value: 2, random: true },
             move: { enable: true, speed: 0.4, direction: 'none', random: true },
-            links: { enable: true, distance: 150, color: '#ffffff', opacity: 0.08, width: 1 },
+            links: { enable: true, distance: 150, color: color, opacity: 0.08, width: 1 },
         },
         interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.15 } } } },
         background: { color: 'transparent' },
     });
 }
+if (!isTouch) initParticles();
 
 // Visit counter
 const counterEl = document.getElementById('visit-count');
@@ -481,7 +515,8 @@ if (!isTouch) document.querySelectorAll('.gallery-item').forEach(item => {
 
 // Click sparkle
 if (!isTouch) document.addEventListener('click', e => {
-    const colors = ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'];
+    const color = getComputedStyle(document.documentElement).getPropertyValue('--particle').trim() || '#ffffff';
+    const colors = [color, color, color, color, color, color];
     for (let i = 0; i < 14; i++) {
         const dot = document.createElement('div');
         const size = 4 + Math.random() * 6;

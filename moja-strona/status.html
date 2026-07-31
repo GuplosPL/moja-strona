@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status – Guplos PL</title>
@@ -13,56 +14,60 @@
     <style>
         html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
         html, body { -ms-overflow-style: none; scrollbar-width: none; }
-        body { background: #111214; }
+        body { background: var(--bg); }
+        @media (hover: none), (pointer: coarse) {
+            .blur-\[120px\] { display: none; }
+            .blur-\[100px\] { display: none; }
+        }
     </style>
 </head>
-<body class="font-['Inter'] antialiased text-[#dbdee1] min-h-screen flex flex-col items-center justify-center px-6">
+<body class="font-['Inter'] antialiased min-h-screen flex flex-col items-center justify-center px-6" style="color: var(--text);">
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div class="absolute -top-60 -right-40 w-[600px] h-[600px] rounded-full bg-[#5865F2]/15 blur-[120px]"></div>
         <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#5865F2]/8 blur-[100px]"></div>
     </div>
 
     <div class="relative z-10 w-full max-w-md">
-        <a href="/" class="inline-block mb-8 text-white font-extrabold text-lg tracking-tight no-underline" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
+        <a href="/" class="inline-block mb-8 font-extrabold text-lg tracking-tight no-underline" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
 
-        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-8">
-            <h1 class="text-2xl font-bold text-white tracking-tight mb-6 text-center" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Status</h1>
+        <div class="rounded-2xl border p-8" style="background: var(--card); border-color: var(--card-border);">
+            <h1 class="text-2xl font-bold tracking-tight mb-6 text-center" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Status</h1>
 
             <div class="space-y-4">
-                <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+                <div class="flex items-center justify-between p-4 rounded-xl border" style="background: var(--card); border-color: var(--card-border);">
                     <span class="font-semibold text-sm">Strona główna</span>
                     <div class="flex items-center gap-2">
-                        <span id="site-ms" class="text-xs text-[#8e9297]">— ms</span>
-                        <span id="site-dot" class="w-3 h-3 rounded-full inline-block" style="background:#4e5058; box-shadow:0 0 8px rgba(78,80,88,0.6);"></span>
+                        <span id="site-ms" class="text-xs" style="color: var(--muted);">— ms</span>
+                        <span id="site-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
                     </div>
                 </div>
-                <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+                <div class="flex items-center justify-between p-4 rounded-xl border" style="background: var(--card); border-color: var(--card-border);">
                     <span class="font-semibold text-sm">API</span>
                     <div class="flex items-center gap-2">
-                        <span id="api-ms" class="text-xs text-[#8e9297]">— ms</span>
-                        <span id="api-dot" class="w-3 h-3 rounded-full inline-block" style="background:#4e5058; box-shadow:0 0 8px rgba(78,80,88,0.6);"></span>
+                        <span id="api-ms" class="text-xs" style="color: var(--muted);">— ms</span>
+                        <span id="api-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
                     </div>
                 </div>
-                <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+                <div class="flex items-center justify-between p-4 rounded-xl border" style="background: var(--card); border-color: var(--card-border);">
                     <span class="font-semibold text-sm">Licznik odwiedzin</span>
                     <div class="flex items-center gap-2">
-                        <span id="counter-num" class="text-xs text-[#8e9297]">—</span>
-                        <span id="counter-dot" class="w-3 h-3 rounded-full inline-block" style="background:#4e5058; box-shadow:0 0 8px rgba(78,80,88,0.6);"></span>
+                        <span id="counter-num" class="text-xs" style="color: var(--muted);">—</span>
+                        <span id="counter-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
                     </div>
                 </div>
             </div>
 
             <div id="chart" class="mt-6 h-16 flex items-end gap-1 overflow-x-auto" style="min-height: 64px;"></div>
 
-            <p id="last-check" class="mt-4 text-center text-xs text-[#4e5058]">Sprawdzanie…</p>
+            <p id="last-check" class="mt-4 text-center text-xs" style="color: var(--muted-2);">Sprawdzanie…</p>
 
             <div class="flex gap-3 mt-4">
                 <button id="refresh-btn" class="flex-1 px-5 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors">Odśwież teraz</button>
-                <a href="/" class="px-5 py-2.5 bg-white/[0.06] hover:bg-white/[0.1] text-white font-semibold text-sm rounded-full border border-white/[0.08] transition-colors no-underline">Wróć</a>
+                <a href="/" class="px-5 py-2.5 font-semibold text-sm rounded-full border transition-colors no-underline" style="color: var(--text-bright); background: var(--card); border-color: var(--card-border);">Wróć</a>
             </div>
         </div>
 
-        <p class="text-center text-xs text-[#4e5058] mt-6">&copy; 2026 Guplos PL</p>
+        <p class="text-center text-xs mt-6" style="color: var(--muted-2);">&copy; 2026 Guplos PL</p>
     </div>
 
     <script>
@@ -84,7 +89,7 @@
         chart.innerHTML = '';
         if (!history || history.length === 0) {
             const empty = document.createElement('div');
-            empty.className = 'w-full h-full flex items-center justify-center text-xs text-[#4e5058]';
+            empty.className = 'w-full h-full flex items-center justify-center text-xs'; empty.style.color = 'var(--muted-2)';
             empty.textContent = 'Brak danych historycznych';
             chart.appendChild(empty);
             return;

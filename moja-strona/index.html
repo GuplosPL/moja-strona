@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guplos PL</title>
@@ -28,42 +29,57 @@
         .fade-in.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         #hero.fade-in { transform: none; filter: blur(6px); }
         #hero.fade-in.visible { transform: none; filter: blur(0); }
-        nav a.active { color: #ffffff !important; }
+        nav a.active { color: var(--text-bright) !important; }
         html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
         html, body { -ms-overflow-style: none; scrollbar-width: none; }
         @media (hover: none), (pointer: coarse) {
             .blur-\[120px\] { display: none; }
             .blur-\[100px\] { display: none; }
-            nav { backdrop-filter: none !important; background: rgba(17,18,20,0.95) !important; }
+            nav { backdrop-filter: none !important; background: var(--bg-elev) !important; }
             .page-reveal, .fade-in { filter: none !important; transition: opacity 0.5s ease-out, transform 0.5s ease-out !important; }
         }
     </style>
     <script>history.scrollRestoration='manual'</script>
 </head>
-<body class="font-['Inter'] antialiased text-[#dbdee1] min-h-screen flex flex-col" style="background: #111214;">
+<body class="font-['Inter'] antialiased min-h-screen flex flex-col" style="color: var(--text); background: var(--bg);">
     <div id="progress-bar" class="fixed top-0 left-0 w-0 h-[2px] z-[100] bg-[#5865F2]" style="transition: width 50ms linear; box-shadow: 0 0 8px rgba(88,101,242,0.5);"></div>
     <div id="particles-js" class="fixed inset-0 z-0 pointer-events-none"></div>
 
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('tlo.png'); filter: blur(8px);"></div>
-        <div class="absolute inset-0 bg-[#111214]/80"></div>
+        <div class="absolute inset-0" style="background: var(--overlay);"></div>
         <div class="absolute -top-60 -right-40 w-[600px] h-[600px] rounded-full bg-[#5865F2]/15 blur-[120px]"></div>
         <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#5865F2]/8 blur-[100px]"></div>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 bg-[#111214]/80 backdrop-blur-xl border-b border-white/[0.04]">
+    <nav class="fixed top-0 w-full z-50 border-b" style="background: var(--bg-elev); border-color: var(--card-border);">
         <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="https://www.youtube.com/watch?v=0BdlKkvjEgA" target="_blank" class="text-white font-extrabold text-lg tracking-tight no-underline" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
+            <a href="https://www.youtube.com/watch?v=0BdlKkvjEgA" target="_blank" class="font-extrabold text-lg tracking-tight no-underline" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
             <div class="hidden md:flex items-center gap-2">
-                <a href="#about" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-about">O mnie</a>
-                <a href="#gallery" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-gallery">Galeria</a>
-                <a href="/faq" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-faq">FAQ</a>
+                <a href="#about" class="px-4 py-2 text-sm font-medium nav-link" data-i18n="nav-about">O mnie</a>
+                <a href="#gallery" class="px-4 py-2 text-sm font-medium nav-link" data-i18n="nav-gallery">Galeria</a>
+                <a href="/faq" class="px-4 py-2 text-sm font-medium nav-link" data-i18n="nav-faq">FAQ</a>
                 <a href="#contact" class="px-4 py-2 text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] rounded-full transition-colors" data-i18n="nav-contact">Kontakt</a>
-                <button id="lang-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
+                <button id="theme-btn" class="w-9 h-9 rounded-full flex items-center justify-center icon-btn transition-all relative" title="Theme">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M19.8 4.2l-2.1 2.1M6.3 17.7l-2.1 2.1"/></svg>
+                </button>
+                <div id="theme-menu" class="hidden absolute top-14 right-6 z-[60] w-40 p-2 rounded-xl border" style="background: var(--bg-elev); border-color: var(--card-border);">
+                    <button data-theme-opt="dark" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Dark</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                    <button data-theme-opt="light" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Light</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                    <button data-theme-opt="oled" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>OLED</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                </div>
+                <button id="lang-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold icon-btn transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
             </div>
             <div class="flex items-center gap-2 md:hidden">
-                <button id="lang-toggle-mobile" class="w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
-                <button id="menu-btn" class="w-11 h-11 rounded-full flex flex-col items-center justify-center gap-[6px] text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" aria-label="Menu">
+                <button id="theme-btn-mobile" class="w-11 h-11 rounded-full flex items-center justify-center icon-btn transition-all relative" title="Theme">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M19.8 4.2l-2.1 2.1M6.3 17.7l-2.1 2.1"/></svg>
+                </button>
+                <div id="theme-menu-mobile" class="hidden absolute top-14 right-6 z-[60] w-40 p-2 rounded-xl border" style="background: var(--bg-elev); border-color: var(--card-border);">
+                    <button data-theme-opt="dark" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Dark</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                    <button data-theme-opt="light" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Light</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                    <button data-theme-opt="oled" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>OLED</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                </div>
+                <button id="menu-btn" class="w-11 h-11 rounded-full flex flex-col items-center justify-center gap-[6px] icon-btn transition-all" aria-label="Menu">
                     <span class="menu-line block w-5 h-[2px] bg-current rounded-full transition-all"></span>
                     <span class="menu-line block w-5 h-[2px] bg-current rounded-full transition-all"></span>
                     <span class="menu-line block w-5 h-[2px] bg-current rounded-full transition-all"></span>
@@ -71,12 +87,12 @@
             </div>
         </div>
         <div class="md:hidden">
-            <div class="mobile-menu-wrap grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out bg-[#111214]/95 backdrop-blur-xl border-t border-white/[0.04]">
+            <div class="mobile-menu-wrap grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out border-t" style="background: var(--bg-elev); border-color: var(--card-border);">
                 <div class="overflow-hidden">
                     <div class="flex flex-col items-center gap-1 px-6 py-4">
-                        <a href="#about" class="w-full py-4 text-sm font-medium text-[#949ba4] hover:text-white hover:bg-white/[0.05] rounded-lg text-center transition-colors" data-i18n="nav-about">O mnie</a>
-                        <a href="#gallery" class="w-full py-4 text-sm font-medium text-[#949ba4] hover:text-white hover:bg-white/[0.05] rounded-lg text-center transition-colors" data-i18n="nav-gallery">Galeria</a>
-                        <a href="/faq" class="w-full py-4 text-sm font-medium text-[#949ba4] hover:text-white hover:bg-white/[0.05] rounded-lg text-center transition-colors" data-i18n="nav-faq">FAQ</a>
+                        <a href="#about" class="w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center" data-i18n="nav-about">O mnie</a>
+                        <a href="#gallery" class="w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center" data-i18n="nav-gallery">Galeria</a>
+                        <a href="/faq" class="w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center" data-i18n="nav-faq">FAQ</a>
                         <a href="#contact" class="w-full py-4 text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] rounded-lg text-center transition-colors" data-i18n="nav-contact">Kontakt</a>
                     </div>
                 </div>
@@ -88,18 +104,18 @@
 
         <section id="hero" class="flex-1 flex flex-col items-center justify-center px-6 pt-28 pb-16 text-center fade-in">
             <div class="relative mb-6">
-                <div class="w-28 h-28 rounded-full overflow-hidden ring-2 ring-[#5865F2]/30 ring-offset-4 ring-offset-[#111214]">
+                <div class="w-28 h-28 rounded-full overflow-hidden ring-2 ring-[#5865F2]/30 ring-offset-4" style="--tw-ring-offset-color: var(--bg);">
                     <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="zdjęcie profilowe" class="w-full h-full object-cover">
                 </div>
-                <span id="discord-status-dot" class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full border-4 border-[#111214] bg-[#23a55a]"></span>
+                <span id="discord-status-dot" class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full border-4 bg-[#23a55a]" style="border-color: var(--bg);"></span>
             </div>
 
-            <div id="discord-status-badge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs font-medium text-[#949ba4] mb-4">
+            <div id="discord-status-badge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-medium nav-link mb-4" style="background: var(--card); border-color: var(--card-border);">
                 <span class="w-2 h-2 rounded-full bg-[#23a55a]"></span>
                 <span id="discord-status-text">online</span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight leading-[1.05] mb-2" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">
+            <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-[1.05] mb-2" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">
                 <span id="discord-name">Guplos PL</span>
             </h1>
 
@@ -107,43 +123,43 @@
                 <span id="discord-username">@guplospl</span>
             </p>
 
-            <div id="discord-activity" class="hidden inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-6 max-w-full">
+            <div id="discord-activity" class="hidden inline-flex items-center gap-2.5 px-4 py-2 rounded-xl border mb-6 max-w-full" style="background: var(--card); border-color: var(--card-border);">
                 <div id="activity-icon" class="w-6 h-6 rounded overflow-hidden shrink-0"></div>
                 <div class="text-left min-w-0">
-                    <p id="activity-name" class="text-white text-xs font-medium truncate"></p>
-                    <p id="activity-detail" class="text-[#949ba4] text-xs truncate"></p>
+                    <p id="activity-name" class="text-xs font-medium truncate" style="color: var(--text-bright);"></p>
+                    <p id="activity-detail" class="text-xs truncate" style="color: var(--muted);"></p>
                 </div>
             </div>
 
-            <p class="text-lg md:text-xl text-[#949ba4] max-w-lg mb-10" data-i18n="hero-tagline">
+            <p class="text-lg md:text-xl max-w-lg mb-10" style="color: var(--muted);" data-i18n="hero-tagline">
                 Virtual Photographer, Cinematographer & Editor
             </p>
 
             <div class="flex items-center gap-3">
                 <a href="#gallery" class="px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors" data-i18n="hero-cta">Zobacz prace</a>
-                <a href="https://discord.com/users/751089335998218440" target="_blank" class="px-6 py-2.5 bg-white/[0.06] hover:bg-white/[0.1] text-white font-semibold text-sm rounded-full border border-white/[0.08] transition-colors" data-i18n="hero-write">Napisz</a>
+                <a href="https://discord.com/users/751089335998218440" target="_blank" class="px-6 py-2.5 font-semibold text-sm rounded-full border transition-colors" style="color: var(--text-bright); background: var(--card); border-color: var(--card-border);" data-i18n="hero-write">Napisz</a>
             </div>
         </section>
 
         <section id="about" class="max-w-5xl mx-auto px-6 py-20 w-full fade-in">
-            <h2 class="text-2xl font-bold text-white tracking-tight mb-8" data-i18n="about-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">O mnie</h2>
-            <div class="p-8 rounded-2xl bg-white/[0.03] border border-white/[0.06] ring-1 ring-white/[0.03]">
+            <h2 class="text-2xl font-bold tracking-tight mb-8" data-i18n="about-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">O mnie</h2>
+            <div class="p-8 rounded-2xl border" style="background: var(--card); border-color: var(--card-border);">
                 <div class="flex flex-col md:flex-row gap-10 items-start">
                     <div class="flex-1 space-y-4">
-                        <p class="text-[#dbdee1] leading-relaxed" data-i18n="about-text">Tutaj informacje beda o mnie</p>
+                        <p class="leading-relaxed" data-i18n="about-text" style="color: var(--text);">Tutaj informacje beda o mnie</p>
                     </div>
                     <div class="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6 shrink-0">
-                        <div class="text-center p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] min-w-[90px]">
-                            <span class="block text-3xl font-extrabold text-white" style="text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">200+</span>
-                            <span class="text-[#949ba4] text-xs font-medium" data-i18n="stat-photos">zdjęć</span>
+                        <div class="text-center p-4 rounded-xl border min-w-[90px]" style="background: var(--card-hover); border-color: var(--card-border);">
+                            <span class="block text-3xl font-extrabold" style="color: var(--text-bright); text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">200+</span>
+                            <span class="text-xs font-medium" data-i18n="stat-photos" style="color: var(--muted);">zdjęć</span>
                         </div>
-                        <div class="text-center p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] min-w-[90px]">
-                            <span class="block text-3xl font-extrabold text-white" style="text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">4</span>
-                            <span class="text-[#949ba4] text-xs font-medium">cinematics</span>
+                        <div class="text-center p-4 rounded-xl border min-w-[90px]" style="background: var(--card-hover); border-color: var(--card-border);">
+                            <span class="block text-3xl font-extrabold" style="color: var(--text-bright); text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">4</span>
+                            <span class="text-xs font-medium" style="color: var(--muted);">cinematics</span>
                         </div>
-                        <div class="text-center p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] min-w-[90px]">
-                            <span class="block text-3xl font-extrabold text-white" style="text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">2</span>
-                            <span class="text-[#949ba4] text-xs font-medium">collabs</span>
+                        <div class="text-center p-4 rounded-xl border min-w-[90px]" style="background: var(--card-hover); border-color: var(--card-border);">
+                            <span class="block text-3xl font-extrabold" style="color: var(--text-bright); text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">2</span>
+                            <span class="text-xs font-medium" style="color: var(--muted);">collabs</span>
                         </div>
                     </div>
                 </div>
@@ -152,39 +168,39 @@
 
         <section id="gallery" class="max-w-5xl mx-auto px-6 py-20 w-full fade-in">
             <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-bold text-white tracking-tight" data-i18n="gallery-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Galeria</h2>
-                <span class="text-sm text-[#949ba4]" data-i18n="gallery-count">8 zdjęć</span>
+                <h2 class="text-2xl font-bold tracking-tight" data-i18n="gallery-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Galeria</h2>
+                <span class="text-sm" data-i18n="gallery-count" style="color: var(--muted);">8 zdjęć</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;">
                     <img src="zdjecia/1.png" alt="zdjecie 1" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;">
                     <img src="zdjecia/2.png" alt="zdjecie 2" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;">
                     <img src="zdjecia/3.png" alt="zdjecie 3" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;">
                     <img src="zdjecia/4.png" alt="zdjecie 4" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;">
                     <img src="zdjecia/5.png" alt="zdjecie 5" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;">
                     <img src="zdjecia/6.png" alt="zdjecie 6" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;">
                     <img src="zdjecia/7.png" alt="zdjecie 7" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
-                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]" data-new>
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;" data-new>
                     <img src="zdjecia/8.png" alt="zdjecie 8" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     <span class="absolute top-2 left-2 px-2.5 py-1 rounded-full bg-[#5865F2]/90 text-white text-[11px] font-semibold" data-i18n="new-badge">Ostatnio przesłane</span>
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -195,36 +211,36 @@
 
 
         <section id="contact" class="max-w-5xl mx-auto px-6 py-20 w-full text-center fade-in">
-            <div class="p-10 rounded-2xl bg-white/[0.03] border border-white/[0.06] max-w-md mx-auto">
-                <h2 class="text-2xl font-bold text-white tracking-tight mb-5" data-i18n="contact-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Kontakt</h2>
+            <div class="p-10 rounded-2xl border max-w-md mx-auto" style="background: var(--card); border-color: var(--card-border);">
+                <h2 class="text-2xl font-bold tracking-tight mb-5" data-i18n="contact-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Kontakt</h2>
                 <a href="https://discord.com/users/751089335998218440" target="_blank" class="inline-block px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors w-full mb-3" data-i18n="contact-discord">Discord – Guplos PL</a>
                 <button id="email-btn" class="px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors w-full">kolanop987@gmail.com</button>
                 <div class="flex justify-center items-center mt-6 flex-wrap" style="gap: 10px;">
                     <div class="relative group">
-                        <a href="https://www.instagram.com/guplos_pl/" target="_blank" class="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all hover:scale-110 hover:bg-white/[0.08]" style="color: #E4405F;" onmouseenter="this.style.boxShadow='0 0 16px rgba(228,64,95,0.5), 0 0 40px rgba(228,64,95,0.2)'" onmouseleave="this.style.boxShadow='none'">
+                        <a href="https://www.instagram.com/guplos_pl/" target="_blank" class="w-16 h-16 rounded-2xl border flex items-center justify-center transition-all hover:scale-110" style="background: var(--card); border-color: var(--card-border); color: #E4405F; --tw-ring-offset-color: var(--bg);" onmouseenter="this.style.boxShadow='0 0 16px rgba(228,64,95,0.5), 0 0 40px rgba(228,64,95,0.2)'" onmouseleave="this.style.boxShadow='none'">
                             <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         </a>
-                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium text-white bg-[#111214]/90 px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Instagram</span>
+                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap" style="color: var(--text-bright); background: var(--bg-elev);">Instagram</span>
                     </div>
                     <div class="relative group">
-                        <a href="https://www.tiktok.com/@guplospl" target="_blank" class="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all hover:scale-110 hover:bg-white/[0.08] text-white" onmouseenter="this.style.boxShadow='0 0 16px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.15)'" onmouseleave="this.style.boxShadow='none'">
+                        <a href="https://www.tiktok.com/@guplospl" target="_blank" class="w-16 h-16 rounded-2xl border flex items-center justify-center transition-all hover:scale-110" style="background: var(--card); border-color: var(--card-border); color: var(--text-bright);" onmouseenter="this.style.boxShadow='0 0 16px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.15)'" onmouseleave="this.style.boxShadow='none'">
                             <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
                         </a>
-                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium text-white bg-[#111214]/90 px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">TikTok</span>
+                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap" style="color: var(--text-bright); background: var(--bg-elev);">TikTok</span>
                     </div>
                     <div class="relative group">
-                        <a href="https://open.spotify.com/user/pkpmztdpnxtrt75rgf7xj4dit" target="_blank" class="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all hover:scale-110 hover:bg-white/[0.08]" style="color: #1DB954;" onmouseenter="this.style.boxShadow='0 0 16px rgba(29,185,84,0.5), 0 0 40px rgba(29,185,84,0.2)'" onmouseleave="this.style.boxShadow='none'">
+                        <a href="https://open.spotify.com/user/pkpmztdpnxtrt75rgf7xj4dit" target="_blank" class="w-16 h-16 rounded-2xl border flex items-center justify-center transition-all hover:scale-110" style="background: var(--card); border-color: var(--card-border); color: #1DB954;" onmouseenter="this.style.boxShadow='0 0 16px rgba(29,185,84,0.5), 0 0 40px rgba(29,185,84,0.2)'" onmouseleave="this.style.boxShadow='none'">
                             <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
                         </a>
-                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium text-white bg-[#111214]/90 px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Spotify</span>
+                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap" style="color: var(--text-bright); background: var(--bg-elev);">Spotify</span>
                     </div>
                 </div>
-                <button id="share-btn" class="mt-5 px-5 py-2.5 bg-white/[0.04] hover:bg-[#5865F2] text-white font-semibold text-sm rounded-full transition-all border border-white/[0.06] flex items-center gap-2 mx-auto">Udostępnij</button>
+                <button id="share-btn" class="mt-5 px-5 py-2.5 hover:bg-[#5865F2] font-semibold text-sm rounded-full transition-all border flex items-center gap-2 mx-auto" style="color: var(--text-bright); background: var(--card); border-color: var(--card-border);">Udostępnij</button>
             </div>
         </section>
 
-        <footer class="text-center py-6 text-sm text-[#4e5058] border-t border-white/[0.04]">
-            &copy; 2026 Guplos PL · <span id="visit-count">0</span> <span data-i18n="footer-visits">odwiedzin</span> · <a href="/status" class="text-[#8e9297] hover:text-white transition-colors no-underline">Status</a>
+        <footer class="text-center py-6 text-sm border-t" style="color: var(--muted-2); border-color: var(--card-border);">
+            &copy; 2026 Guplos PL · <span id="visit-count">0</span> <span data-i18n="footer-visits">odwiedzin</span> · <a href="/status" class="transition-colors no-underline" style="color: var(--muted);">Status</a>
         </footer>
 
     </div>
