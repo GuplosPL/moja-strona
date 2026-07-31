@@ -320,6 +320,7 @@ const translations = {
         'stat-photos': 'zdjęć',
         'gallery-title': 'Galeria', 'gallery-count': '8 zdjęć', 'new-badge': 'Ostatnio przesłane',
         'contact-title': 'Kontakt', 'contact-discord': 'Discord – Guplos PL', 'contact-email-copy': 'Skopiowano!', 'footer-visits': 'odwiedzin',
+        'theme-dark': 'Czarny',
     },
     en: {
         'nav-about': 'About', 'nav-gallery': 'Gallery', 'nav-faq': 'FAQ', 'nav-contact': 'Contact',
@@ -329,6 +330,7 @@ const translations = {
         'stat-photos': 'photos',
         'gallery-title': 'Gallery', 'gallery-count': '8 photos', 'new-badge': 'Recently uploaded',
         'contact-title': 'Contact', 'contact-discord': 'Discord – Guplos PL', 'contact-email-copy': 'Copied!', 'footer-visits': 'visits',
+        'theme-dark': 'Dark',
     }
 };
 let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
@@ -338,8 +340,8 @@ const langToggleMobile = document.getElementById('lang-toggle-mobile');
 // Theme switcher
 const themeBtns = [document.getElementById('theme-btn'), document.getElementById('theme-btn-mobile')].filter(Boolean);
 const themeMenus = [document.getElementById('theme-menu'), document.getElementById('theme-menu-mobile')].filter(Boolean);
-let currentTheme = localStorage.getItem('theme') || 'dark';
-if (currentTheme !== 'dark' && currentTheme !== 'oled') currentTheme = 'dark';
+let currentTheme = localStorage.getItem('theme') || 'oled';
+if (currentTheme !== 'dark' && currentTheme !== 'oled') currentTheme = 'oled';
 function applyTheme(t, save = true) {
     currentTheme = t;
     document.documentElement.setAttribute('data-theme', t);

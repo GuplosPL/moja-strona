@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <script>var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'dark');</script>
+    <script>var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ – Guplos PL</title>
@@ -52,9 +52,9 @@
                         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M19.8 4.2l-2.1 2.1M6.3 17.7l-2.1 2.1"/></svg>
                     </button>
                     <div id="theme-menu" class="hidden absolute top-full right-0 mt-2 z-[60] w-40 p-2 rounded-xl border" style="background: var(--bg-elev); border-color: var(--card-border);">
-                        <button data-theme-opt="dark" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Dark</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
-                        
                         <button data-theme-opt="oled" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>OLED</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                        
+                        <button data-theme-opt="dark" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span data-i18n="theme-dark">Czarny</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
                     </div>
                 </div>
                 <button id="lang-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold icon-btn transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
@@ -65,9 +65,9 @@
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M19.8 4.2l-2.1 2.1M6.3 17.7l-2.1 2.1"/></svg>
                     </button>
                     <div id="theme-menu-mobile" class="hidden absolute top-full right-0 mt-2 z-[60] w-40 p-2 rounded-xl border" style="background: var(--bg-elev); border-color: var(--card-border);">
-                        <button data-theme-opt="dark" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>Dark</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
-                        
                         <button data-theme-opt="oled" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span>OLED</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
+                        
+                        <button data-theme-opt="dark" class="theme-opt w-full px-3 py-2 text-sm text-left rounded-lg flex items-center justify-between"><span data-i18n="theme-dark">Czarny</span><span class="theme-check hidden text-[#5865F2]">✓</span></button>
                     </div>
                 </div>
                 <button id="lang-toggle-mobile" class="w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold icon-btn transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
@@ -295,7 +295,8 @@
             'q1': 'Czym się zajmujesz?', 'a1': 'Zajmuję sie virtualna fotografią w grach takich jak Forza Horizon 6, lecz nie tylko robie tam zdjecia ale również cinematics videos.',
             'q2': 'Jak mogę się z Tobą skontaktować?', 'a2': 'Najszybciej przez Discorda – guplospl, albo przez social media: Instagram i TikTok.',
             'q3': 'Jakiego sprzętu używasz?', 'a3': 'Lista mojego sprzętu znajduje się powyżej w sekcji Sprzęt.',
-            'q4': 'Czy mogę wykorzystać Twoje zdjęcia?', 'a4': 'Bez zgody nie – jeśli chcesz je wykorzystać, napisz do mnie i ustalimy warunki.'
+            'q4': 'Czy mogę wykorzystać Twoje zdjęcia?', 'a4': 'Bez zgody nie – jeśli chcesz je wykorzystać, napisz do mnie i ustalimy warunki.',
+            'theme-dark': 'Czarny'
         },
         en: {
             'nav-home': 'Home', 'nav-gallery': 'Gallery',
@@ -304,15 +305,16 @@
             'q1': 'What do you do?', 'a1': 'I do virtual photography in games such as Forza Horizon 6, but not only that - I also make cinematics videos there.',
             'q2': 'How can I contact you?', 'a2': 'Fastest via Discord – guplospl, or through social media: Instagram and TikTok.',
             'q3': 'What gear do you use?', 'a3': 'My gear list is in the Gear section above.',
-            'q4': 'Can I use your photos?', 'a4': 'Not without permission – if you want to use them, message me and we will settle the terms.'
+            'q4': 'Can I use your photos?', 'a4': 'Not without permission – if you want to use them, message me and we will settle the terms.',
+            'theme-dark': 'Dark'
         }
     };
     let lang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
     // Theme switcher
     const themeBtns = [document.getElementById('theme-btn'), document.getElementById('theme-btn-mobile')].filter(Boolean);
     const themeMenus = [document.getElementById('theme-menu'), document.getElementById('theme-menu-mobile')].filter(Boolean);
-    let currentTheme = localStorage.getItem('theme') || 'dark';
-    if (currentTheme !== 'dark' && currentTheme !== 'oled') currentTheme = 'dark';
+    let currentTheme = localStorage.getItem('theme') || 'oled';
+    if (currentTheme !== 'dark' && currentTheme !== 'oled') currentTheme = 'oled';
     function applyTheme(t, save = true) {
         currentTheme = t;
         document.documentElement.setAttribute('data-theme', t);

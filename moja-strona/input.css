@@ -3,6 +3,20 @@
 @tailwind utilities;
 
 :root {
+    --bg: #000000;
+    --bg-elev: #000000;
+    --overlay: rgba(0,0,0,0.85);
+    --text: #e0e0e0;
+    --text-bright: #ffffff;
+    --muted: #888888;
+    --muted-2: #444444;
+    --card: rgba(255,255,255,0.02);
+    --card-hover: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.06);
+    --particle: #ffffff;
+    color-scheme: dark;
+}
+[data-theme="dark"] {
     --bg: #111214;
     --bg-elev: #111214;
     --overlay: rgba(17,18,20,0.8);
