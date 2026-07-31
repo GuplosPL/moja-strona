@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guplos PL</title>
+    <meta name="description" content="Portfolio">
+    <meta name="keywords" content="fotografia, cinematografia, edycja, Guplos PL, portfolio, fotograf">
+    <meta name="author" content="Guplos PL">
+    <meta property="og:title" content="Guplos PL">
+    <meta property="og:description" content="Portfolio">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://moja-strona-yi0.pages.dev">
+    <meta property="og:image" content="https://moja-strona-yi0.pages.dev/tlo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Guplos PL">
+    <meta name="twitter:description" content="Portfolio">
+    <meta name="twitter:image" content="https://moja-strona-yi0.pages.dev/tlo.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%235865F2'/><text x='50' y='50' dominant-baseline='central' text-anchor='middle' font-size='55' font-weight='bold' fill='white' font-family='sans-serif'>G</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-reveal { opacity: 0; transform: scale(0.97); filter: blur(8px); animation: pageReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        @keyframes pageReveal { to { opacity: 1; transform: scale(1); filter: blur(0); } }
+        .fade-in { opacity: 0; transform: translateY(30px) scale(0.95); filter: blur(4px); transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        #hero.fade-in { transform: none; filter: blur(6px); }
+        #hero.fade-in.visible { transform: none; filter: blur(0); }
+        nav a.active { color: #ffffff !important; }
+        html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+        html, body { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+    <script>history.scrollRestoration='manual'</script>
+</head>
+<body class="font-['Inter'] antialiased text-[#dbdee1] min-h-screen flex flex-col" style="background: #111214;">
+    <div id="progress-bar" class="fixed top-0 left-0 w-0 h-[2px] z-[100] bg-[#5865F2]" style="transition: width 50ms linear; box-shadow: 0 0 8px rgba(88,101,242,0.5);"></div>
+    <div id="particles-js" class="fixed inset-0 z-0 pointer-events-none"></div>
+
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('tlo.png'); filter: blur(8px);"></div>
+        <div class="absolute inset-0 bg-[#111214]/80"></div>
+        <div class="absolute -top-60 -right-40 w-[600px] h-[600px] rounded-full bg-[#5865F2]/15 blur-[120px]"></div>
+        <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#5865F2]/8 blur-[100px]"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 bg-[#111214]/80 backdrop-blur-xl border-b border-white/[0.04]">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="https://www.youtube.com/watch?v=0BdlKkvjEgA" target="_blank" class="text-white font-extrabold text-lg tracking-tight no-underline" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
+            <div class="flex items-center gap-2">
+                <a href="#about" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-about">O mnie</a>
+                <a href="#gallery" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-gallery">Galeria</a>
+                <a href="/faq" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-faq">FAQ</a>
+                <a href="#contact" class="px-4 py-2 text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] rounded-full transition-colors" data-i18n="nav-contact">Kontakt</a>
+                <button id="lang-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-reveal relative z-10 flex-1 flex flex-col">
+
+        <section id="hero" class="flex-1 flex flex-col items-center justify-center px-6 pt-28 pb-16 text-center fade-in">
+            <div class="relative mb-6">
+                <div class="w-28 h-28 rounded-full overflow-hidden ring-2 ring-[#5865F2]/30 ring-offset-4 ring-offset-[#111214]">
+                    <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="zdjęcie profilowe" class="w-full h-full object-cover">
+                </div>
+                <span id="discord-status-dot" class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full border-4 border-[#111214] bg-[#23a55a]"></span>
+            </div>
+
+            <div id="discord-status-badge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs font-medium text-[#949ba4] mb-4">
+                <span class="w-2 h-2 rounded-full bg-[#23a55a]"></span>
+                <span id="discord-status-text">online</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight leading-[1.05] mb-2" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">
+                <span id="discord-name">Guplos PL</span>
+            </h1>
+
+            <p class="text-sm text-[#5865F2] font-medium mb-1">
+                <span id="discord-username">@guplospl</span>
+            </p>
+
+            <div id="discord-activity" class="hidden inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-6">
+                <div id="activity-icon" class="w-6 h-6 rounded overflow-hidden shrink-0"></div>
+                <div class="text-left">
+                    <p id="activity-name" class="text-white text-xs font-medium"></p>
+                    <p id="activity-detail" class="text-[#949ba4] text-xs"></p>
+                </div>
+            </div>
+
+            <p class="text-lg md:text-xl text-[#949ba4] max-w-lg mb-10" data-i18n="hero-tagline">
+                Virtual Photographer, Cinematographer & Editor
+            </p>
+
+            <div class="flex items-center gap-3">
+                <a href="#gallery" class="px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors" data-i18n="hero-cta">Zobacz prace</a>
+                <a href="https://discord.com/users/751089335998218440" target="_blank" class="px-6 py-2.5 bg-white/[0.06] hover:bg-white/[0.1] text-white font-semibold text-sm rounded-full border border-white/[0.08] transition-colors" data-i18n="hero-write">Napisz</a>
+            </div>
+        </section>
+
+        <section id="about" class="max-w-5xl mx-auto px-6 py-20 w-full fade-in">
+            <h2 class="text-2xl font-bold text-white tracking-tight mb-8" data-i18n="about-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">O mnie</h2>
+            <div class="p-8 rounded-2xl bg-white/[0.03] border border-white/[0.06] ring-1 ring-white/[0.03]">
+                <div class="flex flex-col md:flex-row gap-10 items-start">
+                    <div class="flex-1 space-y-4">
+                        <p class="text-[#dbdee1] leading-relaxed" data-i18n="about-text">Tutaj informacje beda o mnie</p>
+                    </div>
+                    <div class="flex gap-6 shrink-0">
+                        <div class="text-center p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] min-w-[90px]">
+                            <span class="block text-3xl font-extrabold text-white" style="text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">200+</span>
+                            <span class="text-[#949ba4] text-xs font-medium" data-i18n="stat-photos">zdjęć</span>
+                        </div>
+                        <div class="text-center p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] min-w-[90px]">
+                            <span class="block text-3xl font-extrabold text-white" style="text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">4</span>
+                            <span class="text-[#949ba4] text-xs font-medium">cinematics</span>
+                        </div>
+                        <div class="text-center p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] min-w-[90px]">
+                            <span class="block text-3xl font-extrabold text-white" style="text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">2</span>
+                            <span class="text-[#949ba4] text-xs font-medium">collabs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="max-w-5xl mx-auto px-6 py-20 w-full fade-in">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-white tracking-tight" data-i18n="gallery-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Galeria</h2>
+                <span class="text-sm text-[#949ba4]" data-i18n="gallery-count">7 zdjęć</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                    <img src="zdjecia/1.png" alt="zdjecie 1" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                    <img src="zdjecia/2.png" alt="zdjecie 2" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                    <img src="zdjecia/3.png" alt="zdjecie 3" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                    <img src="zdjecia/4.png" alt="zdjecie 4" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                    <img src="zdjecia/5.png" alt="zdjecie 5" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                    <img src="zdjecia/6.png" alt="zdjecie 6" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
+                    <img src="zdjecia/7.png" alt="zdjecie 7" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="max-w-5xl mx-auto px-6 py-20 w-full text-center fade-in">
+            <div class="p-10 rounded-2xl bg-white/[0.03] border border-white/[0.06] max-w-md mx-auto">
+                <h2 class="text-2xl font-bold text-white tracking-tight mb-5" data-i18n="contact-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Kontakt</h2>
+                <a href="https://discord.com/users/751089335998218440" target="_blank" class="inline-block px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors w-full mb-3" data-i18n="contact-discord">Discord – Guplos PL</a>
+                <button id="email-btn" class="px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors w-full">kolanop987@gmail.com</button>
+                <div class="flex justify-center items-center mt-6 flex-wrap" style="gap: 10px;">
+                    <div class="relative group">
+                        <a href="https://www.instagram.com/guplos_pl/" target="_blank" class="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all hover:scale-110 hover:bg-white/[0.08]" style="color: #E4405F;" onmouseenter="this.style.boxShadow='0 0 16px rgba(228,64,95,0.5), 0 0 40px rgba(228,64,95,0.2)'" onmouseleave="this.style.boxShadow='none'">
+                            <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium text-white bg-[#111214]/90 px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Instagram</span>
+                    </div>
+                    <div class="relative group">
+                        <a href="https://www.tiktok.com/@guplospl" target="_blank" class="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all hover:scale-110 hover:bg-white/[0.08] text-white" onmouseenter="this.style.boxShadow='0 0 16px rgba(255,255,255,0.4), 0 0 40px rgba(255,255,255,0.15)'" onmouseleave="this.style.boxShadow='none'">
+                            <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                        </a>
+                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium text-white bg-[#111214]/90 px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">TikTok</span>
+                    </div>
+                    <div class="relative group">
+                        <a href="https://open.spotify.com/user/pkpmztdpnxtrt75rgf7xj4dit" target="_blank" class="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center transition-all hover:scale-110 hover:bg-white/[0.08]" style="color: #1DB954;" onmouseenter="this.style.boxShadow='0 0 16px rgba(29,185,84,0.5), 0 0 40px rgba(29,185,84,0.2)'" onmouseleave="this.style.boxShadow='none'">
+                            <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                        </a>
+                        <span class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-medium text-white bg-[#111214]/90 px-2.5 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Spotify</span>
+                    </div>
+                </div>
+                <button id="share-btn" class="mt-5 px-5 py-2.5 bg-white/[0.04] hover:bg-[#5865F2] text-white font-semibold text-sm rounded-full transition-all border border-white/[0.06] flex items-center gap-2 mx-auto">Udostępnij</button>
+            </div>
+        </section>
+
+        <footer class="text-center py-6 text-sm text-[#4e5058] border-t border-white/[0.04]">
+            &copy; 2026 Guplos PL · <span id="visit-count">0</span> <span data-i18n="footer-visits">odwiedzin</span> · <a href="/status" class="text-[#8e9297] hover:text-white transition-colors no-underline">Status</a>
+        </footer>
+
+    </div>
+
+    <div id="lightbox" class="fixed inset-0 z-[200] pointer-events-none">
+        <div id="lightbox-bg" class="absolute inset-0 bg-black/10 backdrop-blur-lg cursor-pointer opacity-0 transition-opacity duration-300"></div>
+        <img id="lightbox-img" src="" alt="" class="fixed z-10" style="border-radius: 12px; object-fit: cover; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);">
+        <div id="lb-watermark" class="fixed z-20" style="opacity: 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; font-weight: 700; font-size: 16px; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); text-shadow: 0 0 8px rgba(0,0,0,0.6);">Guplos PL #GOODDAYS</div>
+        <button id="lb-prev" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/[0.06] hover:bg-[#5865F2] text-white flex items-center justify-center opacity-0 cursor-pointer" style="transition: opacity 0.3s, background 0.2s;"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button>
+        <button id="lb-next" class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/[0.06] hover:bg-[#5865F2] text-white flex items-center justify-center opacity-0 cursor-pointer" style="transition: opacity 0.3s, background 0.2s;"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+        <span class="absolute top-4 right-8 text-white text-5xl cursor-pointer leading-none close-btn z-20" style="transition: opacity 0.3s; opacity: 0;">&times;</span>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+name = "moja-strona"
+compatibility_date = "2024-01-01"
+
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "COUNTER"
+id = "d7b454c9993d4af68a6144de5ee59d80"

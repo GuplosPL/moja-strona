@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ – Guplos PL</title>
+    <meta name="description" content="FAQ">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%235865F2'/><text x='50' y='50' dominant-baseline='central' text-anchor='middle' font-size='55' font-weight='bold' fill='white' font-family='sans-serif'>G</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-reveal { opacity: 0; transform: scale(0.97); filter: blur(8px); animation: pageReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        @keyframes pageReveal { to { opacity: 1; transform: scale(1); filter: blur(0); } }
+        .fade-in { opacity: 0; transform: translateY(30px) scale(0.95); filter: blur(4px); transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+        html, body { -ms-overflow-style: none; scrollbar-width: none; }
+        .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+        .faq-item.open .faq-answer { grid-template-rows: 1fr; }
+        .faq-answer-inner { overflow: hidden; }
+        .faq-icon { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+    </style>
+    <script>history.scrollRestoration='manual'</script>
+</head>
+<body class="font-['Inter'] antialiased text-[#dbdee1] min-h-screen flex flex-col" style="background: #111214;">
+    <div id="progress-bar" class="fixed top-0 left-0 w-0 h-[2px] z-[100] bg-[#5865F2]" style="transition: width 50ms linear; box-shadow: 0 0 8px rgba(88,101,242,0.5);"></div>
+    <div id="particles-js" class="fixed inset-0 z-0 pointer-events-none"></div>
+
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-60 -right-40 w-[600px] h-[600px] rounded-full bg-[#5865F2]/15 blur-[120px]"></div>
+        <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#5865F2]/8 blur-[100px]"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 bg-[#111214]/80 backdrop-blur-xl border-b border-white/[0.04]">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="/" class="text-white font-extrabold text-lg tracking-tight no-underline" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
+            <div class="flex items-center gap-2">
+                <a href="/" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-home">Strona główna</a>
+                <a href="/" class="px-4 py-2 text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] rounded-full transition-colors" data-i18n="nav-gallery">Galeria</a>
+                <button id="lang-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-reveal relative z-10 flex-1 flex flex-col">
+
+        <section class="flex-1 max-w-3xl mx-auto px-6 pt-32 pb-16 w-full">
+            <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight text-center mb-3 fade-in" data-i18n="faq-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">FAQ</h1>
+            <p class="text-center text-[#949ba4] mb-12 fade-in" data-i18n="faq-sub">Często zadawane pytania</p>
+
+            <div class="space-y-3">
+                <div class="faq-item rounded-2xl bg-white/[0.03] border border-white/[0.06] ring-1 ring-white/[0.03] overflow-hidden fade-in">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 px-6 py-5 text-left">
+                        <span class="font-semibold text-white text-sm" data-i18n="q1">Czym się zajmujesz?</span>
+                        <span class="faq-icon shrink-0 w-8 h-8 rounded-full bg-[#5865F2] flex items-center justify-center text-white text-xl font-light leading-none">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p class="px-6 pb-6 text-[#949ba4] text-sm leading-relaxed" data-i18n="a1">Zajmuję sie virtualna fotografią w grach takich jak Forza Horizon 6, lecz nie tylko robie tam zdjecia ale również cinematics videos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-2xl bg-white/[0.03] border border-white/[0.06] ring-1 ring-white/[0.03] overflow-hidden fade-in">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 px-6 py-5 text-left">
+                        <span class="font-semibold text-white text-sm" data-i18n="q2">Jak mogę się z Tobą skontaktować?</span>
+                        <span class="faq-icon shrink-0 w-8 h-8 rounded-full bg-[#5865F2] flex items-center justify-center text-white text-xl font-light leading-none">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p class="px-6 pb-6 text-[#949ba4] text-sm leading-relaxed" data-i18n="a2">Najszybciej przez Discorda – guplospl, albo przez social media: Instagram i TikTok.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-2xl bg-white/[0.03] border border-white/[0.06] ring-1 ring-white/[0.03] overflow-hidden fade-in">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 px-6 py-5 text-left">
+                        <span class="font-semibold text-white text-sm" data-i18n="q3">Jakiego sprzętu używasz?</span>
+                        <span class="faq-icon shrink-0 w-8 h-8 rounded-full bg-[#5865F2] flex items-center justify-center text-white text-xl font-light leading-none">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p class="px-6 pb-6 text-[#949ba4] text-sm leading-relaxed" data-i18n="a3">Pełna lista sprzętu będzie dostępna wkrótce w osobnej sekcji.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-2xl bg-white/[0.03] border border-white/[0.06] ring-1 ring-white/[0.03] overflow-hidden fade-in">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 px-6 py-5 text-left">
+                        <span class="font-semibold text-white text-sm" data-i18n="q4">Czy mogę wykorzystać Twoje zdjęcia?</span>
+                        <span class="faq-icon shrink-0 w-8 h-8 rounded-full bg-[#5865F2] flex items-center justify-center text-white text-xl font-light leading-none">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p class="px-6 pb-6 text-[#949ba4] text-sm leading-relaxed" data-i18n="a4">Bez zgody nie – jeśli chcesz je wykorzystać, napisz do mnie i ustalimy warunki.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-6 text-sm text-[#4e5058] border-t border-white/[0.04]">
+            &copy; 2026 Guplos PL
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+    <script>
+    // Page reveal
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.fade-in').forEach(el => revealObserver.observe(el));
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = total > 0 ? (window.scrollY / total) * 100 : 0;
+        document.getElementById('progress-bar').style.width = progress + '%';
+    });
+
+    // Particles
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 50, density: { enable: true, value_area: 800 } },
+            color: { value: '#ffffff' },
+            shape: { type: 'circle' },
+            opacity: { value: 0.25, random: true },
+            size: { value: 2, random: true },
+            line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.08, width: 1 },
+            move: { enable: true, speed: 0.7, direction: 'none', out_mode: 'out' }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: false } },
+            modes: { grab: { distance: 150, line_linked: { opacity: 0.15 } } }
+        },
+        retina_detect: true
+    });
+
+    // Click sparkle
+    document.addEventListener('click', e => {
+        for (let i = 0; i < 14; i++) {
+            const dot = document.createElement('div');
+            const size = 4 + Math.random() * 6;
+            const angle = Math.random() * 360;
+            const dist = 40 + Math.random() * 80;
+            dot.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;border-radius:50%;background:#ffffff;pointer-events:none;z-index:9999;transition:all 0.6s cubic-bezier(0,.8,.5,1);opacity:1;`;
+            document.body.appendChild(dot);
+            requestAnimationFrame(() => {
+                dot.style.transform = `translate(${Math.cos(angle) * dist}px,${Math.sin(angle) * dist}px)`;
+                dot.style.opacity = '0';
+            });
+            setTimeout(() => dot.remove(), 700);
+        }
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-toggle').addEventListener('click', () => {
+            const wasOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+        });
+    });
+
+    // Language switcher
+    const translations = {
+        pl: {
+            'nav-home': 'Strona główna', 'nav-gallery': 'Galeria',
+            'faq-title': 'FAQ', 'faq-sub': 'Często zadawane pytania',
+            'q1': 'Czym się zajmujesz?', 'a1': 'Zajmuję sie virtualna fotografią w grach takich jak Forza Horizon 6, lecz nie tylko robie tam zdjecia ale również cinematics videos.',
+            'q2': 'Jak mogę się z Tobą skontaktować?', 'a2': 'Najszybciej przez Discorda – guplospl, albo przez social media: Instagram i TikTok.',
+            'q3': 'Jakiego sprzętu używasz?', 'a3': 'Pełna lista sprzętu będzie dostępna wkrótce w osobnej sekcji.',
+            'q4': 'Czy mogę wykorzystać Twoje zdjęcia?', 'a4': 'Bez zgody nie – jeśli chcesz je wykorzystać, napisz do mnie i ustalimy warunki.'
+        },
+        en: {
+            'nav-home': 'Home', 'nav-gallery': 'Gallery',
+            'faq-title': 'FAQ', 'faq-sub': 'Frequently asked questions',
+            'q1': 'What do you do?', 'a1': 'I do virtual photography in games such as Forza Horizon 6, but not only that - I also make cinematics videos there.',
+            'q2': 'How can I contact you?', 'a2': 'Fastest via Discord – guplospl, or through social media: Instagram and TikTok.',
+            'q3': 'What gear do you use?', 'a3': 'The full gear list will be available soon in a separate section.',
+            'q4': 'Can I use your photos?', 'a4': 'Not without permission – if you want to use them, message me and we will settle the terms.'
+        }
+    };
+    let lang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
+    function applyLang(l) {
+        lang = l;
+        localStorage.setItem('lang', l);
+        document.documentElement.lang = l;
+        document.getElementById('lang-toggle').textContent = l === 'pl' ? 'EN' : 'PL';
+        const t = translations[l];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) el.textContent = t[key];
+        });
+    }
+    document.getElementById('lang-toggle').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
+    applyLang(lang);
+    </script>
+</body>
+</html>

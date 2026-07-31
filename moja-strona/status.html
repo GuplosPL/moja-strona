@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status – Guplos PL</title>
+    <meta name="description" content="Status strony Guplos PL">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%235865F2'/><text x='50' y='50' dominant-baseline='central' text-anchor='middle' font-size='55' font-weight='bold' fill='white' font-family='sans-serif'>G</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+        html, body { -ms-overflow-style: none; scrollbar-width: none; }
+        body { background: #111214; }
+    </style>
+</head>
+<body class="font-['Inter'] antialiased text-[#dbdee1] min-h-screen flex flex-col items-center justify-center px-6">
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-60 -right-40 w-[600px] h-[600px] rounded-full bg-[#5865F2]/15 blur-[120px]"></div>
+        <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#5865F2]/8 blur-[100px]"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-md">
+        <a href="/" class="inline-block mb-8 text-white font-extrabold text-lg tracking-tight no-underline" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
+
+        <div class="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-8">
+            <h1 class="text-2xl font-bold text-white tracking-tight mb-6 text-center" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Status</h1>
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+                    <span class="font-semibold text-sm">Strona główna</span>
+                    <div class="flex items-center gap-2">
+                        <span id="site-ms" class="text-xs text-[#8e9297]">— ms</span>
+                        <span id="site-dot" class="w-3 h-3 rounded-full inline-block" style="background:#4e5058; box-shadow:0 0 8px rgba(78,80,88,0.6);"></span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+                    <span class="font-semibold text-sm">Licznik odwiedzin</span>
+                    <div class="flex items-center gap-2">
+                        <span id="counter-num" class="text-xs text-[#8e9297]">—</span>
+                        <span id="counter-dot" class="w-3 h-3 rounded-full inline-block" style="background:#4e5058; box-shadow:0 0 8px rgba(78,80,88,0.6);"></span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+                    <span class="font-semibold text-sm">Discord</span>
+                    <div class="flex items-center gap-2">
+                        <span id="discord-status" class="text-xs text-[#8e9297]">—</span>
+                        <span id="discord-dot" class="w-3 h-3 rounded-full inline-block" style="background:#4e5058; box-shadow:0 0 8px rgba(78,80,88,0.6);"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chart" class="mt-6 h-16 flex items-end gap-1" style="min-height: 64px;"></div>
+
+            <p id="last-check" class="mt-4 text-center text-xs text-[#4e5058]">Sprawdzanie…</p>
+
+            <div class="flex gap-3 mt-4">
+                <button id="refresh-btn" class="flex-1 px-5 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors">Odśwież teraz</button>
+                <a href="/" class="px-5 py-2.5 bg-white/[0.06] hover:bg-white/[0.1] text-white font-semibold text-sm rounded-full border border-white/[0.08] transition-colors no-underline">Wróć</a>
+            </div>
+        </div>
+
+        <p class="text-center text-xs text-[#4e5058] mt-6">&copy; 2026 Guplos PL</p>
+    </div>
+
+    <script>
+    const colors = {
+        online: '#23a55a',
+        degraded: '#f0b232',
+        offline: '#da373c',
+    };
+
+    function setDot(id, status) {
+        const dot = document.getElementById(id);
+        const color = colors[status] || '#4e5058';
+        dot.style.background = color;
+        dot.style.boxShadow = '0 0 8px ' + color;
+    }
+
+    function drawChart(history) {
+        const chart = document.getElementById('chart');
+        chart.innerHTML = '';
+        if (!history || history.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'w-full h-full flex items-center justify-center text-xs text-[#4e5058]';
+            empty.textContent = 'Brak danych historycznych';
+            chart.appendChild(empty);
+            return;
+        }
+        const last = history.slice(-50);
+        last.forEach(entry => {
+            const bar = document.createElement('div');
+            const h = entry.site === 'online' ? Math.max(8, 60 - entry.ms / 20) : 6;
+            bar.style.width = '4px';
+            bar.style.height = h + 'px';
+            bar.style.flex = 'none';
+            bar.style.borderRadius = '2px';
+            bar.style.background = colors[entry.site] || '#4e5058';
+            bar.title = new Date(entry.t).toLocaleString('pl-PL') + ' · ' + (entry.ms ? entry.ms + ' ms' : 'offline');
+            chart.appendChild(bar);
+        });
+    }
+
+    async function loadStatus() {
+        try {
+            const res = await fetch('/api/status', { cache: 'no-store' });
+            const data = await res.json();
+
+            const site = data.checks.site;
+            setDot('site-dot', site.status);
+            document.getElementById('site-ms').textContent = site.responseTime ? site.responseTime + ' ms' : '—';
+
+            const counter = data.checks.counter;
+            setDot('counter-dot', counter.status);
+            document.getElementById('counter-num').textContent = counter.count !== null ? counter.count : '—';
+
+            const discord = data.checks.discord;
+            setDot('discord-dot', discord.status);
+            document.getElementById('discord-status').textContent = discord.discordStatus || (discord.status === 'online' ? 'online' : 'offline');
+
+            document.getElementById('last-check').textContent = 'Ostatnie sprawdzenie: ' + new Date(data.timestamp).toLocaleString('pl-PL');
+        } catch (e) {
+            document.getElementById('last-check').textContent = 'Błąd sprawdzania';
+        }
+    }
+
+    let historyLoaded = false;
+    async function loadHistory() {
+        if (historyLoaded) return;
+        historyLoaded = true;
+        try {
+            const res = await fetch('/api/status?history=1', { cache: 'no-store' });
+            const data = await res.json();
+            if (data.history) drawChart(data.history);
+        } catch (e) {}
+    }
+
+    document.getElementById('refresh-btn').addEventListener('click', () => {
+        historyLoaded = false;
+        loadStatus();
+        loadHistory();
+    });
+
+    loadStatus();
+    loadHistory();
+    setInterval(loadStatus, 60000);
+    </script>
+</body>
+</html>
