@@ -27,6 +27,10 @@
         .fade-in.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
         html, body { -ms-overflow-style: none; scrollbar-width: none; }
+        .make-tab { padding: 0.35rem 0.9rem; font-size: 0.8rem; font-weight: 600; border-radius: 999px; border: 1px solid var(--card-border); background: var(--card); color: var(--text); cursor: pointer; transition: all 0.15s ease; }
+        .make-tab:hover { background: var(--card-hover); color: var(--text-bright); }
+        .make-tab.active { background: #5865F2; border-color: #5865F2; color: #fff; }
+        .swatch { border: 1px solid rgba(255,255,255,0.14); }
         @media (hover: none), (pointer: coarse) {
             .blur-\[120px\] { display: none; }
             .blur-\[100px\] { display: none; }
@@ -104,7 +108,19 @@
     <div class="page-reveal relative z-10 flex-1 flex flex-col">
 
         <section class="flex-1 max-w-5xl mx-auto px-6 pt-28 pb-16 w-full">
-            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-center mb-2 fade-in" data-i18n="colors-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Kolory producentów</h1>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-center mb-6 fade-in" data-i18n="colors-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Kolory producentów</h1>
+
+            <div class="max-w-2xl mx-auto mb-6 fade-in">
+                <div class="relative">
+                    <input id="search-input" type="text" class="w-full px-4 py-3 pr-10 rounded-xl border text-sm outline-none transition-colors" data-i18n-placeholder="colors-search" placeholder="Szukaj koloru…" style="background: var(--card); border-color: var(--card-border); color: var(--text);">
+                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" style="color: var(--muted);"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+            </div>
+
+            <div id="makes-bar" class="flex flex-wrap justify-center gap-2 mb-8 fade-in"></div>
+
+            <div id="colors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <p id="empty-msg" class="hidden text-center text-sm py-16" data-i18n="colors-empty" style="color: var(--muted-2);">Brak wyników</p>
         </section>
 
         <footer class="text-center py-6 text-sm border-t" style="color: var(--muted-2); border-color: var(--card-border);">
@@ -181,13 +197,17 @@
             'nav-home': 'Strona główna', 'nav-gallery': 'Galeria', 'nav-faq': 'FAQ',
             'tools-colors': 'Kolory producentów',
             'theme-dark': 'Czarny',
-            'colors-title': 'Kolory producentów'
+            'colors-title': 'Kolory producentów',
+            'colors-search': 'Szukaj koloru…',
+            'colors-empty': 'Brak wyników'
         },
         en: {
             'nav-home': 'Home', 'nav-gallery': 'Gallery', 'nav-faq': 'FAQ',
             'tools-colors': 'Producer colors',
             'theme-dark': 'Dark',
-            'colors-title': 'Producer colors'
+            'colors-title': 'Producer colors',
+            'colors-search': 'Search color…',
+            'colors-empty': 'No results'
         }
     };
     let lang = (function(){try{return localStorage.getItem('lang')}catch(e){return null}})() || (navigator.language.startsWith('pl') ? 'pl' : 'en');
@@ -203,6 +223,10 @@
             const key = el.getAttribute('data-i18n');
             if (t[key]) el.textContent = t[key];
         });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (t[key]) el.setAttribute('placeholder', t[key]);
+        });
     }
     document.getElementById('lang-toggle').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
     document.getElementById('lang-toggle-mobile').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
@@ -210,62 +234,113 @@
 
     // Producer colors
     const grid = document.getElementById('colors-grid');
-    if (grid) {
-        const producers = [
-            { name: 'Ferrari', colors: ['#FF2800'] },
-            { name: 'Lamborghini', colors: ['#DDB321', '#007F4E'] },
-            { name: 'BMW', colors: ['#0066B1', '#E01F26'] },
-            { name: 'Audi', colors: ['#B8B8B8', '#E01F26'] },
-            { name: 'Porsche', colors: ['#C8102E'] },
-            { name: 'McLaren', colors: ['#FF8000', '#000000'] },
-            { name: 'Ford', colors: ['#003478', '#FFFFFF'] },
-            { name: 'Chevrolet', colors: ['#C8A24A', '#1A1A1A'] },
-            { name: 'Nissan', colors: ['#C3002F', '#FFD700'] },
-            { name: 'Toyota', colors: ['#EB0A1E', '#7D7D7D'] },
-            { name: 'Honda', colors: ['#FF0000', '#003D7C'] },
-            { name: 'Mercedes-AMG', colors: ['#00ADEF', '#0F0F0F'] },
-            { name: 'Bugatti', colors: ['#003DA5', '#A8B2B8'] },
-            { name: 'Koenigsegg', colors: ['#C9A063', '#0C0C0C'] },
-            { name: 'Pagani', colors: ['#C0C0C0', '#800020'] },
-        ];
-        producers.forEach((p, pi) => {
-            const card = document.createElement('div');
-            card.className = 'fade-in rounded-2xl border p-4';
-            card.style.cssText = 'background: var(--card); border-color: var(--card-border); opacity: 1; transform: none;';
-            const title = document.createElement('h2');
-            title.className = 'text-sm font-bold mb-3';
-            title.style.cssText = 'color: var(--text-bright);';
-            title.textContent = p.name;
-            card.appendChild(title);
-            const row = document.createElement('div');
-            row.className = 'flex gap-2';
-            p.colors.forEach((c, ci) => {
-                const swatch = document.createElement('button');
-                swatch.className = 'color-swatch rounded-lg flex items-end p-2';
-                swatch.style.cssText = 'background:' + c + '; width:' + (p.colors.length > 1 ? 'calc(50% - 4px)' : '100%') + '; height: 64px; border: 1px solid rgba(255,255,255,0.12);';
-                const label = document.createElement('span');
-                label.className = 'text-[10px] font-mono font-bold';
-                label.style.cssText = 'color:' + (isLight(c) ? '#000' : '#fff') + '; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
-                label.textContent = c;
-                swatch.appendChild(label);
-                swatch.addEventListener('click', () => {
-                    navigator.clipboard.writeText(c).catch(() => {});
-                    label.textContent = (lang === 'en' ? 'Copied!' : 'Skopiowano!');
-                    setTimeout(() => label.textContent = c, 1200);
-                });
-                row.appendChild(swatch);
+    const makesBar = document.getElementById('makes-bar');
+    const searchInput = document.getElementById('search-input');
+    const emptyMsg = document.getElementById('empty-msg');
+
+    let allColors = [];
+    let currentMake = null;
+    let searchQuery = '';
+
+    function hslColor(c) {
+        const h = Math.round(c.h * 360);
+        const s = Math.round(c.s * 100);
+        const l = Math.round(c.b * 100);
+        return 'hsl(' + h + ',' + s + '%,' + l + '%)';
+    }
+
+    function isLight(h, s, b) {
+        return b > 0.7;
+    }
+
+    function makeCard(c) {
+        const card = document.createElement('div');
+        card.className = 'rounded-2xl border p-4';
+        card.style.cssText = 'background: var(--card); border-color: var(--card-border);';
+        const color = hslColor(c);
+        const light = isLight(c.h, c.s, c.b);
+        const sw = document.createElement('div');
+        sw.className = 'swatch rounded-lg h-16 mb-3 flex items-end';
+        sw.style.background = color;
+        const hexLabel = document.createElement('span');
+        hexLabel.className = 'text-[10px] font-mono font-bold px-2 py-1';
+        hexLabel.style.cssText = 'color:' + (light ? '#000' : '#fff') + '; text-shadow: 0 1px 2px rgba(0,0,0,0.35);';
+        hexLabel.textContent = color;
+        sw.appendChild(hexLabel);
+        card.appendChild(sw);
+        const title = document.createElement('h2');
+        title.className = 'text-sm font-bold mb-0.5';
+        title.style.cssText = 'color: var(--text-bright);';
+        title.textContent = c.n;
+        card.appendChild(title);
+        const sub = document.createElement('p');
+        sub.className = 'text-xs mb-3';
+        sub.style.cssText = 'color: var(--muted);';
+        sub.textContent = c.m + ' · ' + c.t;
+        card.appendChild(sub);
+        const hslText = document.createElement('p');
+        hslText.className = 'text-[11px] font-mono';
+        hslText.style.cssText = 'color: var(--muted-2);';
+        hslText.textContent = 'H ' + c.h.toFixed(2) + (c.hs === 'L' ? ' L' : ' R') + '  ·  S ' + c.s.toFixed(2) + (c.ss === 'L' ? ' L' : ' R') + '  ·  B ' + c.b.toFixed(2) + (c.bs === 'L' ? ' L' : ' R');
+        card.appendChild(hslText);
+        return card;
+    }
+
+    function render() {
+        grid.innerHTML = '';
+        let list = allColors;
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            list = list.filter(c => c.n.toLowerCase().includes(q) || c.m.toLowerCase().includes(q) || c.t.toLowerCase().includes(q));
+        } else if (currentMake) {
+            list = list.filter(c => c.m === currentMake);
+        }
+        if (list.length === 0) {
+            emptyMsg.classList.remove('hidden');
+            return;
+        }
+        emptyMsg.classList.add('hidden');
+        const doc = document.createDocumentFragment();
+        list.forEach(c => doc.appendChild(makeCard(c)));
+        grid.appendChild(doc);
+    }
+
+    function buildTabs() {
+        makesBar.innerHTML = '';
+        const sorted = Object.keys(allMakes).sort((a, b) => a.localeCompare(b));
+        sorted.forEach(m => {
+            const btn = document.createElement('button');
+            btn.className = 'make-tab';
+            btn.textContent = m;
+            btn.addEventListener('click', () => {
+                currentMake = currentMake === m ? null : m;
+                document.querySelectorAll('.make-tab').forEach(b => b.classList.toggle('active', b === btn && currentMake === m));
+                render();
             });
-            card.appendChild(row);
-            grid.appendChild(card);
-            setTimeout(() => card.classList.add('visible'), 60 * pi);
+            makesBar.appendChild(btn);
         });
     }
 
-    function isLight(hex) {
-        const n = parseInt(hex.slice(1), 16);
-        const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
-        return (0.299 * r + 0.587 * g + 0.114 * b) > 150;
-    }
+    let allMakes = {};
+    fetch('/narzedzia/kolory.json')
+        .then(r => r.json())
+        .then(data => {
+            allColors = data.colors;
+            allMakes = data.makes;
+            buildTabs();
+            render();
+        })
+        .catch(() => {
+            emptyMsg.textContent = (lang === 'en' ? 'Failed to load colors' : 'Nie udało się wczytać kolorów');
+            emptyMsg.classList.remove('hidden');
+        });
+
+    searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value.trim();
+        currentMake = null;
+        document.querySelectorAll('.make-tab').forEach(b => b.classList.remove('active'));
+        render();
+    });
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
