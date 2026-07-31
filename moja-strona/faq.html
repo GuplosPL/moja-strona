@@ -236,24 +236,27 @@
     const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
     const particleColor = () => getComputedStyle(document.documentElement).getPropertyValue('--particle').trim() || '#ffffff';
     function initFAQParticles() {
-        const color = particleColor();
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 50, density: { enable: true, value_area: 800 } },
-                color: { value: color },
-                shape: { type: 'circle' },
-                opacity: { value: 0.25, random: true },
-                size: { value: 2, random: true },
-                line_linked: { enable: true, distance: 150, color: color, opacity: 0.08, width: 1 },
-                move: { enable: true, speed: 0.7, direction: 'none', out_mode: 'out' }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: false } },
-                modes: { grab: { distance: 150, line_linked: { opacity: 0.15 } } }
-            },
-            retina_detect: true
-        });
+        if (typeof particlesJS === 'undefined') return;
+        try {
+            const color = particleColor();
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 50, density: { enable: true, value_area: 800 } },
+                    color: { value: color },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.25, random: true },
+                    size: { value: 2, random: true },
+                    line_linked: { enable: true, distance: 150, color: color, opacity: 0.08, width: 1 },
+                    move: { enable: true, speed: 0.7, direction: 'none', out_mode: 'out' }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: false } },
+                    modes: { grab: { distance: 150, line_linked: { opacity: 0.15 } } }
+                },
+                retina_detect: true
+            });
+        } catch (e) {}
     }
     if (!isTouch) initFAQParticles();
 

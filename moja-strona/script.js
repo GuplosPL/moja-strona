@@ -439,20 +439,23 @@ const heroCheck = setInterval(() => {
 // Particles
 const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 function initParticles() {
-    const color = getComputedStyle(document.documentElement).getPropertyValue('--particle').trim() || '#ffffff';
-    tsParticles.load('particles-js', {
-        fpsLimit: 60,
-        particles: {
-            number: { value: 40, density: { enable: true } },
-            color: { value: color },
-            opacity: { value: 0.25, random: true },
-            size: { value: 2, random: true },
-            move: { enable: true, speed: 0.4, direction: 'none', random: true },
-            links: { enable: true, distance: 150, color: color, opacity: 0.08, width: 1 },
-        },
-        interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.15 } } } },
-        background: { color: 'transparent' },
-    });
+    if (typeof tsParticles === 'undefined') return;
+    try {
+        const color = getComputedStyle(document.documentElement).getPropertyValue('--particle').trim() || '#ffffff';
+        tsParticles.load('particles-js', {
+            fpsLimit: 60,
+            particles: {
+                number: { value: 40, density: { enable: true } },
+                color: { value: color },
+                opacity: { value: 0.25, random: true },
+                size: { value: 2, random: true },
+                move: { enable: true, speed: 0.4, direction: 'none', random: true },
+                links: { enable: true, distance: 150, color: color, opacity: 0.08, width: 1 },
+            },
+            interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.15 } } } },
+            background: { color: 'transparent' },
+        });
+    } catch (e) {}
 }
 if (!isTouch) initParticles();
 
