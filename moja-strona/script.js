@@ -553,6 +553,8 @@ document.getElementById('share-btn').addEventListener('click', () => {
 
 // Snowflakes
 (function() {
+    const now = new Date();
+    if (now.getMonth() !== 11) return;
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9990;';
     document.body.appendChild(canvas);
@@ -573,7 +575,7 @@ document.getElementById('share-btn').addEventListener('click', () => {
         return {
             x: rand(0, W),
             y: init ? rand(0, H) : rand(-20, -5),
-            r: rand(1, 3.2),
+            r: rand(1.5, 4.5),
             vy: rand(0.5, 1.8),
             vx: rand(-0.4, 0.4),
             sway: rand(0, Math.PI * 2),
