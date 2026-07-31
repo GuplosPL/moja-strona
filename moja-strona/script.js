@@ -116,6 +116,15 @@ function smoothScroll(targetY, duration = 800) {
     requestAnimationFrame(step);
 }
 
+(function moveNewFirst() {
+    const grid = document.querySelector('#gallery .grid');
+    if (!grid) return;
+    const newItems = grid.querySelectorAll('.gallery-item[data-new]');
+    for (let i = newItems.length - 1; i >= 0; i--) {
+        grid.insertBefore(newItems[i], grid.firstChild);
+    }
+})();
+
 const galleryItems = [...document.querySelectorAll('.gallery-item')];
 let currentIndex = 0;
 let lastThumb = null;
@@ -309,7 +318,7 @@ const translations = {
         'hero-cta': 'Zobacz prace', 'hero-write': 'Napisz',
         'about-title': 'O mnie', 'about-text': 'Tutaj informacje beda o mnie',
         'stat-photos': 'zdjęć',
-        'gallery-title': 'Galeria', 'gallery-count': '7 zdjęć',
+        'gallery-title': 'Galeria', 'gallery-count': '7 zdjęć', 'new-badge': 'Ostatnio przesłane',
         'contact-title': 'Kontakt', 'contact-discord': 'Discord – Guplos PL', 'contact-email-copy': 'Skopiowano!', 'footer-visits': 'odwiedzin',
     },
     en: {
@@ -318,7 +327,7 @@ const translations = {
         'hero-cta': 'View work', 'hero-write': 'Write',
         'about-title': 'About', 'about-text': 'Information about me will be here',
         'stat-photos': 'photos',
-        'gallery-title': 'Gallery', 'gallery-count': '7 photos',
+        'gallery-title': 'Gallery', 'gallery-count': '7 photos', 'new-badge': 'Recently uploaded',
         'contact-title': 'Contact', 'contact-discord': 'Discord – Guplos PL', 'contact-email-copy': 'Copied!', 'footer-visits': 'visits',
     }
 };
