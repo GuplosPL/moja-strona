@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <script>var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');</script>
+    <script>var t=null;try{t=localStorage.getItem('theme')}catch(e){};document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guplos PL</title>
@@ -259,7 +259,7 @@
         <span class="absolute top-4 right-8 text-white text-5xl cursor-pointer leading-none close-btn z-20" style="transition: opacity 0.3s; opacity: 0;">&times;</span>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+    <script src="tsparticles.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

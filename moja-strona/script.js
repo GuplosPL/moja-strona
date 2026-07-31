@@ -1,5 +1,14 @@
 const DISCORD_ID = '751089335998218440';
 
+const store = {
+    get(key) {
+        try { return localStorage.getItem(key); } catch (e) { return null; }
+    },
+    set(key, val) {
+        try { localStorage.setItem(key, val); } catch (e) {}
+    },
+};
+
 const statusColors = {
     online: '#23a55a',
     idle: '#f0b232',
@@ -13,6 +22,12 @@ const statusLabels = {
     dnd: 'Nie przeszkadzać',
     offline: 'Offline',
 };
+const statusLabelsEn = {
+    online: 'Online',
+    idle: 'Away',
+    dnd: 'Do Not Disturb',
+    offline: 'Offline',
+};
 
 const activityTypes = {
     0: 'Gra w',
@@ -22,15 +37,29 @@ const activityTypes = {
     4: 'Niestandardowy',
     5: 'Konkuruje w',
 };
+const activityTypesEn = {
+    0: 'Playing',
+    1: 'Streaming',
+    2: 'Listening to',
+    3: 'Watching',
+    4: 'Custom status',
+    5: 'Competing in',
+};
 
 function setDiscordPresence(data) {
     const user = data.discord_user;
     const status = data.discord_status;
 
     const avatar = document.getElementById('discord-avatar');
-    const ext = user.avatar ? (user.avatar.startsWith('a_') ? 'gif' : 'png') : 'png';
-    const hash = user.avatar || 'embed/avatars/' + (user.discriminator % 5);
-    avatar.src = `https://cdn.discordapp.com/${user.avatar ? 'avatars' : 'embed'}/${user.id}/${hash}.${ext}?size=128`;
+    let avatarSrc;
+    if (user.avatar) {
+        const ext = user.avatar.startsWith('a_') ? 'gif' : 'png';
+        avatarSrc = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=128`;
+    } else {
+        const idx = (parseInt(user.discriminator, 10) || user.id) % 5;
+        avatarSrc = `https://cdn.discordapp.com/embed/avatars/${idx}.png`;
+    }
+    avatar.src = avatarSrc;
 
     document.getElementById('discord-name').textContent = user.global_name || user.username;
     document.getElementById('discord-username').textContent = '@' + user.username;
@@ -41,7 +70,7 @@ function setDiscordPresence(data) {
     dot.style.background = color;
     dot.style.boxShadow = `0 0 8px ${color}, 0 0 20px ${color}66`;
 
-    document.getElementById('discord-status-text').textContent = statusLabels[status] || 'Offline';
+    document.getElementById('discord-status-text').textContent = (currentLang === 'en' ? statusLabelsEn : statusLabels)[status] || 'Offline';
     const badge = document.getElementById('discord-status-badge');
     const dot2 = badge.querySelector('span');
     dot2.style.background = color;
@@ -55,7 +84,7 @@ function setDiscordPresence(data) {
         activityDiv.classList.remove('hidden');
         const iconDiv = document.getElementById('activity-icon');
         iconDiv.innerHTML = `<img src="https://i.scdn.co/image/${spotify.album_art_url.split('/').pop()}" alt="" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML=''">`;
-        document.getElementById('activity-name').textContent = `Słucha ${spotify.song}`;
+        document.getElementById('activity-name').textContent = (currentLang === 'en' ? 'Listening to' : 'Słucha') + ' ' + spotify.song;
         document.getElementById('activity-detail').textContent = `${spotify.artist} · ${spotify.album}`;
     } else if (activity) {
         activityDiv.classList.remove('hidden');
@@ -69,7 +98,7 @@ function setDiscordPresence(data) {
         } else {
             iconDiv.innerHTML = '';
         }
-        const prefix = activityTypes[activity.type] || '';
+        const prefix = (currentLang === 'en' ? activityTypesEn : activityTypes)[activity.type] || '';
         document.getElementById('activity-name').textContent = prefix ? `${prefix} ${activity.name}` : activity.name;
         document.getElementById('activity-detail').textContent = activity.details || '';
     } else {
@@ -126,6 +155,9 @@ function smoothScroll(targetY, duration = 800) {
 })();
 
 const galleryItems = [...document.querySelectorAll('.gallery-item')];
+const galleryCountEl = document.querySelector('[data-i18n="gallery-count"]');
+const countLang = store.get('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
+if (galleryCountEl) galleryCountEl.textContent = galleryItems.length + ' ' + (countLang === 'en' ? 'photos' : 'zdjęć');
 let currentIndex = 0;
 let lastThumb = null;
 let navTimeout = null;
@@ -295,9 +327,10 @@ document.querySelector('.close-btn').addEventListener('click', closeLightbox);
 document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); navigateLightbox(-1); });
 document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); navigateLightbox(1); });
 document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') navigateLightbox(-1);
-    if (e.key === 'ArrowRight') navigateLightbox(1);
+    const lightboxOpen = !document.getElementById('lightbox').classList.contains('pointer-events-none');
+    if (e.key === 'Escape' && lightboxOpen) closeLightbox();
+    if (e.key === 'ArrowLeft' && lightboxOpen) navigateLightbox(-1);
+    if (e.key === 'ArrowRight' && lightboxOpen) navigateLightbox(1);
 });
 
 // Scroll animations
@@ -333,19 +366,19 @@ const translations = {
         'theme-dark': 'Dark',
     }
 };
-let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
+let currentLang = store.get('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
 const langToggle = document.getElementById('lang-toggle');
 const langToggleMobile = document.getElementById('lang-toggle-mobile');
 
 // Theme switcher
 const themeBtns = [document.getElementById('theme-btn'), document.getElementById('theme-btn-mobile')].filter(Boolean);
 const themeMenus = [document.getElementById('theme-menu'), document.getElementById('theme-menu-mobile')].filter(Boolean);
-let currentTheme = localStorage.getItem('theme') || 'oled';
+let currentTheme = store.get('theme') || 'oled';
 if (currentTheme !== 'dark' && currentTheme !== 'oled') currentTheme = 'oled';
 function applyTheme(t, save = true) {
     currentTheme = t;
     document.documentElement.setAttribute('data-theme', t);
-    if (save) localStorage.setItem('theme', t);
+    if (save) store.set('theme', t);
     themeMenus.forEach(m => m.querySelectorAll('.theme-check').forEach(c => c.classList.add('hidden')));
     themeMenus.forEach(m => {
         const opt = m.querySelector(`[data-theme-opt="${t}"]`);
@@ -395,7 +428,7 @@ function applyLang() {
             el.textContent = translations[currentLang][key];
         }
     });
-    localStorage.setItem('lang', currentLang);
+    store.set('lang', currentLang);
 }
 if (langToggle) langToggle.addEventListener('click', toggleLang);
 if (langToggleMobile) langToggleMobile.addEventListener('click', toggleLang);
@@ -463,7 +496,7 @@ if (!isTouch) initParticles();
 
 // Visit counter
 const counterEl = document.getElementById('visit-count');
-const visited = localStorage.getItem('visited');
+const visited = store.get('visited');
 const action = visited ? '' : '?action=increment';
 
 async function getProof() {
@@ -484,7 +517,7 @@ async function loadCount() {
         .then(r => r.json())
         .then(data => {
             if (counterEl) counterEl.textContent = data.count;
-            if (!visited) localStorage.setItem('visited', '1');
+            if (!visited) store.set('visited', '1');
         })
         .catch(() => {});
 }

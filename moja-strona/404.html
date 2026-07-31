@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404</title>
+    <title>404 – Guplos PL</title>
+    <meta name="description" content="Strona nie została znaleziona.">
+    <meta property="og:title" content="404 – Guplos PL">
+    <meta property="og:description" content="Strona nie została znaleziona.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://moja-strona-yi0.pages.dev">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -24,8 +29,8 @@
     <p id="msg" style="font-size: 1.2rem; color: var(--muted); margin-top: 0.5rem;">Strona nie została znaleziona</p>
     <a id="btn" href="/" class="btn">Wróć do strony głównej</a>
     <script>
-        var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');
-        const lang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
+        var t=null;try{t=localStorage.getItem('theme')}catch(e){};document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');
+        const lang = (function(){try{return localStorage.getItem('lang')}catch(e){return null}})() || (navigator.language.startsWith('pl') ? 'pl' : 'en');
         if (lang !== 'pl') {
             document.getElementById('msg').textContent = 'Page not found';
             document.getElementById('btn').textContent = 'Back to homepage';
