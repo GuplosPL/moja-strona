@@ -83,7 +83,7 @@
         <section id="hero" class="flex-1 flex flex-col items-center justify-center px-6 pt-28 pb-16 text-center fade-in">
             <div class="relative mb-6">
                 <div class="w-28 h-28 rounded-full overflow-hidden ring-2 ring-[#5865F2]/30 ring-offset-4 ring-offset-[#111214]">
-                    <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="zdjÄ™cie profilowe" class="w-full h-full object-cover">
+                    <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="zdjęcie profilowe" class="w-full h-full object-cover">
                 </div>
                 <span id="discord-status-dot" class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full border-4 border-[#111214] bg-[#23a55a]"></span>
             </div>
@@ -101,11 +101,11 @@
                 <span id="discord-username">@guplospl</span>
             </p>
 
-            <div id="discord-activity" class="hidden inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-6">
+            <div id="discord-activity" class="hidden inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-6 max-w-full">
                 <div id="activity-icon" class="w-6 h-6 rounded overflow-hidden shrink-0"></div>
-                <div class="text-left">
-                    <p id="activity-name" class="text-white text-xs font-medium"></p>
-                    <p id="activity-detail" class="text-[#949ba4] text-xs"></p>
+                <div class="text-left min-w-0">
+                    <p id="activity-name" class="text-white text-xs font-medium truncate"></p>
+                    <p id="activity-detail" class="text-[#949ba4] text-xs truncate"></p>
                 </div>
             </div>
 
@@ -126,10 +126,10 @@
                     <div class="flex-1 space-y-4">
                         <p class="text-[#dbdee1] leading-relaxed" data-i18n="about-text">Tutaj informacje beda o mnie</p>
                     </div>
-                    <div class="flex gap-6 shrink-0">
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6 shrink-0">
                         <div class="text-center p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] min-w-[90px]">
                             <span class="block text-3xl font-extrabold text-white" style="text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">200+</span>
-                            <span class="text-[#949ba4] text-xs font-medium" data-i18n="stat-photos">zdjÄ™Ä‡</span>
+                            <span class="text-[#949ba4] text-xs font-medium" data-i18n="stat-photos">zdjęć</span>
                         </div>
                         <div class="text-center p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] min-w-[90px]">
                             <span class="block text-3xl font-extrabold text-white" style="text-shadow: 0 0 8px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.2);">4</span>
@@ -147,7 +147,7 @@
         <section id="gallery" class="max-w-5xl mx-auto px-6 py-20 w-full fade-in">
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold text-white tracking-tight" data-i18n="gallery-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Galeria</h2>
-                <span class="text-sm text-[#949ba4]" data-i18n="gallery-count">8 zdjÄ™Ä‡</span>
+                <span class="text-sm text-[#949ba4]" data-i18n="gallery-count">8 zdjęć</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]">
@@ -180,7 +180,7 @@
                 </div>
                 <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1 ring-white/[0.06] aspect-[21/9]" data-new>
                     <img src="zdjecia/8.png" alt="zdjecie 8" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
-                    <span class="absolute top-2 left-2 px-2.5 py-1 rounded-full bg-[#5865F2]/90 text-white text-[11px] font-semibold" data-i18n="new-badge">Ostatnio przesĹ‚ane</span>
+                    <span class="absolute top-2 left-2 px-2.5 py-1 rounded-full bg-[#5865F2]/90 text-white text-[11px] font-semibold" data-i18n="new-badge">Ostatnio przesłane</span>
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
         <section id="contact" class="max-w-5xl mx-auto px-6 py-20 w-full text-center fade-in">
             <div class="p-10 rounded-2xl bg-white/[0.03] border border-white/[0.06] max-w-md mx-auto">
                 <h2 class="text-2xl font-bold text-white tracking-tight mb-5" data-i18n="contact-title" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Kontakt</h2>
-                <a href="https://discord.com/users/751089335998218440" target="_blank" class="inline-block px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors w-full mb-3" data-i18n="contact-discord">Discord â€“ Guplos PL</a>
+                <a href="https://discord.com/users/751089335998218440" target="_blank" class="inline-block px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors w-full mb-3" data-i18n="contact-discord">Discord – Guplos PL</a>
                 <button id="email-btn" class="px-6 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors w-full">kolanop987@gmail.com</button>
                 <div class="flex justify-center items-center mt-6 flex-wrap" style="gap: 10px;">
                     <div class="relative group">

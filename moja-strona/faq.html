@@ -37,10 +37,28 @@
     <nav class="fixed top-0 w-full z-50 bg-[#111214]/80 backdrop-blur-xl border-b border-white/[0.04]">
         <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="/" class="text-white font-extrabold text-lg tracking-tight no-underline" style="text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
-            <div class="flex items-center gap-2">
+            <div class="hidden md:flex items-center gap-2">
                 <a href="/" class="px-4 py-2 text-sm font-medium text-[#949ba4] hover:text-white transition-colors" data-i18n="nav-home">Strona główna</a>
                 <a href="/" class="px-4 py-2 text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] rounded-full transition-colors" data-i18n="nav-gallery">Galeria</a>
                 <button id="lang-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
+            </div>
+            <div class="flex items-center gap-2 md:hidden">
+                <button id="lang-toggle-mobile" class="w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" style="text-shadow: 0 0 8px rgba(255,255,255,0.2);">EN</button>
+                <button id="menu-btn" class="w-11 h-11 rounded-full flex flex-col items-center justify-center gap-[6px] text-[#949ba4] hover:text-white hover:bg-white/[0.06] transition-all" aria-label="Menu">
+                    <span class="menu-line block w-5 h-[2px] bg-current rounded-full transition-all"></span>
+                    <span class="menu-line block w-5 h-[2px] bg-current rounded-full transition-all"></span>
+                    <span class="menu-line block w-5 h-[2px] bg-current rounded-full transition-all"></span>
+                </button>
+            </div>
+        </div>
+        <div class="md:hidden">
+            <div class="mobile-menu-wrap grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out bg-[#111214]/95 backdrop-blur-xl border-t border-white/[0.04]">
+                <div class="overflow-hidden">
+                    <div class="flex flex-col items-center gap-1 px-6 py-4">
+                        <a href="/" class="w-full py-4 text-sm font-medium text-[#949ba4] hover:text-white hover:bg-white/[0.05] rounded-lg text-center transition-colors" data-i18n="nav-home">Strona główna</a>
+                        <a href="/" class="w-full py-4 text-sm font-medium text-white bg-[#5865F2] hover:bg-[#4752C4] rounded-lg text-center transition-colors" data-i18n="nav-gallery">Galeria</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -227,8 +245,7 @@
     });
 
     // Language switcher
-    const translations = {
-        pl: {
+    const translations = {        pl: {
             'nav-home': 'Strona główna', 'nav-gallery': 'Galeria',
             'faq-title': 'FAQ', 'faq-sub': 'Często zadawane pytania',
             'gear-title': 'Sprzęt', 'gear-parts': 'Podzespoły', 'gear-cpu': 'Procesor', 'gear-gpu': 'Karta graficzna', 'gear-ram': 'Pamięć RAM', 'gear-disk1': 'Dysk 1', 'gear-disk2': 'Dysk 2', 'gear-mon1': 'Monitor główny', 'gear-mon2': 'Monitor drugi',
@@ -248,11 +265,24 @@
         }
     };
     let lang = localStorage.getItem('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en');
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.querySelector('.mobile-menu-wrap');
+    menuBtn.addEventListener('click', () => {
+        const open = mobileMenu.classList.contains('grid-rows-[1fr]');
+        mobileMenu.classList.toggle('grid-rows-[1fr]', !open);
+        menuBtn.classList.toggle('active', !open);
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        mobileMenu.classList.remove('grid-rows-[1fr]');
+        menuBtn.classList.remove('active');
+    }));
     function applyLang(l) {
         lang = l;
         localStorage.setItem('lang', l);
         document.documentElement.lang = l;
-        document.getElementById('lang-toggle').textContent = l === 'pl' ? 'EN' : 'PL';
+        const label = l === 'pl' ? 'EN' : 'PL';
+        document.getElementById('lang-toggle').textContent = label;
+        document.getElementById('lang-toggle-mobile').textContent = label;
         const t = translations[l];
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
@@ -260,6 +290,7 @@
         });
     }
     document.getElementById('lang-toggle').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
+    document.getElementById('lang-toggle-mobile').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
     applyLang(lang);
     </script>
 </body>
