@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-#menu-btn.active .menu-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#menu-btn.active .menu-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 #menu-btn.active .menu-line:nth-child(2) { opacity: 0; }
-#menu-btn.active .menu-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+#menu-btn.active .menu-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
