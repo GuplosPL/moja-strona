@@ -27,12 +27,9 @@
         .fade-in.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
         html, body { -ms-overflow-style: none; scrollbar-width: none; }
-        .make-menu { opacity: 0; visibility: hidden; transform: translateY(-6px); max-height: 200px; transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; }
-        .make-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
-        .make-opt { width: 100%; text-align: left; padding: 0.45rem 0.9rem; font-size: 0.85rem; font-weight: 600; border-radius: 0.5rem; color: var(--text); cursor: pointer; transition: all 0.15s ease; }
-        .make-opt:hover { background: var(--card-hover); color: var(--text-bright); }
-        .make-opt.active { background: #5865F2; color: #fff; }
-        .make-opt-sep { height: 1px; margin: 0.25rem 0.4rem; background: var(--card-border); }
+        .make-tab { padding: 0.35rem 0.9rem; font-size: 0.8rem; font-weight: 600; border-radius: 999px; border: 1px solid var(--card-border); background: var(--card); color: var(--text); cursor: pointer; transition: all 0.15s ease; }
+        .make-tab:hover { background: var(--card-hover); color: var(--text-bright); }
+        .make-tab.active { background: #5865F2; border-color: #5865F2; color: #fff; }
         .swatch { border: 1px solid rgba(255,255,255,0.14); }
         @media (hover: none), (pointer: coarse) {
             .blur-\[120px\] { display: none; }
@@ -120,15 +117,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center mb-8 fade-in">
-                <div id="make-dropdown" class="relative w-full max-w-xs">
-                    <button id="make-dropdown-btn" class="w-full px-4 py-3 rounded-xl border text-sm font-medium flex items-center justify-between gap-2 transition-colors" style="background: var(--card); border-color: var(--card-border); color: var(--text);">
-                        <span id="make-dropdown-label">Wybierz markę</span>
-                        <svg id="make-dropdown-arrow" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" class="transition-transform"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
-                    </button>
-                    <div id="make-menu" class="make-menu absolute top-full left-0 right-0 mt-2 z-50 rounded-xl border p-1 overflow-y-auto" style="background: var(--bg-elev); border-color: var(--card-border);"></div>
-                </div>
-            </div>
+            <div id="makes-bar" class="flex flex-wrap justify-center gap-2 mb-8 fade-in"></div>
 
             <div id="colors-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             <p id="empty-msg" class="text-center text-sm py-16" data-i18n="colors-pick" style="color: var(--muted-2);">Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory</p>
@@ -211,8 +200,7 @@
             'colors-title': 'Kolory producentów',
             'colors-search': 'Szukaj koloru…',
             'colors-empty': 'Brak wyników',
-            'colors-pick': 'Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory',
-            'make-select': 'Wybierz markę'
+            'colors-pick': 'Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory'
         },
         en: {
             'nav-home': 'Home', 'nav-gallery': 'Gallery', 'nav-faq': 'FAQ',
@@ -221,8 +209,7 @@
             'colors-title': 'Producer colors',
             'colors-search': 'Search color…',
             'colors-empty': 'No results',
-            'colors-pick': 'Choose a brand or type a color to see results',
-            'make-select': 'Choose a brand'
+            'colors-pick': 'Choose a brand or type a color to see results'
         }
     };
     let lang = (function(){try{return localStorage.getItem('lang')}catch(e){return null}})() || (navigator.language.startsWith('pl') ? 'pl' : 'en');
@@ -243,12 +230,13 @@
             if (t[key]) el.setAttribute('placeholder', t[key]);
         });
     }
-    document.getElementById('lang-toggle').addEventListener('click', () => { applyLang(lang === 'pl' ? 'en' : 'pl'); updateLabel(); });
-    document.getElementById('lang-toggle-mobile').addEventListener('click', () => { applyLang(lang === 'pl' ? 'en' : 'pl'); updateLabel(); });
+    document.getElementById('lang-toggle').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
+    document.getElementById('lang-toggle-mobile').addEventListener('click', () => applyLang(lang === 'pl' ? 'en' : 'pl'));
     applyLang(lang);
 
     // Producer colors
     const grid = document.getElementById('colors-grid');
+    const makesBar = document.getElementById('makes-bar');
     const searchInput = document.getElementById('search-input');
     const emptyMsg = document.getElementById('empty-msg');
 
@@ -314,51 +302,19 @@
         grid.appendChild(doc);
     }
 
-    const makeMenu = document.getElementById('make-menu');
-    const makeBtn = document.getElementById('make-dropdown-btn');
-    const makeLabel = document.getElementById('make-dropdown-label');
-    const makeArrow = document.getElementById('make-dropdown-arrow');
-
-    function toggleDropdown(force) {
-        const open = force !== undefined ? force : !makeMenu.classList.contains('open');
-        makeMenu.classList.toggle('open', open);
-        makeArrow.style.transform = open ? 'rotate(180deg)' : '';
-    }
-    makeBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        toggleDropdown();
-    });
-    document.addEventListener('click', e => {
-        if (!document.getElementById('make-dropdown').contains(e.target)) toggleDropdown(false);
-    });
-
-    function updateLabel() {
-        makeLabel.textContent = currentMake || translations[lang]['make-select'];
-    }
-
     function buildTabs() {
-        makeMenu.innerHTML = '';
+        makesBar.innerHTML = '';
         const sorted = Object.keys(allMakes).sort((a, b) => a.localeCompare(b));
-        let lastLetter = '';
         sorted.forEach(m => {
-            const letter = m.charAt(0).toUpperCase();
-            if (lastLetter && letter !== lastLetter) {
-                const sep = document.createElement('div');
-                sep.className = 'make-opt-sep';
-                makeMenu.appendChild(sep);
-            }
-            lastLetter = letter;
-            const opt = document.createElement('button');
-            opt.className = 'make-opt';
-            opt.textContent = m;
-            opt.addEventListener('click', () => {
+            const btn = document.createElement('button');
+            btn.className = 'make-tab';
+            btn.textContent = m;
+            btn.addEventListener('click', () => {
                 currentMake = currentMake === m ? null : m;
-                makeMenu.querySelectorAll('.make-opt').forEach(b => b.classList.toggle('active', b === opt && currentMake === m));
-                updateLabel();
-                toggleDropdown(false);
+                document.querySelectorAll('.make-tab').forEach(b => b.classList.toggle('active', b === btn && currentMake === m));
                 render();
             });
-            makeMenu.appendChild(opt);
+            makesBar.appendChild(btn);
         });
     }
 
@@ -369,7 +325,6 @@
             allColors = data.colors;
             allMakes = data.makes;
             buildTabs();
-            updateLabel();
             render();
         })
         .catch(() => {
@@ -383,8 +338,7 @@
         searchTimer = setTimeout(() => {
             searchQuery = searchInput.value.trim();
             currentMake = null;
-            document.querySelectorAll('.make-opt').forEach(b => b.classList.remove('active'));
-            updateLabel();
+            document.querySelectorAll('.make-tab').forEach(b => b.classList.remove('active'));
             render();
         }, 400);
     });
