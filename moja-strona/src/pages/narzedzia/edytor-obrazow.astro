@@ -93,18 +93,18 @@ const presets = [
                     </div>
                 </div>
 
-                <div class="lg:fixed lg:right-0 lg:top-24 lg:bottom-0 lg:w-80 lg:overflow-y-auto lg:pb-8 lg:pr-6">
-                    <div class="rounded-2xl border p-5" style="background: var(--card); border-color: var(--card-border);">
-                        <p class="text-xs font-semibold uppercase tracking-wider mb-3" data-i18n="editor-presets" style="color: var(--muted);">Presety</p>
-                        <div class="flex flex-wrap gap-2 mb-6">
+                <div class="lg:fixed lg:right-0 lg:top-20 lg:w-80 lg:pr-6">
+                    <div class="rounded-2xl border p-4" style="background: var(--card); border-color: var(--card-border);">
+                        <p class="text-xs font-semibold uppercase tracking-wider mb-2.5" data-i18n="editor-presets" style="color: var(--muted);">Presety</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
                             {presets.map(p => (
-                                <button data-preset={p.name} class="preset-btn px-3.5 py-1.5 text-xs font-semibold rounded-full border transition-all hover:scale-105" style="color: var(--text); background: var(--card-hover); border-color: var(--card-border);">{p.label}</button>
+                                <button data-preset={p.name} class="preset-btn px-3 py-1 text-xs font-semibold rounded-full border transition-all hover:scale-105" style="color: var(--text); background: var(--card-hover); border-color: var(--card-border);">{p.label}</button>
                             ))}
                         </div>
-                        <div class="space-y-5">
+                        <div class="space-y-3.5">
                             {controls.map(c => (
                                 <div class="relative editor-control" title={c.tip}>
-                                    <div class="flex items-center justify-between mb-1.5">
+                                    <div class="flex items-center justify-between mb-1">
                                         <label class="text-xs font-medium" data-i18n={c.i18nKey} style="color: var(--text);">{c.label}</label>
                                         <span id={`${c.id}-value`} class="text-xs tabular-nums" style="color: var(--muted);">{c.value}</span>
                                     </div>

@@ -1,0 +1,18 @@
+Pomysły do ewentualnej implementacji na stronie:
+
+- ZROBIONE: Sekcja FAQ – osobna strona /faq (accordion, PL/EN, smaczki)
+- ZROBIONE: Sekcja "Sprzęt" – karty z gearu na stronie /faq nad pytaniami
+- Sekcja "Projekty" – karty z screenem + opisem + linkiem GitHub/demo
+- ZROBIONE: Nav sticky z backdrop-blur – nawigacja przyklejona na górze z rozmyciem tła
+- ZROBIONE: Watermark na zdjęciach w lightboxie – "Guplos PL #GOODDAYS" 70%
+- Podgląd aktywności Spotify w czasie rzeczywistym – co teraz słuchasz
+- Motyw świąteczny/sezonowy – zmiana kolorów automatycznie
+- ZROBIONE: Dynamiczne tagi "ostatnio używane" – pokazuje ostatnie zdjęcia przesłane do galerii
+- ZROBIONE: Płatki śniegu (listopad/grudzień) – canvas, włączane od 1.12 do 31.12
+- ZROBIONE: Zegar analogowy w rogu – zrobiony i usunięty (nie spodobał się)
+- Szyfrowana sekcja – trzeba wpisać hasło żeby odblokować ukryte zdjęcia
+- ZROBIONE: Skin/theme selector – zmiana motywu (OLED/Czarny), OLED domyślny, PL/EN w menu
+- Sekcja "Kolaboracje" – loga/screeny współprac z innymi
+- Status Discord na żywo w title – tytuł karty pokazuje "Guplos PL – słucha Spotify"
+- Smart quotes – losowy cytat na dole strony, zmienia się codziennie
+- Tryb offline – Service Worker cachujący stronę, działa bez neta
