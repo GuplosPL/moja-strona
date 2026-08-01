@@ -345,6 +345,19 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Progress bar
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = total > 0 ? (window.scrollY / total) * 100 : 0;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            ticking = false;
+        });
+    });
+
     // Particles
     const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
     function initColorParticles() {
