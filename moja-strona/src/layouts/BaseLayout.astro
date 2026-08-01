@@ -58,7 +58,7 @@ const {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script is:inline>history.scrollRestoration='manual'</script>
 </head>
-<body class="font-['Inter'] antialiased min-h-screen flex flex-col" style="color: var(--text); background: var(--bg);">
+<body class="font-['Inter'] antialiased min-h-screen flex flex-col" data-reveal-hero={revealHero} style="color: var(--text); background: var(--bg);">
     <div id="progress-bar" class="fixed top-0 left-0 w-0 h-[2px] z-[100] bg-[#5865F2]" style="transition: width 50ms linear; box-shadow: 0 0 8px rgba(88,101,242,0.5);"></div>
     <div id="particles-js" class="fixed inset-0 z-0 pointer-events-none"></div>
 
@@ -86,7 +86,7 @@ const {
         initNav();
         initLang();
         initProgressBar();
-        initReveal({ hero: {revealHero} });
+        initReveal({ hero: document.body.dataset.revealHero === 'true' });
         initEffects();
         setOnThemeChange(() => { if (!window.matchMedia('(hover: none), (pointer: coarse)').matches) initParticles(); });
         const yearEl = document.getElementById('year');

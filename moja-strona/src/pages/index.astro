@@ -9,6 +9,7 @@ const navLinks = [
 ];
 
 const gallery = [
+    { src: '/zdjecia/9.png', alt: 'zdjecie 9', isNew: true },
     { src: '/zdjecia/1.png', alt: 'zdjecie 1' },
     { src: '/zdjecia/2.png', alt: 'zdjecie 2' },
     { src: '/zdjecia/3.png', alt: 'zdjecie 3' },
@@ -16,7 +17,7 @@ const gallery = [
     { src: '/zdjecia/5.png', alt: 'zdjecie 5' },
     { src: '/zdjecia/6.png', alt: 'zdjecie 6' },
     { src: '/zdjecia/7.png', alt: 'zdjecie 7' },
-    { src: '/zdjecia/8.png', alt: 'zdjecie 8', isNew: true },
+    { src: '/zdjecia/8.png', alt: 'zdjecie 8' },
 ];
 ---
 <BaseLayout
@@ -51,11 +52,15 @@ const gallery = [
             <span id="discord-username">@guplospl</span>
         </p>
 
-        <div id="discord-activity" class="hidden inline-flex items-center gap-2.5 px-4 py-2 rounded-xl border mb-6 max-w-full" style="background: var(--card); border-color: var(--card-border);">
-            <div id="activity-icon" class="w-6 h-6 rounded overflow-hidden shrink-0"></div>
-            <div class="text-left min-w-0">
-                <p id="activity-name" class="text-xs font-medium truncate" style="color: var(--text-bright);"></p>
-                <p id="activity-detail" class="text-xs truncate" style="color: var(--muted);"></p>
+        <div id="discord-activity" class="activity-wrap max-w-full">
+            <div class="overflow-hidden">
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl border mb-6 max-w-full" style="background: var(--card); border-color: var(--card-border);">
+                    <div id="activity-icon" class="w-6 h-6 rounded overflow-hidden shrink-0"></div>
+                    <div class="text-left min-w-0">
+                        <p id="activity-name" class="text-xs font-medium truncate" style="color: var(--text-bright);"></p>
+                        <p id="activity-detail" class="text-xs truncate" style="color: var(--muted);"></p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -97,7 +102,7 @@ const gallery = [
     <section id="gallery" class="max-w-5xl mx-auto px-6 py-20 w-full fade-in">
         <div class="flex items-center justify-between mb-8">
             <h2 class="text-2xl font-bold tracking-tight" data-i18n="gallery-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Galeria</h2>
-            <span class="text-sm" data-i18n="gallery-count" style="color: var(--muted);">8 zdjęć</span>
+            <span class="text-sm" data-i18n="gallery-count" style="color: var(--muted);">9 zdjęć</span>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             {gallery.map(item => (

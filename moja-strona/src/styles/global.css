@@ -72,6 +72,10 @@ html, body { -ms-overflow-style: none; scrollbar-width: none; }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
 .faq-q { color: var(--text-bright); }
 
+.activity-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.activity-wrap.open { grid-template-rows: 1fr; }
+.activity-wrap > .overflow-hidden { min-height: 0; }
+
 .make-tab { padding: 0.35rem 0.9rem; font-size: 0.8rem; font-weight: 600; border-radius: 999px; border: 1px solid var(--card-border); background: var(--card); color: var(--text); cursor: pointer; transition: all 0.15s ease; }
 .make-tab:hover { background: var(--card-hover); color: var(--text-bright); }
 .make-tab.active { background: #5865F2; border-color: #5865F2; color: #fff; }

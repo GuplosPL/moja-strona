@@ -74,13 +74,13 @@ function setDiscordPresence(data) {
     const activity = data.activities && !spotify && data.activities.find(a => a.type === 0);
 
     if (spotify) {
-        activityDiv.classList.remove('hidden');
+        activityDiv.classList.add('open');
         const iconDiv = document.getElementById('activity-icon');
         iconDiv.innerHTML = `<img src="https://i.scdn.co/image/${spotify.album_art_url.split('/').pop()}" alt="" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML=''">`;
         document.getElementById('activity-name').textContent = (getLang() === 'en' ? 'Listening to' : 'Słucha') + ' ' + spotify.song;
         document.getElementById('activity-detail').textContent = `${spotify.artist} · ${spotify.album}`;
     } else if (activity) {
-        activityDiv.classList.remove('hidden');
+        activityDiv.classList.add('open');
         const iconDiv = document.getElementById('activity-icon');
         if (activity.assets && activity.assets.large_image) {
             const img = activity.assets.large_image;
@@ -95,7 +95,10 @@ function setDiscordPresence(data) {
         document.getElementById('activity-name').textContent = prefix ? `${prefix} ${activity.name}` : activity.name;
         document.getElementById('activity-detail').textContent = activity.details || '';
     } else {
-        activityDiv.classList.add('hidden');
+        activityDiv.classList.remove('open');
+        document.getElementById('activity-icon').innerHTML = '';
+        document.getElementById('activity-name').textContent = '';
+        document.getElementById('activity-detail').textContent = '';
     }
 }
 
