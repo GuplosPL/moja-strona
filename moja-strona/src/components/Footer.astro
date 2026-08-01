@@ -1,0 +1,9 @@
+---
+interface Props { visits?: boolean; statusLink?: boolean; }
+const { visits = false, statusLink = false } = Astro.props;
+---
+<footer class="text-center py-6 text-sm border-t" style="color: var(--muted-2); border-color: var(--card-border);">
+    &copy; <span id="year">2026</span> Guplos PL
+    {visits && <><span> · </span><span id="visit-count">0</span> <span data-i18n="footer-visits">odwiedzin</span></>}
+    {statusLink && <><span> · </span><a href="/status" class="transition-colors no-underline" style="color: var(--muted);">Status</a></>}
+</footer>

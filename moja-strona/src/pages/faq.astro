@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const navLinks = [
+    { href: '/', i18nKey: 'nav-home', label: 'Strona główna' },
+    { href: '/#gallery', i18nKey: 'nav-gallery', label: 'Galeria' },
+    { href: '/faq', i18nKey: 'nav-faq', label: 'FAQ', key: 'faq' },
+];
+
+const gear = [
+    { badge: 'CPU', key: 'gear-cpu', label: 'Procesor', value: 'AMD Ryzen 5 7600X' },
+    { badge: 'GPU', key: 'gear-gpu', label: 'Karta graficzna', value: 'RTX 4070 Super 12GB' },
+    { badge: 'RAM', key: 'gear-ram', label: 'Pamięć RAM', value: '32GB 6000MHz' },
+    { badge: 'SSD', key: 'gear-disk1', label: 'Dysk 1', value: '2TB SSD Kingston' },
+    { badge: 'SSD', key: 'gear-disk2', label: 'Dysk 2', value: '1TB SSD' },
+    { badge: 'MON', key: 'gear-mon1', label: 'Monitor główny', value: 'MSI 2560x1440 200Hz' },
+    { badge: 'MON', key: 'gear-mon2', label: 'Monitor drugi', value: 'MSI 1920x1080 100Hz' },
+];
+
+const faqs = [
+    { q: 'q1', a: 'a1' },
+    { q: 'q2', a: 'a2' },
+    { q: 'q3', a: 'a3' },
+    { q: 'q4', a: 'a4' },
+];
+---
+<BaseLayout
+    title="FAQ – Guplos PL"
+    description="Często zadawane pytania i sprzęt, którego używa Guplos PL."
+    ogUrl="https://moja-strona-yi0.pages.dev/faq"
+    navLinks={navLinks}
+    activeNav="faq"
+>
+    <section class="flex-1 max-w-3xl mx-auto px-6 pt-32 pb-16 w-full">
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-center mb-3 fade-in" data-i18n="faq-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">FAQ</h1>
+        <p class="text-center mb-12 fade-in" data-i18n="faq-sub" style="color: var(--muted);">Często zadawane pytania</p>
+
+        <h2 class="text-xl font-bold tracking-tight mb-6 fade-in" data-i18n="gear-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Sprzęt</h2>
+        <div class="p-8 rounded-2xl border mb-12 fade-in" style="background: var(--card); border-color: var(--card-border);">
+            <h3 class="text-sm font-bold uppercase tracking-widest mb-4" data-i18n="gear-parts" style="color: var(--text-bright);">Podzespoły</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {gear.map(item => (
+                    <div class="p-5 rounded-xl border transition-colors flex items-start gap-4" style="background: var(--card); border-color: var(--card-border);">
+                        <span class="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">{item.badge}</span>
+                        <div class="text-left">
+                            <p class="text-[11px] uppercase tracking-widest font-semibold" style="color: var(--muted);" data-i18n={item.key}>{item.label}</p>
+                            <p class="font-semibold text-sm mt-1" style="color: var(--text-bright);">{item.value}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        <div class="space-y-3">
+            {faqs.map(item => (
+                <div class="faq-item rounded-2xl border overflow-hidden fade-in" style="background: var(--card); border-color: var(--card-border);">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 px-6 py-5 text-left">
+                        <span class="font-semibold text-sm" style="color: var(--text-bright);" data-i18n={item.q}>{item.q}</span>
+                        <span class="faq-icon shrink-0 w-8 h-8 rounded-full bg-[#5865F2] flex items-center justify-center text-white text-xl font-light leading-none">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p class="px-6 pb-6 text-sm leading-relaxed" style="color: var(--muted);" data-i18n={item.a}>{item.a}</p>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </section>
+</BaseLayout>
+
+<script>
+    import { initFaq } from '../lib/faq.js';
+    initFaq();
+</script>

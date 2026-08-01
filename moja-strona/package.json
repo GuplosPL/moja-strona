@@ -1,19 +1,21 @@
 {
   "name": "moja-strona",
-  "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "version": "2.0.0",
+  "description": "Guplos PL — portfolio",
   "scripts": {
-    "build": "tailwindcss -i input.css -o style.css --minify",
-    "deploy": "npm run build && wrangler pages deploy .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "npm run build && wrangler pages deploy dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "tailwindcss": "^3.4.19",
-    "wrangler": "^4.115.0"
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.1.6",
+    "tailwindcss": "^4.3.3",
+    "wrangler": "^4.118.0"
   }
 }
