@@ -7,7 +7,7 @@ export const translations = {
         'nav-gallery': 'Galeria',
         'nav-faq': 'FAQ',
         'nav-home': 'Strona główna',
-        'tools-colors': 'Kolory producentów',
+        'tools-colors': 'Kolory Producentów',
         'tools-editor': 'Edytor Obrazów',
         'tools-more-soon': 'Więcej wkrótce...',
         'theme-dark': 'Czarny',
@@ -46,7 +46,7 @@ export const translations = {
         'q4': 'Czy mogę wykorzystać Twoje zdjęcia?',
         'a4': 'Bez zgody nie – jeśli chcesz je wykorzystać, napisz do mnie i ustalimy warunki.',
         // kolory
-        'colors-title': 'Kolory producentów',
+        'colors-title': 'Kolory Producentów',
         'colors-search': 'Szukaj koloru…',
         'colors-empty': 'Brak wyników',
         'colors-pick': 'Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory',

@@ -14,7 +14,7 @@ const { links, logoHref = '/', logoTarget = '_self', active = '' } = Astro.props
                         <div class="relative">
                             <button id="tools-btn" class:list={['px-4 py-2 text-sm font-medium nav-link flex items-center gap-1', { active: active === 'tools' }]}>Narzędzia<svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" class="transition-transform"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
                             <div id="tools-menu" class="hidden absolute top-full left-0 mt-2 z-[60] w-56 p-2 rounded-xl border" style="background: var(--bg-elev); border-color: var(--card-border);">
-                                <a href="/narzedzia/kolory-producentow" class:list={['block px-3 py-2 text-sm rounded-lg nav-link', { active: active === 'tools' }]} data-i18n="tools-colors">Kolory producentów</a>
+                                <a href="/narzedzia/kolory-producentow" class:list={['block px-3 py-2 text-sm rounded-lg nav-link', { active: active === 'tools' }]} data-i18n="tools-colors">Kolory Producentów</a>
                                 <a href="/narzedzia/edytor-obrazow" class:list={['block px-3 py-2 text-sm rounded-lg nav-link', { active: active === 'tools' }]} data-i18n="tools-editor">Edytor Obrazów</a>
                                 <div class="px-3 pt-2 pb-1 text-xs font-medium" style="color: var(--muted);" data-i18n="tools-more-soon">Więcej wkrótce...</div>
                             </div>
@@ -59,7 +59,7 @@ const { links, logoHref = '/', logoTarget = '_self', active = '' } = Astro.props
                         <Fragment>
                             <a href={link.href} class:list={['w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center', { active: active === (link.key ?? link.i18nKey) }]} data-i18n={link.i18nKey}>{link.label}</a>
                             {link.i18nKey === 'nav-gallery' && (
-                                <a href="/narzedzia/kolory-producentow" class:list={['w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center', { active: active === 'tools' }]} data-i18n="tools-colors">Kolory producentów</a>
+                                <a href="/narzedzia/kolory-producentow" class:list={['w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center', { active: active === 'tools' }]} data-i18n="tools-colors">Kolory Producentów</a>
                                 <a href="/narzedzia/edytor-obrazow" class:list={['w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center', { active: active === 'tools' }]} data-i18n="tools-editor">Edytor Obrazów</a>
                                 <div class="w-full py-4 text-sm font-medium text-center" style="color: var(--muted);" data-i18n="tools-more-soon">Więcej wkrótce...</div>
                             )}
