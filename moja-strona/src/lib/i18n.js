@@ -9,6 +9,7 @@ export const translations = {
         'nav-home': 'Strona główna',
         'tools-colors': 'Kolory producentów',
         'tools-editor': 'Edytor Obrazów',
+        'tools-more-soon': 'Więcej wkrótce...',
         'theme-dark': 'Czarny',
         // index
         'hero-tagline': 'Virtual Photographer, Cinematographer & Editor',
@@ -87,6 +88,7 @@ export const translations = {
         'nav-home': 'Home',
         'tools-colors': 'Producer colors',
         'tools-editor': 'Image Editor',
+        'tools-more-soon': 'More coming soon...',
         'theme-dark': 'Dark',
         // index
         'hero-tagline': 'Virtual Photographer, Cinematographer & Editor',

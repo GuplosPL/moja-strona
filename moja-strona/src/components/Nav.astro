@@ -16,6 +16,7 @@ const { links, logoHref = '/', logoTarget = '_self', active = '' } = Astro.props
                             <div id="tools-menu" class="hidden absolute top-full left-0 mt-2 z-[60] w-56 p-2 rounded-xl border" style="background: var(--bg-elev); border-color: var(--card-border);">
                                 <a href="/narzedzia/kolory-producentow" class:list={['block px-3 py-2 text-sm rounded-lg nav-link', { active: active === 'tools' }]} data-i18n="tools-colors">Kolory producentów</a>
                                 <a href="/narzedzia/edytor-obrazow" class:list={['block px-3 py-2 text-sm rounded-lg nav-link', { active: active === 'tools' }]} data-i18n="tools-editor">Edytor Obrazów</a>
+                                <div class="px-3 pt-2 pb-1 text-xs font-medium" style="color: var(--muted);" data-i18n="tools-more-soon">Więcej wkrótce...</div>
                             </div>
                         </div>
                     )}
@@ -60,6 +61,7 @@ const { links, logoHref = '/', logoTarget = '_self', active = '' } = Astro.props
                             {link.i18nKey === 'nav-gallery' && (
                                 <a href="/narzedzia/kolory-producentow" class:list={['w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center', { active: active === 'tools' }]} data-i18n="tools-colors">Kolory producentów</a>
                                 <a href="/narzedzia/edytor-obrazow" class:list={['w-full py-4 text-sm font-medium nav-item-mobile rounded-lg text-center', { active: active === 'tools' }]} data-i18n="tools-editor">Edytor Obrazów</a>
+                                <div class="w-full py-4 text-sm font-medium text-center" style="color: var(--muted);" data-i18n="tools-more-soon">Więcej wkrótce...</div>
                             )}
                         </Fragment>
                     ))}
