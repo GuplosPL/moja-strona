@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const navLinks = [
+    { href: '/', i18nKey: 'nav-home', label: 'Strona główna' },
+    { href: '/#gallery', i18nKey: 'nav-gallery', label: 'Galeria' },
+    { href: '/wspolprace', i18nKey: 'nav-collabs', label: 'Współprace', key: 'collabs' },
+    { href: '/faq', i18nKey: 'nav-faq', label: 'FAQ' },
+];
+---
+<BaseLayout
+    title="Współprace – Guplos PL"
+    description="Projekty i współprace Guplos PL."
+    ogUrl="https://moja-strona-yi0.pages.dev/wspolprace"
+    navLinks={navLinks}
+    activeNav="collabs"
+>
+    <section class="flex-1 max-w-3xl mx-auto px-6 pt-32 pb-16 w-full">
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-center mb-3 fade-in" data-i18n="collabs-title" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Współprace</h1>
+        <p class="text-center mb-12 fade-in" data-i18n="collabs-sub" style="color: var(--muted);">Projekty i współprace</p>
+
+        <div class="p-8 rounded-2xl border fade-in text-center" style="background: var(--card); border-color: var(--card-border);">
+            <p class="text-sm leading-relaxed" data-i18n="collabs-desc" style="color: var(--muted);">Sekcja w przygotowaniu — wkrótce pojawią się tutaj informacje o moich projektach i współpracach.</p>
+        </div>
+    </section>
+</BaseLayout>

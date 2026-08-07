@@ -7,6 +7,7 @@ export const translations = {
         'nav-gallery': 'Galeria',
         'nav-faq': 'FAQ',
         'nav-home': 'Strona główna',
+        'nav-collabs': 'Współprace',
         'tools-colors': 'Kolory Producentów',
         'tools-editor': 'Edytor Obrazów',
         'tools-more-soon': 'Więcej wkrótce...',
@@ -45,6 +46,10 @@ export const translations = {
         'a3': 'Lista mojego sprzętu znajduje się powyżej w sekcji Sprzęt.',
         'q4': 'Czy mogę wykorzystać Twoje zdjęcia?',
         'a4': 'Bez zgody nie – jeśli chcesz je wykorzystać, napisz do mnie i ustalimy warunki.',
+        // wspolprace
+        'collabs-title': 'Współprace',
+        'collabs-sub': 'Projekty i współprace',
+        'collabs-desc': 'Sekcja w przygotowaniu — wkrótce pojawią się tutaj informacje o moich projektach i współpracach.',
         // kolory
         'colors-title': 'Kolory Producentów',
         'colors-search': 'Szukaj koloru…',
@@ -86,6 +91,7 @@ export const translations = {
         'nav-gallery': 'Gallery',
         'nav-faq': 'FAQ',
         'nav-home': 'Home',
+        'nav-collabs': 'Collaborations',
         'tools-colors': 'Producer colors',
         'tools-editor': 'Image Editor',
         'tools-more-soon': 'More coming soon...',
@@ -124,6 +130,10 @@ export const translations = {
         'a3': 'My gear list is in the Gear section above.',
         'q4': 'Can I use your photos?',
         'a4': 'Not without permission – if you want to use them, message me and we will settle the terms.',
+        // collabs
+        'collabs-title': 'Collaborations',
+        'collabs-sub': 'Projects and collaborations',
+        'collabs-desc': 'Section in progress — information about my projects and collaborations will appear here soon.',
         // kolory
         'colors-title': 'Producer colors',
         'colors-search': 'Search color…',
