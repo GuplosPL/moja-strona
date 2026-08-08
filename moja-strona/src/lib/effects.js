@@ -33,26 +33,6 @@ export function initParticles() {
     } catch (e) {}
 }
 
-export function initSparkle() {
-    if (isTouch) return;
-    document.addEventListener('click', e => {
-        const color = particleColor();
-        for (let i = 0; i < 14; i++) {
-            const dot = document.createElement('div');
-            const size = 4 + Math.random() * 6;
-            const angle = Math.random() * 360;
-            const dist = 40 + Math.random() * 80;
-            dot.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px;border-radius:50%;background:${color};pointer-events:none;z-index:9999;transition:all 0.6s cubic-bezier(0,.8,.5,1);opacity:1;`;
-            document.body.appendChild(dot);
-            requestAnimationFrame(() => {
-                dot.style.transform = `translate(${Math.cos(angle) * dist}px,${Math.sin(angle) * dist}px)`;
-                dot.style.opacity = '0';
-            });
-            setTimeout(() => dot.remove(), 700);
-        }
-    });
-}
-
 export function initSnow() {
     const now = new Date();
     if (now.getMonth() !== 11) return;
@@ -116,6 +96,5 @@ export function initSnow() {
 
 export function initEffects() {
     if (!isTouch) initParticles();
-    initSparkle();
     initSnow();
 }
