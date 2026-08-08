@@ -20,11 +20,8 @@ const isDecember = now.getMonth() === 11;
 </div>
 
 <script>
+    import { store } from '../lib/store.js';
     const banner = document.getElementById('cookie-banner');
-    const store = {
-        get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } },
-        set(key, val) { try { localStorage.setItem(key, val); } catch (e) {} },
-    };
     const consent = store.get('cookie-consent');
     if (!consent) {
         banner.style.display = 'block';

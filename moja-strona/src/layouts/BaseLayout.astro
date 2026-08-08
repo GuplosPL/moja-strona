@@ -44,7 +44,7 @@ const {
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <script is:inline>var t=null;try{t=localStorage.getItem('theme')}catch(e){};document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');</script>
+    <script is:inline>var t=null;try{t=localStorage.getItem('theme')}catch(e){};document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');var l=null;try{l=localStorage.getItem('lang')}catch(e){};if(l==='en'){document.documentElement.lang='en';document.documentElement.classList.add('lang-pending')}</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>

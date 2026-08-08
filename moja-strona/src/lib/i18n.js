@@ -24,7 +24,7 @@ export const translations = {
         'new-badge': 'Ostatnio przesłane',
         'contact-title': 'Kontakt',
         'contact-discord': 'Discord – Guplos PL',
-        'contact-email-copy': 'Skopiowano!',
+        'share-copied': 'Skopiowano link!',
         'footer-visits': 'odwiedzin',
         // cookie
         'cookie-text': 'Ta strona używa plików cookie i localStorage do zapamiętywania Twoich preferencji (motyw, język) oraz zliczania odwiedzin. Klikając „Akceptuję" zgadzasz się na ich użycie.',
@@ -36,7 +36,6 @@ export const translations = {
         'maintenance-status': 'Sprawdź status strony',
         'maintenance-eta': 'Przewidywany powrót',
         // status
-        'status-title': 'Status',
         'status-all-operational': 'Wszystkie systemy działają',
         'status-degraded': 'Częściowe problemy',
         'status-offline': 'Systemy niedostępne',
@@ -47,13 +46,11 @@ export const translations = {
         'status-site': 'Strona główna',
         'status-api': 'API',
         'status-counter': 'Licznik odwiedzin',
-        'status-discord': 'Discord',
         'status-maintenance': 'Przerwa techniczna',
         'status-online': 'Działa',
         'status-ms': 'ms',
         'status-uptime': 'Uptime',
         'status-avg-latency': 'Śr. odpowiedź',
-        'status-uptime-check': 'Sprawdź uptime',
         'status-no-history': 'Brak danych historycznych',
         'status-checks': 'kontroli',
         'status-error': 'Błąd sprawdzania',
@@ -89,7 +86,6 @@ export const translations = {
         'ig-b2': 'Szeroki wybór gier i DLC',
         'ig-b3': 'Wspierasz mnie zupełnie za darmo',
         'ig-cta': 'Sprawdź gry na Instant Gaming',
-        'ig-link': 'instant-gaming.com',
         // wumpus
         'wumpus-featured': 'Wyróżnione',
         'wumpus-badge': 'Serwer Discord',
@@ -109,12 +105,12 @@ export const translations = {
         'colors-title': 'Kolory Producentów',
         'colors-search': 'Szukaj koloru…',
         'colors-empty': 'Brak wyników',
+        'colors-error': 'Nie udało się wczytać kolorów',
         'colors-pick': 'Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory',
         // edytor
         'editor-title': 'Edytor Obrazów',
         'editor-upload': 'Wybierz zdjęcie lub przeciągnij je tutaj',
         'editor-browse': 'Przeglądaj',
-        'editor-drop': 'Przeciągnij i upuść zdjęcie',
         'editor-upload-hint': 'PNG, JPG lub WEBP',
         'editor-export': 'Pobierz',
         'editor-reset': 'Resetuj',
@@ -129,8 +125,6 @@ export const translations = {
         'editor-blur': 'Rozmycie',
         'editor-sepia': 'Sepia',
         'editor-sharpen': 'Ostrość',
-        'editor-zoom': 'Zoom',
-        'editor-flip': 'Odbicie lustrzane',
         'editor-flip-h': 'Poziomo',
         'editor-flip-v': 'Pionowo',
         'editor-crop': 'Kadruj',
@@ -138,7 +132,6 @@ export const translations = {
         'editor-crop-cancel': 'Anuluj',
         'editor-format': 'Format',
         'editor-quality': 'Jakość',
-        'editor-none': 'Brak',
     },
     en: {
         // shared nav
@@ -163,7 +156,7 @@ export const translations = {
         'new-badge': 'Recently uploaded',
         'contact-title': 'Contact',
         'contact-discord': 'Discord – Guplos PL',
-        'contact-email-copy': 'Copied!',
+        'share-copied': 'Link copied!',
         'footer-visits': 'visits',
         // cookie
         'cookie-text': 'This site uses cookies and localStorage to remember your preferences (theme, language) and to count visits. By clicking "Accept" you agree to their use.',
@@ -175,7 +168,6 @@ export const translations = {
         'maintenance-status': 'Check website status',
         'maintenance-eta': 'Estimated return',
         // status
-        'status-title': 'Status',
         'status-all-operational': 'All systems operational',
         'status-degraded': 'Partial issues',
         'status-offline': 'Systems unavailable',
@@ -186,13 +178,11 @@ export const translations = {
         'status-site': 'Website',
         'status-api': 'API',
         'status-counter': 'Visit counter',
-        'status-discord': 'Discord',
         'status-maintenance': 'Maintenance break',
         'status-online': 'Operational',
         'status-ms': 'ms',
         'status-uptime': 'Uptime',
         'status-avg-latency': 'Avg. latency',
-        'status-uptime-check': 'Check uptime',
         'status-no-history': 'No history data',
         'status-checks': 'checks',
         'status-error': 'Check error',
@@ -228,7 +218,6 @@ export const translations = {
         'ig-b2': 'Wide selection of games and DLC',
         'ig-b3': 'Support me completely free',
         'ig-cta': 'Check out games on Instant Gaming',
-        'ig-link': 'instant-gaming.com',
         // wumpus
         'wumpus-featured': 'Featured',
         'wumpus-badge': 'Discord Server',
@@ -248,12 +237,12 @@ export const translations = {
         'colors-title': 'Producer colors',
         'colors-search': 'Search color…',
         'colors-empty': 'No results',
+        'colors-error': 'Failed to load colors',
         'colors-pick': 'Choose a brand or type a color to see results',
         // edytor
         'editor-title': 'Image Editor',
         'editor-upload': 'Choose an image or drop it here',
         'editor-browse': 'Browse',
-        'editor-drop': 'Drop an image here',
         'editor-upload-hint': 'PNG, JPG or WEBP',
         'editor-export': 'Download',
         'editor-reset': 'Reset',
@@ -268,8 +257,6 @@ export const translations = {
         'editor-blur': 'Blur',
         'editor-sepia': 'Sepia',
         'editor-sharpen': 'Sharpen',
-        'editor-zoom': 'Zoom',
-        'editor-flip': 'Mirror',
         'editor-flip-h': 'Horizontal',
         'editor-flip-v': 'Vertical',
         'editor-crop': 'Crop',
@@ -277,7 +264,6 @@ export const translations = {
         'editor-crop-cancel': 'Cancel',
         'editor-format': 'Format',
         'editor-quality': 'Quality',
-        'editor-none': 'None',
     }
 };
 
@@ -289,6 +275,7 @@ export function setTypingActive(v) { typingActive = v; }
 
 export function applyLang() {
     document.documentElement.lang = currentLang;
+    document.documentElement.classList.remove('lang-pending');
     const label = currentLang === 'pl' ? 'EN' : 'PL';
     const langToggle = document.getElementById('lang-toggle');
     const langToggleMobile = document.getElementById('lang-toggle-mobile');

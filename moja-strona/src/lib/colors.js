@@ -1,4 +1,4 @@
-import { getLang } from './i18n.js';
+import { translations, getLang } from './i18n.js';
 
 export function initColors() {
     const grid = document.getElementById('colors-grid');
@@ -6,6 +6,7 @@ export function initColors() {
     const searchInput = document.getElementById('search-input');
     const emptyMsg = document.getElementById('empty-msg');
     if (!grid || !makesBar || !searchInput || !emptyMsg) return;
+    const T = () => translations[getLang()] || translations.pl;
 
     let allColors = [];
     let allMakes = {};
@@ -63,7 +64,7 @@ export function initColors() {
         pendingBatch = null;
         observer.unobserve(sentinel);
         if (!currentMake && !searchQuery) {
-            emptyMsg.textContent = getLang() === 'en' ? 'Choose a brand or type a color to see results' : 'Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory';
+            emptyMsg.textContent = T()['colors-pick'];
             emptyMsg.classList.remove('hidden');
             return;
         }
@@ -75,7 +76,7 @@ export function initColors() {
             list = list.filter(c => c.m === currentMake);
         }
         if (list.length === 0) {
-            emptyMsg.textContent = getLang() === 'en' ? 'No results' : 'Brak wyników';
+            emptyMsg.textContent = T()['colors-empty'];
             emptyMsg.classList.remove('hidden');
             return;
         }
@@ -120,7 +121,7 @@ export function initColors() {
             render();
         })
         .catch(() => {
-            emptyMsg.textContent = (getLang() === 'en' ? 'Failed to load colors' : 'Nie udało się wczytać kolorów');
+            emptyMsg.textContent = T()['colors-error'] || 'Nie udało się wczytać kolorów';
             emptyMsg.classList.remove('hidden');
         });
 
@@ -134,4 +135,6 @@ export function initColors() {
             render();
         }, 400);
     });
+
+    window.addEventListener('langchange', render);
 }

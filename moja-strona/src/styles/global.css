@@ -3,7 +3,6 @@
 :root {
     --bg: #000000;
     --bg-elev: #000000;
-    --overlay: rgba(0,0,0,0.85);
     --text: #e0e0e0;
     --text-bright: #ffffff;
     --muted: #888888;
@@ -17,7 +16,6 @@
 [data-theme="dark"] {
     --bg: #111214;
     --bg-elev: #111214;
-    --overlay: rgba(17,18,20,0.8);
     --text: #dbdee1;
     --text-bright: #ffffff;
     --muted: #949ba4;
@@ -31,7 +29,6 @@
 [data-theme="oled"] {
     --bg: #000000;
     --bg-elev: #000000;
-    --overlay: rgba(0,0,0,0.85);
     --text: #e0e0e0;
     --text-bright: #ffffff;
     --muted: #888888;
@@ -57,6 +54,7 @@
 
 .page-reveal { opacity: 0; transform: scale(0.97); animation: pageReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 @keyframes pageReveal { to { opacity: 1; transform: scale(1); } }
+html.lang-pending [data-i18n] { visibility: hidden; }
 .fade-in { opacity: 0; transform: translateY(30px) scale(0.95); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
 .fade-in.visible { opacity: 1; transform: translateY(0) scale(1); }
 #hero.fade-in { transform: none; }
@@ -72,7 +70,6 @@ html, body { overflow-x: hidden; }
 .faq-answer-inner { overflow: hidden; }
 .faq-icon { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
-.faq-q { color: var(--text-bright); }
 
 .activity-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 .activity-wrap.open { grid-template-rows: 1fr; }
@@ -82,9 +79,6 @@ html, body { overflow-x: hidden; }
 .make-tab:hover { background: var(--card-hover); color: var(--text-bright); }
 .make-tab.active { background: #5865F2; border-color: #5865F2; color: #fff; }
 .swatch { border: 1px solid rgba(255,255,255,0.14); }
-
-#chart::-webkit-scrollbar { display: none; }
-#chart { scrollbar-width: none; }
 
 @media (hover: none), (pointer: coarse) {
     .page-reveal, .fade-in { transition: opacity 0.5s ease-out, transform 0.5s ease-out !important; }

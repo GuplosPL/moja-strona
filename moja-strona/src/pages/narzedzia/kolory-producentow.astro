@@ -1,18 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-
-const navLinks = [
-    { href: '/', i18nKey: 'nav-home', label: 'Strona główna' },
-    { href: '/#gallery', i18nKey: 'nav-gallery', label: 'Galeria' },
-    { href: '/wspolprace', i18nKey: 'nav-collabs', label: 'Współprace' },
-    { href: '/faq', i18nKey: 'nav-faq', label: 'FAQ' },
-];
+import { navLinks } from '../../lib/nav-links.js';
 ---
 <BaseLayout
     title="Kolory Producentów – Guplos PL"
     description="Kolory Producentów – narzędzie z paletami kolorów marek."
     ogUrl="https://guplospl.com/narzedzia/kolory-producentow"
-    navLinks={navLinks}
+    navLinks={navLinks.tools}
     activeNav="tools"
 >
     <section class="flex-1 max-w-5xl mx-auto px-6 pt-28 pb-16 w-full">

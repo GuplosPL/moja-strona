@@ -4,7 +4,7 @@ import '../styles/global.css';
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <script is:inline>var t=null;try{t=localStorage.getItem('theme')}catch(e){};document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');</script>
+    <script is:inline>var t=null;try{t=localStorage.getItem('theme')}catch(e){};document.documentElement.setAttribute('data-theme',(t==='dark'||t==='oled')?t:'oled');var l=null;try{l=localStorage.getItem('lang')}catch(e){};if(l==='en'){document.documentElement.lang='en'}</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 – Guplos PL</title>
@@ -34,6 +34,7 @@ import '../styles/global.css';
     <a id="btn" href="/" class="btn">Wróć do strony głównej</a>
     <script is:inline>
         const lang = (function(){try{return localStorage.getItem('lang')}catch(e){return null}})() || (navigator.language.startsWith('pl') ? 'pl' : 'en');
+        document.documentElement.lang = lang;
         if (lang !== 'pl') {
             document.getElementById('msg').textContent = 'Page not found';
             document.getElementById('btn').textContent = 'Back to homepage';

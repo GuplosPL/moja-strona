@@ -1,12 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-
-const navLinks = [
-    { href: '/', i18nKey: 'nav-home', label: 'Strona główna' },
-    { href: '/#gallery', i18nKey: 'nav-gallery', label: 'Galeria' },
-    { href: '/wspolprace', i18nKey: 'nav-collabs', label: 'Współprace' },
-    { href: '/faq', i18nKey: 'nav-faq', label: 'FAQ' },
-];
+import { navLinks } from '../../lib/nav-links.js';
 
 const controls = [
     { id: 'editor-brightness', i18nKey: 'editor-brightness', label: 'Jasność', min: -100, max: 100, value: 0, tip: 'Rozjaśnia lub przyciemnia cały obraz' },
@@ -33,7 +27,7 @@ const presets = [
     title="Edytor Obrazów – Guplos PL"
     description="Edytor obrazów online z podstawowymi regulacjami."
     ogUrl="https://guplospl.com/narzedzia/edytor-obrazow"
-    navLinks={navLinks}
+    navLinks={navLinks.tools}
     activeNav="tools"
 >
     <section class="flex-1 w-full px-6 pt-28 pb-16">

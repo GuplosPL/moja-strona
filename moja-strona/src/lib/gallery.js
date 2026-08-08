@@ -58,7 +58,9 @@ export function initGallery() {
         const lbImg = document.getElementById('lightbox-img');
         const lb = document.getElementById('lightbox');
         const bg = document.getElementById('lightbox-bg');
+        const thumb = item.querySelector('img');
 
+        lbImg.alt = thumb ? thumb.alt : '';
         lbImg.src = src;
         lbImg.onload = function() {
             const final = getFinalRect();
@@ -194,7 +196,17 @@ export function initGallery() {
         }
     }
 
-    galleryItems.forEach(item => item.addEventListener('click', () => openLightbox(item)));
+    galleryItems.forEach(item => {
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        item.addEventListener('click', () => openLightbox(item));
+        item.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(item);
+            }
+        });
+    });
     document.getElementById('lightbox-bg').addEventListener('click', closeLightbox);
     document.querySelector('.close-btn').addEventListener('click', closeLightbox);
     document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); navigateLightbox(-1); });
