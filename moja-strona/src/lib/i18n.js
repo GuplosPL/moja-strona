@@ -59,6 +59,13 @@ export const translations = {
         'ig-b3': 'Wspierasz mnie zupełnie za darmo',
         'ig-cta': 'Sprawdź gry na Instant Gaming',
         'ig-link': 'instant-gaming.com',
+        // wumpus
+        'wumpus-badge': 'Serwer Discord',
+        'wumpus-title': 'Wumpus Central',
+        'wumpus-desc': 'Społeczność Discord poświęcona Wumpusowi — najsłodszemu maskotce Discorda. Dołącz, poznaj ludzi i wspieraj Wumpusa razem z nami!',
+        'wumpus-join': 'Dołącz do serwera',
+        'wumpus-github': 'GitHub',
+        'wumpus-x': 'X (Twitter)',
         // kolory
         'colors-title': 'Kolory Producentów',
         'colors-search': 'Szukaj koloru…',
@@ -152,6 +159,13 @@ export const translations = {
         'ig-b3': 'Support me completely free',
         'ig-cta': 'Check out games on Instant Gaming',
         'ig-link': 'instant-gaming.com',
+        // wumpus
+        'wumpus-badge': 'Discord Server',
+        'wumpus-title': 'Wumpus Central',
+        'wumpus-desc': 'A Discord community dedicated to Wumpus — Discord\u2019s cutest mascot. Join us, meet people and support Wumpus together!',
+        'wumpus-join': 'Join the server',
+        'wumpus-github': 'GitHub',
+        'wumpus-x': 'X (Twitter)',
         // kolory
         'colors-title': 'Producer colors',
         'colors-search': 'Search color…',
