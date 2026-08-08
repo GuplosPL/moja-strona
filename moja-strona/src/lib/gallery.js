@@ -97,18 +97,7 @@ export function initGallery() {
     function openLightbox(item) {
         currentIndex = galleryItems.indexOf(item);
         lastThumb = item;
-        const full = item.querySelector('img').dataset.full;
-        animateLightbox(item, full || item.querySelector('img').src);
-        preloadNearby();
-    }
-
-    function preloadNearby() {
-        if (!galleryItems.length) return;
-        [currentIndex - 1, currentIndex + 1].forEach(idx => {
-            const item = galleryItems[(idx + galleryItems.length) % galleryItems.length];
-            const full = item.querySelector('img').dataset.full;
-            if (full) { const img = new Image(); img.src = full; }
-        });
+        animateLightbox(item, item.querySelector('img').src);
     }
 
     function navigateLightbox(dir) {
@@ -132,9 +121,7 @@ export function initGallery() {
             const item = galleryItems[currentIndex];
             lastThumb = item;
 
-            const imgEl = item.querySelector('img');
-            const newSrc = imgEl.dataset.full || imgEl.src;
-            preloadNearby();
+            const newSrc = item.querySelector('img').src;
             const slideIn = () => {
                 lbImg.style.transition = 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
                 lbImg.style.transform = 'translateX(0) scale(1)';
