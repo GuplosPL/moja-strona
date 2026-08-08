@@ -48,6 +48,7 @@ export const translations = {
         'status-api': 'API',
         'status-counter': 'Licznik odwiedzin',
         'status-discord': 'Discord',
+        'status-maintenance': 'Przerwa techniczna',
         'status-online': 'Działa',
         'status-ms': 'ms',
         'status-uptime': 'Uptime',
@@ -186,6 +187,7 @@ export const translations = {
         'status-api': 'API',
         'status-counter': 'Visit counter',
         'status-discord': 'Discord',
+        'status-maintenance': 'Maintenance break',
         'status-online': 'Operational',
         'status-ms': 'ms',
         'status-uptime': 'Uptime',
@@ -310,6 +312,7 @@ export function applyLang() {
 export function toggleLang() {
     currentLang = currentLang === 'pl' ? 'en' : 'pl';
     applyLang();
+    window.dispatchEvent(new CustomEvent('langchange'));
 }
 
 export function initLang() {

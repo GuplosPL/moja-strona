@@ -1,4 +1,5 @@
 import { translations, getLang } from './i18n.js';
+import { MAINTENANCE, MAINTENANCE_ETA } from './maintenance.js';
 
 export function initStatus() {
     const colors = {
@@ -6,7 +7,6 @@ export function initStatus() {
         degraded: '#f0b232',
         offline: '#da373c',
     };
-    const DISCORD_ID = '751089335998218440';
     const T = () => translations[getLang()] || translations.pl;
 
     function setDot(id, status, pulse) {
@@ -52,13 +52,11 @@ export function initStatus() {
         let worst = 'online';
         if (document.getElementById('site-dot').style.background === colors.offline ||
             document.getElementById('api-dot').style.background === colors.offline ||
-            document.getElementById('counter-dot').style.background === colors.offline ||
-            document.getElementById('discord-dot').style.background === colors.offline) worst = 'offline';
+            document.getElementById('counter-dot').style.background === colors.offline) worst = 'offline';
         else if (last.site === 'degraded' ||
             document.getElementById('site-dot').style.background === colors.degraded ||
             document.getElementById('api-dot').style.background === colors.degraded ||
-            document.getElementById('counter-dot').style.background === colors.degraded ||
-            document.getElementById('discord-dot').style.background === colors.degraded) worst = 'degraded';
+            document.getElementById('counter-dot').style.background === colors.degraded) worst = 'degraded';
 
         const c = colors[worst];
         title.textContent = worst === 'online' ? T()['status-all-operational'] : worst === 'degraded' ? T()['status-degraded'] : T()['status-offline'];
@@ -121,53 +119,57 @@ export function initStatus() {
         });
     }
 
-    async function loadDiscord() {
-        try {
-            const res = await fetch('https://api.lanyard.rest/v1/users/' + DISCORD_ID, { cache: 'no-store' });
-            const data = await res.json();
-            if (!data.success) throw new Error('lanyard');
-            const st = data.data.discord_status || 'offline';
-            const status = st === 'online' || st === 'idle' || st === 'dnd' ? 'online' : 'offline';
-            const el = document.getElementById('discord-detail');
-            const map = { online: 'online', idle: 'idle', dnd: 'dnd', offline: 'offline' };
-            el.textContent = map[st] || '—';
-            setDot('discord-dot', status, true);
-            document.getElementById('discord-ms').textContent = '';
-        } catch (e) {
-            setDot('discord-dot', 'offline');
-            document.getElementById('discord-detail').textContent = '—';
+    function setMaintenance() {
+        const dot = document.getElementById('maintenance-dot');
+        const detail = document.getElementById('maintenance-detail');
+        const eta = document.getElementById('maintenance-eta');
+        if (MAINTENANCE) {
+            setDot('maintenance-dot', 'degraded', true);
+            detail.textContent = T()['maintenance-text'];
+            eta.textContent = T()['maintenance-eta'] + ' ' + MAINTENANCE_ETA;
+        } else {
+            dot.style.background = colors.online;
+            dot.style.boxShadow = '0 0 8px ' + colors.online;
+            detail.textContent = T()['status-all-operational'];
+            eta.textContent = '';
         }
     }
+
+    let lastData = null;
+    let lastHistory = null;
 
     async function loadStatus() {
         try {
             const res = await fetch('/api/status', { cache: 'no-store' });
             const data = await res.json();
-
-            const site = data.checks.site;
-            setDot('site-dot', site.status, true);
-            setMs('site-ms', site.responseTime);
-            document.getElementById('site-detail').textContent =
-                (site.status === 'online' ? T()['status-online'] : site.status) + (site.httpCode ? ' · HTTP ' + site.httpCode : '');
-
-            const api = data.checks.api;
-            setDot('api-dot', api.status, true);
-            setMs('api-ms', api.responseTime);
-            document.getElementById('api-detail').textContent =
-                (api.status === 'online' ? T()['status-online'] : api.status);
-
-            const counter = data.checks.counter;
-            setDot('counter-dot', counter.status, true);
-            document.getElementById('counter-num').textContent = counter.count !== null ? counter.count : '—';
-            document.getElementById('counter-detail').textContent =
-                (counter.status === 'online' ? T()['status-online'] : counter.status);
-
-            document.getElementById('last-check').textContent =
-                T()['status-last-check'] + ': ' + new Date(data.timestamp).toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'pl-PL');
+            lastData = data;
+            renderStatus(data);
         } catch (e) {
             document.getElementById('last-check').textContent = T()['status-error'];
         }
-        loadDiscord();
+    }
+
+    function renderStatus(data) {
+        const site = data.checks.site;
+        setDot('site-dot', site.status, true);
+        setMs('site-ms', site.responseTime);
+        document.getElementById('site-detail').textContent =
+            (site.status === 'online' ? T()['status-online'] : site.status) + (site.httpCode ? ' · HTTP ' + site.httpCode : '');
+
+        const api = data.checks.api;
+        setDot('api-dot', api.status, true);
+        setMs('api-ms', api.responseTime);
+        document.getElementById('api-detail').textContent =
+            (api.status === 'online' ? T()['status-online'] : api.status);
+
+        const counter = data.checks.counter;
+        setDot('counter-dot', counter.status, true);
+        document.getElementById('counter-num').textContent = counter.count !== null ? counter.count : '—';
+        document.getElementById('counter-detail').textContent =
+            (counter.status === 'online' ? T()['status-online'] : counter.status);
+
+        document.getElementById('last-check').textContent =
+            T()['status-last-check'] + ': ' + new Date(data.timestamp).toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'pl-PL');
     }
 
     let historyLoaded = false;
@@ -178,17 +180,28 @@ export function initStatus() {
             const res = await fetch('/api/status?history=1', { cache: 'no-store' });
             const data = await res.json();
             if (data.history) {
-                drawChart(data.history);
-                const online = data.history.filter(e => e.site === 'online').length;
-                const pct = Math.round(online / data.history.length * 100);
-                document.getElementById('overall-uptime').textContent = pct + '%';
-                document.getElementById('overall-uptime').style.color = colors.online;
-                const avg = Math.round(data.history.filter(e => e.ms).reduce((s, e) => s + e.ms, 0) / Math.max(1, data.history.filter(e => e.ms).length));
-                document.getElementById('avg-ms').textContent = avg + ' ' + T()['status-ms'];
-                document.getElementById('checks-count').textContent = data.history.length;
-                overall(data.history);
+                lastHistory = data.history;
+                renderHistory(data.history);
             }
         } catch (e) {}
+    }
+
+    function renderHistory(history) {
+        drawChart(history);
+        const online = history.filter(e => e.site === 'online').length;
+        const pct = Math.round(online / history.length * 100);
+        document.getElementById('overall-uptime').textContent = pct + '%';
+        document.getElementById('overall-uptime').style.color = colors.online;
+        const avg = Math.round(history.filter(e => e.ms).reduce((s, e) => s + e.ms, 0) / Math.max(1, history.filter(e => e.ms).length));
+        document.getElementById('avg-ms').textContent = avg + ' ' + T()['status-ms'];
+        document.getElementById('checks-count').textContent = history.length;
+        overall(history);
+    }
+
+    function rerenderLang() {
+        setMaintenance();
+        if (lastData) renderStatus(lastData);
+        if (lastHistory) renderHistory(lastHistory);
     }
 
     document.getElementById('refresh-btn').addEventListener('click', () => {
@@ -197,8 +210,11 @@ export function initStatus() {
         loadHistory();
     });
 
+    window.addEventListener('langchange', rerenderLang);
+
     loadStatus();
     loadHistory();
+    setMaintenance();
     setInterval(loadStatus, 60000);
     document.getElementById('year').textContent = new Date().getFullYear();
 }

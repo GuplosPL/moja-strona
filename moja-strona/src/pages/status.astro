@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { MAINTENANCE, MAINTENANCE_ETA } from '../lib/maintenance.js';
 ---
 <!DOCTYPE html>
 <html lang="pl">
@@ -38,8 +39,8 @@ import '../styles/global.css';
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <div class="min-w-0">
-                <h1 id="overall-title" class="text-xl font-bold tracking-tight" style="color: var(--text-bright);" data-i18n="status-checking">Sprawdzanie…</h1>
-                <p id="overall-sub" class="text-sm mt-0.5" style="color: var(--muted);" data-i18n="status-checking">Sprawdzanie…</p>
+                <h1 id="overall-title" class="text-xl font-bold tracking-tight" style="color: var(--text-bright);">Sprawdzanie…</h1>
+                <p id="overall-sub" class="text-sm mt-0.5" style="color: var(--muted);">Sprawdzanie…</p>
             </div>
             <span id="overall-uptime" class="ml-auto text-2xl font-extrabold tabular-nums" style="color: var(--muted);">—</span>
         </div>
@@ -89,16 +90,16 @@ import '../styles/global.css';
             </div>
 
             <div class="rounded-2xl border p-5 flex items-center gap-4" style="background: var(--card); border-color: var(--card-border);">
-                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-none" style="background: #5865F2/15;">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#5865F2" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 8v8a2 2 0 002 2h12a2 2 0 002-2V8M4 8V6a2 2 0 012-2h12a2 2 0 012 2v2"/></svg>
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-none" style="background: #f0b232/15;">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#f0b232" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
                 </div>
                 <div class="min-w-0 flex-1">
-                    <p class="font-semibold text-sm" style="color: var(--text-bright);" data-i18n="status-discord">Discord</p>
-                    <p id="discord-detail" class="text-xs mt-0.5 truncate" style="color: var(--muted);">—</p>
+                    <p class="font-semibold text-sm" style="color: var(--text-bright);" data-i18n="status-maintenance">Przerwa techniczna</p>
+                    <p id="maintenance-detail" class="text-xs mt-0.5 truncate" style="color: var(--muted);">—</p>
                 </div>
                 <div class="flex flex-col items-end gap-1">
-                    <span id="discord-ms" class="text-sm font-semibold tabular-nums" style="color: var(--muted);">—</span>
-                    <span id="discord-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
+                    <span id="maintenance-eta" class="text-sm font-semibold tabular-nums" style="color: var(--muted);">{MAINTENANCE ? (MAINTENANCE_ETA || '') : ''}</span>
+                    <span id="maintenance-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
                 </div>
             </div>
         </div>
