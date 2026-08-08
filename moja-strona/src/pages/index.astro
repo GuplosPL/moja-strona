@@ -10,15 +10,15 @@ const navLinks = [
 ];
 
 const gallery = [
-    { src: '/zdjecia/9.png', alt: 'zdjecie 9', isNew: true },
-    { src: '/zdjecia/1.png', alt: 'zdjecie 1' },
-    { src: '/zdjecia/2.png', alt: 'zdjecie 2' },
-    { src: '/zdjecia/3.png', alt: 'zdjecie 3' },
-    { src: '/zdjecia/4.png', alt: 'zdjecie 4' },
-    { src: '/zdjecia/5.png', alt: 'zdjecie 5' },
-    { src: '/zdjecia/6.png', alt: 'zdjecie 6' },
-    { src: '/zdjecia/7.png', alt: 'zdjecie 7' },
-    { src: '/zdjecia/8.png', alt: 'zdjecie 8' },
+    { src: '/zdjecia/9.webp', alt: 'zdjecie 9', isNew: true },
+    { src: '/zdjecia/1.webp', alt: 'zdjecie 1' },
+    { src: '/zdjecia/2.webp', alt: 'zdjecie 2' },
+    { src: '/zdjecia/3.webp', alt: 'zdjecie 3' },
+    { src: '/zdjecia/4.webp', alt: 'zdjecie 4' },
+    { src: '/zdjecia/5.webp', alt: 'zdjecie 5' },
+    { src: '/zdjecia/6.webp', alt: 'zdjecie 6' },
+    { src: '/zdjecia/7.webp', alt: 'zdjecie 7' },
+    { src: '/zdjecia/8.webp', alt: 'zdjecie 8' },
 ];
 ---
 <BaseLayout
@@ -108,7 +108,7 @@ const gallery = [
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             {gallery.map(item => (
                 <div class="overflow-hidden rounded-xl cursor-pointer relative group gallery-item ring-1" style="--tw-ring-color: var(--card-border); aspect-ratio: 21/9;" {...(item.isNew ? { 'data-new': '' } : {})}>
-                    <img src={item.src} alt={item.alt} class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
+                    <img src={item.src} alt={item.alt} loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-105">
                     {item.isNew && <span class="absolute top-2 left-2 px-2.5 py-1 rounded-full bg-[#5865F2]/90 text-white text-[11px] font-semibold" data-i18n="new-badge">Ostatnio przesłane</span>}
                     <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>

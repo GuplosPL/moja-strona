@@ -64,9 +64,11 @@
 nav a.active { color: var(--text-bright) !important; }
 html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
 html, body { -ms-overflow-style: none; scrollbar-width: none; }
+html, body { overflow-x: hidden; }
 
 .faq-answer { color: var(--muted); display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
 .faq-item.open .faq-answer { grid-template-rows: 1fr; }
+.mobile-menu-wrap.open { grid-template-rows: 1fr; }
 .faq-answer-inner { overflow: hidden; }
 .faq-icon { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
@@ -85,8 +87,7 @@ html, body { -ms-overflow-style: none; scrollbar-width: none; }
 #chart { scrollbar-width: none; }
 
 @media (hover: none), (pointer: coarse) {
-    .blur-\[120px\] { display: none; }
-    .blur-\[100px\] { display: none; }
+    .blur-\[120px\], .blur-\[110px\], .blur-\[100px\] { display: none; }
     nav { backdrop-filter: none !important; background: var(--bg-elev) !important; }
     .page-reveal, .fade-in { filter: none !important; transition: opacity 0.5s ease-out, transform 0.5s ease-out !important; }
 }

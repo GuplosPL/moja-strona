@@ -13,13 +13,17 @@ export function initNav() {
     const mobileMenu = document.querySelector('.mobile-menu-wrap');
     if (menuBtn && mobileMenu) {
         menuBtn.addEventListener('click', () => {
-            const open = mobileMenu.classList.contains('grid-rows-[1fr]');
-            mobileMenu.classList.toggle('grid-rows-[1fr]', !open);
+            const open = mobileMenu.classList.contains('open');
+            mobileMenu.classList.toggle('open', !open);
             menuBtn.classList.toggle('active', !open);
         });
         mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-            mobileMenu.classList.remove('grid-rows-[1fr]');
+            mobileMenu.classList.remove('open');
             menuBtn.classList.remove('active');
         }));
+        mobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            menuBtn.classList.remove('active');
+        });
     }
 }
