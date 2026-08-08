@@ -11,6 +11,7 @@ interface Props {
     ogTitle?: string;
     ogDescription?: string;
     ogUrl?: string;
+    canonicalUrl?: string;
     navLinks?: NavLink[];
     logoHref?: string;
     logoTarget?: string;
@@ -26,6 +27,7 @@ const {
     ogTitle = title,
     ogDescription = description,
     ogUrl = 'https://guplospl.com',
+    canonicalUrl = ogUrl,
     navLinks = [],
     logoHref = '/',
     logoTarget = '_self',
@@ -43,6 +45,28 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
     <meta name="description" content={description}>
+    <link rel="canonical" href={canonicalUrl}>
+    <script type="application/ld+json" is:inline>
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Guplos PL",
+        "url": "https://guplospl.com",
+        "description": "Portfolio Guplos PL – virtual photographer, cinematographer & editor.",
+        "author": {
+            "@type": "Person",
+            "name": "Guplos PL",
+            "url": "https://guplospl.com",
+            "sameAs": [
+                "https://www.instagram.com/guplos_pl/",
+                "https://www.tiktok.com/@guplospl",
+                "https://open.spotify.com/user/pkpmztdpnxtrt75rgf7xj4dit",
+                "https://steamcommunity.com/id/guplospl/",
+                "https://discord.com/users/751089335998218440"
+            ]
+        }
+    }
+    </script>
     <meta property="og:title" content={ogTitle}>
     <meta property="og:description" content={ogDescription}>
     <meta property="og:type" content="website">
