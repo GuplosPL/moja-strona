@@ -68,6 +68,13 @@ export const translations = {
         'wumpus-join': 'Dołącz do serwera',
         'wumpus-github': 'GitHub',
         'wumpus-x': 'X (Twitter)',
+        // vertex
+        'vertex-featured': 'Wyróżnione',
+        'vertex-badge': 'Serwer Discord',
+        'vertex-title': 'VERTEX',
+        'vertex-desc': 'Opis wkrótce...',
+        'vertex-discord': 'Dołącz do serwera',
+        'vertex-tiktok': 'TikTok',
         // kolory
         'colors-title': 'Kolory Producentów',
         'colors-search': 'Szukaj koloru…',
@@ -170,6 +177,13 @@ export const translations = {
         'wumpus-join': 'Join the server',
         'wumpus-github': 'GitHub',
         'wumpus-x': 'X (Twitter)',
+        // vertex
+        'vertex-featured': 'Featured',
+        'vertex-badge': 'Discord Server',
+        'vertex-title': 'VERTEX',
+        'vertex-desc': 'Description coming soon...',
+        'vertex-discord': 'Join the server',
+        'vertex-tiktok': 'TikTok',
         // kolory
         'colors-title': 'Producer colors',
         'colors-search': 'Search color…',
