@@ -181,7 +181,7 @@ export const translations = {
         'vertex-featured': 'Featured',
         'vertex-badge': 'Discord Server',
         'vertex-title': 'VERTEX',
-        'vertex-desc': 'Description coming soon...',
+        'vertex-desc': 'Vertex is a community created by Hydra for enthusiasts of virtual motorsports, editors, photographers and video creators. The server was built around mutual inspiration, developing skills and networking in a supportive environment far from the soulless crowd.',
         'vertex-discord': 'Join the server',
         'vertex-tiktok': 'TikTok',
         // kolory
