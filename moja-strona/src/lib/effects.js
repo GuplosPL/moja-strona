@@ -9,17 +9,26 @@ export function initParticles() {
     try {
         const color = particleColor();
         window.tsParticles.load('particles-js', {
-            fpsLimit: 60,
+            fpsLimit: 30,
             particles: {
-                number: { value: 70, density: { enable: true } },
+                number: { value: 35, density: { enable: true } },
                 color: { value: color },
-                opacity: { value: 0.3, random: true },
+                opacity: { value: 0.25, random: true },
                 size: { value: 2, random: true },
-                move: { enable: true, speed: 0.5, direction: 'none', random: true },
-                links: { enable: true, distance: 140, color: color, opacity: 0.1, width: 1 },
+                move: { enable: true, speed: 0.4, direction: 'none', random: true },
+                links: { enable: true, distance: 160, color: color, opacity: 0.08, width: 1 },
             },
-            interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.15 } } } },
+            interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.12 } } } },
             background: { color: 'transparent' },
+        });
+        window.tsParticles.pause('particles-js');
+        document.addEventListener('visibilitychange', () => {
+            if (typeof window.tsParticles === 'undefined') return;
+            if (document.hidden) {
+                window.tsParticles.pause('particles-js');
+            } else {
+                window.tsParticles.play('particles-js');
+            }
         });
     } catch (e) {}
 }

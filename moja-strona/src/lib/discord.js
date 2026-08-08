@@ -112,6 +112,29 @@ function fetchPresence() {
 }
 
 export function initDiscord() {
+    let timer = null;
+
+    function start() {
+        if (timer) return;
+        timer = setInterval(fetchPresence, 30000);
+    }
+
+    function stop() {
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            stop();
+        } else {
+            fetchPresence();
+            start();
+        }
+    });
+
     fetchPresence();
-    setInterval(fetchPresence, 10000);
+    start();
 }

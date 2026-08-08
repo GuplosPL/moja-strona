@@ -6,15 +6,20 @@ export function initCounter() {
     const visited = store.get('visited');
     const action = visited ? '' : '?action=increment';
 
-    async function getProof() {
-        const ts = Date.now();
-        for (let nonce = 0; nonce < 500000; nonce++) {
-            const data = new TextEncoder().encode(`${ts}:${nonce}`);
-            const hash = await crypto.subtle.digest('SHA-256', data);
-            const hex = [...new Uint8Array(hash)].map(b => b.toString(16).padStart(2, '0')).join('');
-            if (hex.startsWith('000')) return `${ts}:${nonce}`;
-        }
-        return '';
+    function getProof() {
+        return new Promise(resolve => {
+            const ts = Date.now();
+            const worker = new Worker(new URL('./proof.worker.js', import.meta.url), { type: 'module' });
+            worker.onmessage = e => {
+                worker.terminate();
+                resolve(e.data);
+            };
+            worker.onerror = () => {
+                worker.terminate();
+                resolve('');
+            };
+            worker.postMessage(ts);
+        });
     }
 
     async function loadCount() {

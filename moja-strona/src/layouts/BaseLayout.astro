@@ -104,11 +104,11 @@ const {
 
     <script is:inline src="/tsparticles.bundle.min.js"></script>
     <script>
-        import { initTheme, setOnThemeChange } from '../lib/theme.js';
+        import { initTheme } from '../lib/theme.js';
         import { initNav } from '../lib/nav.js';
         import { initLang } from '../lib/i18n.js';
         import { initProgressBar, initReveal } from '../lib/scroll.js';
-        import { initEffects, initParticles } from '../lib/effects.js';
+        import { initEffects } from '../lib/effects.js';
 
         initTheme();
         initNav();
@@ -116,7 +116,6 @@ const {
         initProgressBar();
         initReveal({ hero: document.body.dataset.revealHero === 'true' });
         initEffects();
-        setOnThemeChange(() => { if (!window.matchMedia('(hover: none), (pointer: coarse)').matches) initParticles(); });
         const yearEl = document.getElementById('year');
         if (yearEl) yearEl.textContent = new Date().getFullYear();
     </script>
