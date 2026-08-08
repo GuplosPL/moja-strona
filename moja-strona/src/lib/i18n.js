@@ -315,9 +315,8 @@ export function toggleLang() {
 export function initLang() {
     const langToggle = document.getElementById('lang-toggle');
     const langToggleMobile = document.getElementById('lang-toggle-mobile');
-    const maintenanceLang = document.getElementById('maintenance-lang');
     if (langToggle) langToggle.addEventListener('click', toggleLang);
     if (langToggleMobile) langToggleMobile.addEventListener('click', toggleLang);
-    if (maintenanceLang) maintenanceLang.addEventListener('click', toggleLang);
+    window.__toggleLang = toggleLang;
     applyLang();
 }

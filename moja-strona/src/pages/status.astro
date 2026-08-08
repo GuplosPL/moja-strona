@@ -27,7 +27,10 @@ import '../styles/global.css';
     <div class="fixed inset-0 z-0 pointer-events-none" style="background: radial-gradient(1000px 650px at 100% -10%, rgba(88,101,242,0.14), transparent 60%), radial-gradient(900px 600px at -10% 110%, rgba(88,101,242,0.08), transparent 60%);"></div>
 
     <div class="relative z-10 w-full max-w-2xl">
-        <a href="/" class="inline-block mb-8 font-extrabold text-lg tracking-tight no-underline" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
+        <div class="flex items-center justify-between mb-8">
+            <a href="/" class="inline-block font-extrabold text-lg tracking-tight no-underline" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
+            <button id="lang-toggle" class="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold border transition-all cursor-pointer" style="color: var(--text-bright); background: var(--card); border-color: var(--card-border);">EN</button>
+        </div>
 
         <!-- Ogólny status -->
         <div id="overall-card" class="rounded-2xl border p-6 mb-4 flex items-center gap-4 transition-colors" style="background: var(--card); border-color: var(--card-border);">
