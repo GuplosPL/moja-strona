@@ -62,7 +62,7 @@ export const translations = {
         // wumpus
         'wumpus-badge': 'Serwer Discord',
         'wumpus-title': 'Wumpus Central',
-        'wumpus-desc': 'Społeczność Discord poświęcona Wumpusowi — najsłodszemu maskotce Discorda. Dołącz, poznaj ludzi i wspieraj Wumpusa razem z nami!',
+        'wumpus-desc': 'Fanowskie źródło danych, przecieków, trackerów i wiadomości o platformie Discord stworzonej przez Discord Inc. – nie jesteśmy jednak w żaden sposób powiązani z Discord Inc. Celem serwera jest dystrybucja treści na Discordzie i rozwijanie zainteresowania Discordem wśród jego użytkowników. Staramy się nie być źródłem udostępnianych treści, ale społecznością stworzoną dla użytkowników potrzebujących pomocy z Discordem i odpowiednim miejscem dla osób, do których kierujemy nasze działania.',
         'wumpus-join': 'Dołącz do serwera',
         'wumpus-github': 'GitHub',
         'wumpus-x': 'X (Twitter)',
@@ -162,7 +162,7 @@ export const translations = {
         // wumpus
         'wumpus-badge': 'Discord Server',
         'wumpus-title': 'Wumpus Central',
-        'wumpus-desc': 'A Discord community dedicated to Wumpus — Discord\u2019s cutest mascot. Join us, meet people and support Wumpus together!',
+        'wumpus-desc': 'A fan-made source of data, leaks, trackers and news about the Discord platform created by Discord Inc. – however, we are in no way affiliated with Discord Inc. The purpose of this server is to distribute content on Discord and grow interest in Discord among its users. We strive not to be a source of the shared content, but a community created for users who need help with Discord and the right place for the people we target our activities at.',
         'wumpus-join': 'Join the server',
         'wumpus-github': 'GitHub',
         'wumpus-x': 'X (Twitter)',
