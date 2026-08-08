@@ -24,6 +24,13 @@ export function initGallery() {
         const lbImg = document.getElementById('lightbox-img');
         const wm = document.getElementById('lb-watermark');
         if (lbImg.naturalWidth === 0) return;
+        const final = getFinalRect();
+        wm.style.left = (final.left + 20) + 'px';
+        wm.style.top = (final.top + final.h - 38) + 'px';
+    }
+
+    function getFinalRect() {
+        const lbImg = document.getElementById('lightbox-img');
         const aspectRatio = lbImg.naturalWidth / lbImg.naturalHeight;
         const maxW = window.innerWidth * 0.9;
         const maxH = window.innerHeight * 0.9;
@@ -35,14 +42,14 @@ export function initGallery() {
             finalH = maxH;
             finalW = maxH * aspectRatio;
         }
-        const finalLeft = (window.innerWidth - finalW) / 2;
-        const finalTop = (window.innerHeight - finalH) / 2;
-        wm.style.left = (finalLeft + 20) + 'px';
-        wm.style.top = (finalTop + finalH - 38) + 'px';
+        return {
+            w: finalW, h: finalH,
+            left: (window.innerWidth - finalW) / 2,
+            top: (window.innerHeight - finalH) / 2,
+        };
     }
 
     function animateLightbox(item, src) {
-        const thumb = item.querySelector('img');
         const rect = item.getBoundingClientRect();
         const lbImg = document.getElementById('lightbox-img');
         const lb = document.getElementById('lightbox');
@@ -50,68 +57,71 @@ export function initGallery() {
 
         lbImg.src = src;
         lbImg.onload = function() {
-            const aspectRatio = lbImg.naturalWidth / lbImg.naturalHeight;
-            const maxW = window.innerWidth * 0.9;
-            const maxH = window.innerHeight * 0.9;
-            let finalW, finalH;
-            if (aspectRatio > maxW / maxH) {
-                finalW = maxW;
-                finalH = maxW / aspectRatio;
-            } else {
-                finalH = maxH;
-                finalW = maxH * aspectRatio;
-            }
-            const finalLeft = (window.innerWidth - finalW) / 2;
-            const finalTop = (window.innerHeight - finalH) / 2;
-
-            Object.assign(lbImg.style, {
-                top: rect.top + 'px',
-                left: rect.left + 'px',
-                width: rect.width + 'px',
-                height: rect.height + 'px',
-                transform: 'none', objectFit: 'cover',
-                borderRadius: '12px', maxWidth: 'none', maxHeight: 'none',
-                opacity: '1', visibility: 'visible',
-            });
-
+            const final = getFinalRect();
+            lbImg.style.width = final.w + 'px';
+            lbImg.style.height = final.h + 'px';
+            lbImg.style.left = final.left + 'px';
+            lbImg.style.top = final.top + 'px';
+            lbImg.style.maxWidth = 'none';
+            lbImg.style.maxHeight = 'none';
+            lbImg.style.objectFit = 'contain';
+            lbImg.style.borderRadius = '16px';
+            lbImg.style.transformOrigin = '0 0';
+            lbImg.style.willChange = 'transform, opacity';
+            lbImg.style.transition = 'none';
+            lbImg.style.transform = `translate(${rect.left - final.left}px, ${rect.top - final.top}px) scale(${rect.width / final.w}, ${rect.height / final.h})`;
+            lbImg.style.opacity = '1';
+            lbImg.style.visibility = 'visible';
             lb.classList.remove('pointer-events-none');
             bg.classList.remove('opacity-0');
             document.querySelector('.close-btn').style.opacity = '1';
             document.getElementById('lb-prev').style.opacity = '1';
             document.getElementById('lb-next').style.opacity = '1';
+
             lbImg.offsetHeight;
 
-            Object.assign(lbImg.style, {
-                top: finalTop + 'px', left: finalLeft + 'px',
-                width: finalW + 'px', height: finalH + 'px',
-                objectFit: 'contain', borderRadius: '16px',
-            });
+            lbImg.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            lbImg.style.transform = 'translate(0, 0) scale(1, 1)';
 
             const wm = document.getElementById('lb-watermark');
-            wm.style.transform = 'none';
-            positionWatermark();
+            wm.style.transform = 'translate(0, 0) scale(1, 1)';
+            wm.style.transformOrigin = '0 0';
             wm.style.opacity = '0.7';
+            positionWatermark();
         };
+    }
+
+    function preloadNearby() {
+        if (!galleryItems.length) return;
+        [currentIndex - 1, currentIndex + 1].forEach(idx => {
+            const item = galleryItems[(idx + galleryItems.length) % galleryItems.length];
+            const src = item.querySelector('img').src;
+            const img = new Image();
+            img.decode = img.decode || null;
+            if (img.decode) { img.src = src; img.decode().catch(() => {}); }
+            else { img.src = src; }
+        });
     }
 
     function openLightbox(item) {
         currentIndex = galleryItems.indexOf(item);
         lastThumb = item;
         animateLightbox(item, item.querySelector('img').src);
+        preloadNearby();
     }
 
     function navigateLightbox(dir) {
         const lbImg = document.getElementById('lightbox-img');
         const wm = document.getElementById('lb-watermark');
-        const slideOut = dir > 0 ? '80px' : '-80px';
+        const slideOut = dir > 0 ? '60px' : '-60px';
 
         if (navTimeout) clearTimeout(navTimeout);
 
-        lbImg.style.transition = 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
-        lbImg.style.transform = `translateX(${slideOut}) scale(0.92)`;
-        lbImg.style.filter = 'blur(6px)';
+        lbImg.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease';
+        lbImg.style.transform = `translateX(${slideOut})`;
         lbImg.style.opacity = '0';
-        wm.style.transform = `translateX(${slideOut}) scale(0.92)`;
+        wm.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease';
+        wm.style.transform = `translateX(${slideOut})`;
         wm.style.opacity = '0';
 
         navTimeout = setTimeout(() => {
@@ -123,16 +133,17 @@ export function initGallery() {
 
             const newSrc = item.querySelector('img').src;
             const slideIn = () => {
-                lbImg.style.transition = 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
-                lbImg.style.transform = 'translateX(0) scale(1)';
-                lbImg.style.filter = 'blur(0px)';
+                lbImg.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease';
+                lbImg.style.transform = 'translateX(0)';
                 lbImg.style.opacity = '1';
-                wm.style.transform = 'translateX(0) scale(1)';
+                wm.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease';
+                wm.style.transform = 'translateX(0)';
                 wm.style.opacity = '0.7';
                 positionWatermark();
             };
 
             lbImg.src = newSrc;
+            preloadNearby();
             if (lbImg.complete) {
                 slideIn();
             } else {
@@ -157,24 +168,24 @@ export function initGallery() {
 
         if (lastThumb) {
             const rect = lastThumb.getBoundingClientRect();
-            Object.assign(lbImg.style, {
-                top: rect.top + 'px', left: rect.left + 'px',
-                width: rect.width + 'px', height: rect.height + 'px',
-                objectFit: 'cover', borderRadius: '12px', opacity: '0',
-            });
+            const final = getFinalRect();
+            lbImg.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease';
+            lbImg.style.transform = `translate(${rect.left - final.left}px, ${rect.top - final.top}px) scale(${rect.width / final.w}, ${rect.height / final.h})`;
+            lbImg.style.opacity = '0';
             const wm = document.getElementById('lb-watermark');
-            wm.style.left = (rect.left + 20) + 'px';
-            wm.style.top = (rect.top + rect.height - 38) + 'px';
             setTimeout(() => { wm.style.opacity = '0'; }, 250);
             setTimeout(() => {
                 lb.classList.add('pointer-events-none');
                 lbImg.style.visibility = 'hidden';
+                lbImg.style.willChange = 'auto';
             }, 400);
         } else {
+            lbImg.style.transition = 'opacity 0.3s ease';
             lbImg.style.opacity = '0';
             setTimeout(() => {
                 lb.classList.add('pointer-events-none');
                 lbImg.style.visibility = 'hidden';
+                lbImg.style.willChange = 'auto';
             }, 300);
         }
     }
