@@ -72,7 +72,7 @@ export const translations = {
         'vertex-featured': 'Wyróżnione',
         'vertex-badge': 'Serwer Discord',
         'vertex-title': 'VERTEX',
-        'vertex-desc': 'Opis wkrótce...',
+        'vertex-desc': 'Vertex to tworzona przez Hydrę społeczność dla pasjonatów wirtualnej motoryzacji, montażystów, fotografów i twórców wideo. Serwer powstał z myślą o wzajemnej inspiracji, rozwijaniu umiejętności oraz nawiązywaniu współpracy w niesprzyjającym bezdusznej masówce, wspierającym środowisku.',
         'vertex-discord': 'Dołącz do serwera',
         'vertex-tiktok': 'TikTok',
         // kolory
