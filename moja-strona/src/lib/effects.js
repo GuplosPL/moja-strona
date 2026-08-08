@@ -95,6 +95,7 @@ export function initSnow() {
 }
 
 export function initEffects() {
-    if (!isTouch) initParticles();
+    const el = document.getElementById('particles-js');
+    if (!isTouch && el && el.dataset.enabled === 'true') initParticles();
     initSnow();
 }

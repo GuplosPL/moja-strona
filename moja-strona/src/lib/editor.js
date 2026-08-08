@@ -140,13 +140,17 @@ export function initEditor() {
     let currentSrc = null;
     let currentFileName = 'edytor-obrazow.png';
     let cropRegion = null;
+    let renderQueued = false;
+
+    const MAX_DIM = 2048;
 
     function loadFromSrc(src) {
         currentSrc = src;
         originalImg.onload = () => {
             cropRegion = null;
-            canvas.width = originalImg.naturalWidth;
-            canvas.height = originalImg.naturalHeight;
+            const scale = Math.min(1, MAX_DIM / Math.max(originalImg.naturalWidth, originalImg.naturalHeight));
+            canvas.width = Math.max(1, Math.round(originalImg.naturalWidth * scale));
+            canvas.height = Math.max(1, Math.round(originalImg.naturalHeight * scale));
             canvas.style.width = '100%';
             canvas.style.height = 'auto';
             render();
@@ -205,6 +209,15 @@ export function initEditor() {
         }
     }
 
+    function scheduleRender() {
+        if (renderQueued) return;
+        renderQueued = true;
+        requestAnimationFrame(() => {
+            renderQueued = false;
+            render();
+        });
+    }
+
     function updateSlider(id, key, onChange) {
         const el = document.getElementById(id);
         el.addEventListener('input', () => {
@@ -212,7 +225,7 @@ export function initEditor() {
             const valEl = document.getElementById(id + '-value');
             if (valEl) valEl.textContent = el.value;
             if (onChange) onChange();
-            else if (currentSrc) render();
+            else if (currentSrc) scheduleRender();
         });
     }
 
@@ -267,7 +280,11 @@ export function initEditor() {
             const cctx = canvas.getContext('2d');
             cctx.clearRect(0, 0, canvas.width, canvas.height);
             cctx.filter = 'none';
-            cctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
+            const sx = cropRegion ? cropRegion.x : 0;
+            const sy = cropRegion ? cropRegion.y : 0;
+            const sw = cropRegion ? cropRegion.w : originalImg.naturalWidth;
+            const sh = cropRegion ? cropRegion.h : originalImg.naturalHeight;
+            cctx.drawImage(originalImg, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
         });
         beforeBtn.addEventListener('pointerup', () => {
             if (!currentSrc) return;
@@ -303,8 +320,8 @@ export function initEditor() {
                 h: bx.height * sy,
             };
             cropOverlay.classList.add('hidden');
-            canvas.width = Math.round(cropRegion.w);
-            canvas.height = Math.round(cropRegion.h);
+            canvas.width = Math.round(cropRegion.w * (canvas.width / originalImg.naturalWidth));
+            canvas.height = Math.round(cropRegion.h * (canvas.height / originalImg.naturalHeight));
             canvas.style.width = '100%';
             canvas.style.height = 'auto';
             render();

@@ -213,6 +213,9 @@ export function initStatus() {
     loadStatus();
     loadHistory();
     setMaintenance();
-    setInterval(loadStatus, 60000);
+    const statusTimer = setInterval(loadStatus, 60000);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) clearInterval(statusTimer);
+    });
     document.getElementById('year').textContent = new Date().getFullYear();
 }

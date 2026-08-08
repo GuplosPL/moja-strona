@@ -12,6 +12,18 @@ export function initColors() {
     let currentMake = null;
     let searchQuery = '';
 
+    const sentinel = document.createElement('div');
+    sentinel.style.height = '1px';
+    let pendingBatch = null;
+    const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && pendingBatch) {
+            const fn = pendingBatch;
+            pendingBatch = null;
+            fn();
+        }
+    }, { rootMargin: '600px' });
+    grid.appendChild(sentinel);
+
     function hslColor(c) {
         const h = Math.round(c.h * 360);
         const s = Math.round(c.s * 100);
@@ -47,6 +59,9 @@ export function initColors() {
 
     function render() {
         grid.innerHTML = '';
+        grid.appendChild(sentinel);
+        pendingBatch = null;
+        observer.unobserve(sentinel);
         if (!currentMake && !searchQuery) {
             emptyMsg.textContent = getLang() === 'en' ? 'Choose a brand or type a color to see results' : 'Wybierz markę lub wpisz szukany kolor, aby zobaczyć kolory';
             emptyMsg.classList.remove('hidden');
@@ -65,9 +80,19 @@ export function initColors() {
             return;
         }
         emptyMsg.classList.add('hidden');
-        const doc = document.createDocumentFragment();
-        list.forEach(c => doc.appendChild(makeCard(c)));
-        grid.appendChild(doc);
+        const BATCH = 120;
+        let index = 0;
+        const nextBatch = () => {
+            const doc = document.createDocumentFragment();
+            const end = Math.min(index + BATCH, list.length);
+            for (; index < end; index++) doc.appendChild(makeCard(list[index]));
+            grid.insertBefore(doc, sentinel);
+            pendingBatch = index < list.length ? nextBatch : null;
+            if (pendingBatch) observer.observe(sentinel);
+            else observer.unobserve(sentinel);
+        };
+        pendingBatch = nextBatch;
+        nextBatch();
     }
 
     function buildTabs() {

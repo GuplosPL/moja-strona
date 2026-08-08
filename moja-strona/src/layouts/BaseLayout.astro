@@ -21,6 +21,7 @@ interface Props {
     showStatusLink?: boolean;
     activeNav?: string;
     revealHero?: boolean;
+    particles?: boolean;
 }
 
 const {
@@ -37,6 +38,7 @@ const {
     showStatusLink = false,
     activeNav = '',
     revealHero = false,
+    particles = false,
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -82,12 +84,12 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script is:inline src="/tsparticles.bundle.min.js" defer></script>
+    {particles && <script is:inline src="/tsparticles.bundle.min.js" defer></script>}
     <script is:inline>history.scrollRestoration='manual'</script>
 </head>
 <body class="font-['Inter'] antialiased min-h-screen flex flex-col" data-reveal-hero={revealHero} style="color: var(--text); background: var(--bg);">
     <div id="progress-bar" class="fixed top-0 left-0 w-0 h-[2px] z-[100] bg-[#5865F2]" style="transition: width 50ms linear; box-shadow: 0 0 8px rgba(88,101,242,0.5);"></div>
-    <div id="particles-js" class="fixed inset-0 z-0 pointer-events-none"></div>
+    <div id="particles-js" class="fixed inset-0 z-0 pointer-events-none" data-enabled={particles}></div>
 
     <div class="fixed inset-0 z-0 pointer-events-none" style="background: radial-gradient(1100px 700px at 100% -10%, rgba(88,101,242,0.14), transparent 60%), radial-gradient(900px 600px at -10% 110%, rgba(88,101,242,0.08), transparent 60%), radial-gradient(800px 600px at 35% 100%, rgba(139,92,246,0.07), transparent 60%), radial-gradient(900px 700px at 110% 45%, rgba(139,92,246,0.06), transparent 60%), radial-gradient(700px 500px at 30% -5%, rgba(88,101,242,0.06), transparent 60%), radial-gradient(700px 500px at 70% 110%, rgba(168,85,247,0.05), transparent 60%);"></div>
 
