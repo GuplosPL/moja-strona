@@ -34,6 +34,7 @@ export const translations = {
         'maintenance-title': 'Przerwa techniczna',
         'maintenance-text': 'Strona jest chwilowo niedostępna z powodu przerwy technicznej. Pracujemy nad przywróceniem usług — sprawdź status strony, aby śledzić postęp prac.',
         'maintenance-status': 'Sprawdź status strony',
+        'maintenance-eta': 'Przewidywany powrót',
         // status
         'status-title': 'Status',
         'status-all-operational': 'Wszystkie systemy działają',
@@ -171,6 +172,7 @@ export const translations = {
         'maintenance-title': 'Maintenance break',
         'maintenance-text': 'The website is temporarily unavailable due to a maintenance break. We are working on restoring services — check the website status to track progress.',
         'maintenance-status': 'Check website status',
+        'maintenance-eta': 'Estimated return',
         // status
         'status-title': 'Status',
         'status-all-operational': 'All systems operational',
