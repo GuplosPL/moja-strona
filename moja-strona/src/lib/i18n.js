@@ -288,8 +288,10 @@ export function applyLang() {
     const label = currentLang === 'pl' ? 'EN' : 'PL';
     const langToggle = document.getElementById('lang-toggle');
     const langToggleMobile = document.getElementById('lang-toggle-mobile');
+    const maintenanceLang = document.getElementById('maintenance-lang');
     if (langToggle) langToggle.textContent = label;
     if (langToggleMobile) langToggleMobile.textContent = label;
+    if (maintenanceLang) maintenanceLang.textContent = label;
     const t = translations[currentLang];
     document.querySelectorAll('[data-i18n]').forEach(el => {
         if (el.dataset.i18n === 'hero-tagline' && typingActive) return;
@@ -311,7 +313,9 @@ export function toggleLang() {
 export function initLang() {
     const langToggle = document.getElementById('lang-toggle');
     const langToggleMobile = document.getElementById('lang-toggle-mobile');
+    const maintenanceLang = document.getElementById('maintenance-lang');
     if (langToggle) langToggle.addEventListener('click', toggleLang);
     if (langToggleMobile) langToggleMobile.addEventListener('click', toggleLang);
+    if (maintenanceLang) maintenanceLang.addEventListener('click', toggleLang);
     applyLang();
 }
