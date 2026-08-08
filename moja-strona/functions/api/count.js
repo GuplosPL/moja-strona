@@ -1,12 +1,12 @@
-async function sha256Hex(str) {
+﻿async function sha256Hex(str) {
     const data = new TextEncoder().encode(str);
     const hash = await crypto.subtle.digest('SHA-256', data);
     return [...new Uint8Array(hash)].map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function json(obj) {
+function json(obj, origin) {
     return new Response(JSON.stringify(obj), {
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': origin || 'https://guplospl.com' },
     });
 }
 
@@ -16,11 +16,12 @@ export async function onRequest(context) {
     const action = url.searchParams.get('action');
     const key = 'count';
     const ua = request.headers.get('user-agent') || '';
+    const origin = url.origin;
 
     const current = parseInt(await env.COUNTER.get(key), 10) || 0;
 
-    if (/bot|crawler|spider|scrape|scrapy|curl|wget|python|go-http|headless|axios|java|httpclient|node-fetch/i.test(ua)) {
-        return json({ count: current });
+    if (/bot|crawler|spider|scrape|scrapy|curl|wget|python|go-http|headless|axios|java|httpclient|node-fetch|facebookexternalhit|whatsapp|telegrambot|slackbot|discordbot|linkedinbot/i.test(ua)) {
+        return json({ count: current }, origin);
     }
 
     if (action === 'increment') {
@@ -28,25 +29,25 @@ export async function onRequest(context) {
         const rateKey = `rl:${ip}`;
         const last = parseInt(await env.COUNTER.get(rateKey), 10) || 0;
         if (Date.now() - last < 1800000) {
-            return json({ count: current, incremented: false });
+            return json({ count: current, incremented: false }, origin);
         }
 
         const proof = request.headers.get('x-proof') || '';
         const [tsStr, nonce] = proof.split(':');
         const ts = parseInt(tsStr, 10);
         if (!ts || !nonce || isNaN(ts) || Math.abs(Date.now() - ts) > 120000) {
-            return json({ count: current, incremented: false });
+            return json({ count: current, incremented: false }, origin);
         }
         const hash = await sha256Hex(`${ts}:${nonce}`);
         if (!hash.startsWith('000')) {
-            return json({ count: current, incremented: false });
+            return json({ count: current, incremented: false }, origin);
         }
 
         await env.COUNTER.put(rateKey, String(Date.now()));
         const count = current + 1;
         await env.COUNTER.put(key, String(count));
-        return json({ count, incremented: true });
+        return json({ count, incremented: true }, origin);
     }
 
-    return json({ count: current });
+    return json({ count: current }, origin);
 }
