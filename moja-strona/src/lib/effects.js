@@ -9,16 +9,16 @@ export function initParticles() {
     try {
         const color = particleColor();
         window.tsParticles.load('particles-js', {
-            fpsLimit: 30,
+            fpsLimit: 20,
             particles: {
-                number: { value: 35, density: { enable: true } },
+                number: { value: 20, density: { enable: true } },
                 color: { value: color },
-                opacity: { value: 0.25, random: true },
-                size: { value: 2, random: true },
-                move: { enable: true, speed: 0.4, direction: 'none', random: true },
-                links: { enable: true, distance: 160, color: color, opacity: 0.08, width: 1 },
+                opacity: { value: 0.18, random: true },
+                size: { value: 1.5, random: true },
+                move: { enable: true, speed: 0.25, direction: 'none', random: true },
+                links: { enable: false },
             },
-            interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.12 } } } },
+            interactivity: { events: { onHover: { enable: false }, onClick: { enable: false } } },
             background: { color: 'transparent' },
         });
         window.tsParticles.pause('particles-js');
