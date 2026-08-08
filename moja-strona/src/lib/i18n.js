@@ -26,6 +26,10 @@ export const translations = {
         'contact-discord': 'Discord – Guplos PL',
         'contact-email-copy': 'Skopiowano!',
         'footer-visits': 'odwiedzin',
+        // cookie
+        'cookie-text': 'Ta strona używa plików cookie i localStorage do zapamiętywania Twoich preferencji (motyw, język) oraz zliczania odwiedzin. Klikając „Akceptuję" zgadzasz się na ich użycie.',
+        'cookie-accept': 'Akceptuję',
+        'cookie-decline': 'Odrzuć',
         // faq
         'faq-title': 'FAQ',
         'faq-sub': 'Często zadawane pytania',
@@ -134,6 +138,10 @@ export const translations = {
         'contact-discord': 'Discord – Guplos PL',
         'contact-email-copy': 'Copied!',
         'footer-visits': 'visits',
+        // cookie
+        'cookie-text': 'This site uses cookies and localStorage to remember your preferences (theme, language) and to count visits. By clicking "Accept" you agree to their use.',
+        'cookie-accept': 'Accept',
+        'cookie-decline': 'Decline',
         // faq
         'faq-title': 'FAQ',
         'faq-sub': 'Frequently asked questions',
