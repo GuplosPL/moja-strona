@@ -97,7 +97,18 @@ export function initGallery() {
     function openLightbox(item) {
         currentIndex = galleryItems.indexOf(item);
         lastThumb = item;
-        animateLightbox(item, item.querySelector('img').src);
+        const full = item.querySelector('img').dataset.full;
+        animateLightbox(item, full || item.querySelector('img').src);
+        preloadNearby();
+    }
+
+    function preloadNearby() {
+        if (!galleryItems.length) return;
+        [currentIndex - 1, currentIndex + 1].forEach(idx => {
+            const item = galleryItems[(idx + galleryItems.length) % galleryItems.length];
+            const full = item.querySelector('img').dataset.full;
+            if (full) { const img = new Image(); img.src = full; }
+        });
     }
 
     function navigateLightbox(dir) {
@@ -121,7 +132,9 @@ export function initGallery() {
             const item = galleryItems[currentIndex];
             lastThumb = item;
 
-            const newSrc = item.querySelector('img').src;
+            const imgEl = item.querySelector('img');
+            const newSrc = imgEl.dataset.full || imgEl.src;
+            preloadNearby();
             const slideIn = () => {
                 lbImg.style.transition = 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
                 lbImg.style.transform = 'translateX(0) scale(1)';
