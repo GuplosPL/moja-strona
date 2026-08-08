@@ -1,39 +1,142 @@
+import { translations, getLang } from './i18n.js';
+
 export function initStatus() {
     const colors = {
         online: '#23a55a',
         degraded: '#f0b232',
         offline: '#da373c',
     };
+    const DISCORD_ID = '751089335998218440';
+    const T = () => translations[getLang()] || translations.pl;
 
-    function setDot(id, status) {
+    function setDot(id, status, pulse) {
         const dot = document.getElementById(id);
         const color = colors[status] || '#4e5058';
         dot.style.background = color;
         dot.style.boxShadow = '0 0 8px ' + color;
+        if (pulse) dot.animate(
+            [{ opacity: 0.3, transform: 'scale(0.8)' }, { opacity: 1, transform: 'scale(1.25)' }, { opacity: 1, transform: 'scale(1)' }],
+            { duration: 500, easing: 'ease-out' }
+        );
+    }
+
+    function latencyColor(ms) {
+        if (ms == null) return 'var(--muted)';
+        if (ms < 100) return colors.online;
+        if (ms < 300) return colors.degraded;
+        return colors.offline;
+    }
+
+    function setMs(id, ms) {
+        const el = document.getElementById(id);
+        el.textContent = ms != null ? ms + ' ' + T()['status-ms'] : '—';
+        el.style.color = latencyColor(ms);
+    }
+
+    function overall(history) {
+        const card = document.getElementById('overall-card');
+        const icon = document.getElementById('overall-icon');
+        const title = document.getElementById('overall-title');
+        const sub = document.getElementById('overall-sub');
+
+        if (!history || history.length === 0) {
+            title.textContent = T()['status-all-operational'];
+            sub.textContent = new Date().toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'pl-PL');
+            card.style.borderColor = colors.online;
+            icon.style.background = colors.online;
+            icon.style.boxShadow = '0 0 20px ' + colors.online;
+            return;
+        }
+
+        const last = history[history.length - 1];
+        let worst = 'online';
+        if (document.getElementById('site-dot').style.background === colors.offline ||
+            document.getElementById('api-dot').style.background === colors.offline ||
+            document.getElementById('counter-dot').style.background === colors.offline ||
+            document.getElementById('discord-dot').style.background === colors.offline) worst = 'offline';
+        else if (last.site === 'degraded' ||
+            document.getElementById('site-dot').style.background === colors.degraded ||
+            document.getElementById('api-dot').style.background === colors.degraded ||
+            document.getElementById('counter-dot').style.background === colors.degraded ||
+            document.getElementById('discord-dot').style.background === colors.degraded) worst = 'degraded';
+
+        const c = colors[worst];
+        title.textContent = worst === 'online' ? T()['status-all-operational'] : worst === 'degraded' ? T()['status-degraded'] : T()['status-offline'];
+        sub.textContent = new Date().toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'pl-PL');
+        card.style.borderColor = c;
+        icon.style.background = c;
+        icon.style.boxShadow = '0 0 20px ' + c;
     }
 
     function drawChart(history) {
-        const chart = document.getElementById('chart');
-        chart.innerHTML = '';
+        const svg = document.getElementById('chart');
+        const empty = document.getElementById('chart-empty');
+        svg.innerHTML = '';
         if (!history || history.length === 0) {
-            const empty = document.createElement('div');
-            empty.className = 'w-full h-full flex items-center justify-center text-xs'; empty.style.color = 'var(--muted-2)';
-            empty.textContent = 'Brak danych historycznych';
-            chart.appendChild(empty);
+            svg.classList.add('hidden');
+            empty.classList.remove('hidden');
             return;
         }
-        const last = history.slice(-50);
-        last.forEach(entry => {
-            const bar = document.createElement('div');
-            const h = entry.site === 'online' ? Math.max(8, 60 - entry.ms / 20) : 6;
-            bar.style.width = '4px';
-            bar.style.height = h + 'px';
-            bar.style.flex = 'none';
-            bar.style.borderRadius = '2px';
-            bar.style.background = colors[entry.site] || '#4e5058';
-            bar.title = new Date(entry.t).toLocaleString('pl-PL') + ' · ' + (entry.ms ? entry.ms + ' ms' : 'offline');
-            chart.appendChild(bar);
+        svg.classList.remove('hidden');
+        empty.classList.add('hidden');
+
+        const last = history.slice(-100);
+        const W = 600, H = 80, PAD = 4;
+        const maxMs = Math.max(...last.map(e => e.ms || 80), 80);
+        const pts = last.map((e, i) => {
+            const x = PAD + (i / Math.max(1, last.length - 1)) * (W - 2 * PAD);
+            const h = e.site === 'online' ? Math.max(8, (e.ms || 0) / maxMs * (H - 2 * PAD)) : 4;
+            const y = H - PAD - h;
+            return [x, y, e];
         });
+
+        const ns = 'http://www.w3.org/2000/svg';
+        const area = document.createElementNS(ns, 'path');
+        area.setAttribute('d', 'M' + pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('') + 'L' + (W - PAD) + ',' + (H - PAD) + 'L' + PAD + ',' + (H - PAD) + 'Z');
+        area.setAttribute('fill', 'url(#chart-grad)');
+        svg.appendChild(area);
+
+        pts.forEach(p => {
+            const rect = document.createElementNS(ns, 'rect');
+            rect.setAttribute('x', p[0] - 1.5);
+            rect.setAttribute('y', p[1]);
+            rect.setAttribute('width', 3);
+            rect.setAttribute('height', Math.max(4, H - PAD - p[1]));
+            rect.setAttribute('rx', 1.5);
+            rect.setAttribute('fill', colors[p[2].site] || '#4e5058');
+            rect.setAttribute('opacity', '0.9');
+            const label = new Date(p[2].t).toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'pl-PL') + ' · ' + (p[2].ms ? p[2].ms + ' ms' : (T()['status-offline']));
+            const el = rect;
+            el.addEventListener('mouseenter', () => {
+                el.setAttribute('opacity', '1');
+                el.setAttribute('width', '8');
+                el.setAttribute('x', p[0] - 4);
+            });
+            el.addEventListener('mouseleave', () => {
+                el.setAttribute('opacity', '0.9');
+                el.setAttribute('width', '3');
+                el.setAttribute('x', p[0] - 1.5);
+            });
+            svg.appendChild(rect);
+        });
+    }
+
+    async function loadDiscord() {
+        try {
+            const res = await fetch('https://api.lanyard.rest/v1/users/' + DISCORD_ID, { cache: 'no-store' });
+            const data = await res.json();
+            if (!data.success) throw new Error('lanyard');
+            const st = data.data.discord_status || 'offline';
+            const status = st === 'online' || st === 'idle' || st === 'dnd' ? 'online' : 'offline';
+            const el = document.getElementById('discord-detail');
+            const map = { online: 'online', idle: 'idle', dnd: 'dnd', offline: 'offline' };
+            el.textContent = map[st] || '—';
+            setDot('discord-dot', status, true);
+            document.getElementById('discord-ms').textContent = '';
+        } catch (e) {
+            setDot('discord-dot', 'offline');
+            document.getElementById('discord-detail').textContent = '—';
+        }
     }
 
     async function loadStatus() {
@@ -42,21 +145,29 @@ export function initStatus() {
             const data = await res.json();
 
             const site = data.checks.site;
-            setDot('site-dot', site.status);
-            document.getElementById('site-ms').textContent = site.responseTime ? site.responseTime + ' ms' : '—';
+            setDot('site-dot', site.status, true);
+            setMs('site-ms', site.responseTime);
+            document.getElementById('site-detail').textContent =
+                (site.status === 'online' ? T()['status-online'] : site.status) + (site.httpCode ? ' · HTTP ' + site.httpCode : '');
 
             const api = data.checks.api;
-            setDot('api-dot', api.status);
-            document.getElementById('api-ms').textContent = api.responseTime ? api.responseTime + ' ms' : '—';
+            setDot('api-dot', api.status, true);
+            setMs('api-ms', api.responseTime);
+            document.getElementById('api-detail').textContent =
+                (api.status === 'online' ? T()['status-online'] : api.status);
 
             const counter = data.checks.counter;
-            setDot('counter-dot', counter.status);
+            setDot('counter-dot', counter.status, true);
             document.getElementById('counter-num').textContent = counter.count !== null ? counter.count : '—';
+            document.getElementById('counter-detail').textContent =
+                (counter.status === 'online' ? T()['status-online'] : counter.status);
 
-            document.getElementById('last-check').textContent = 'Ostatnie sprawdzenie: ' + new Date(data.timestamp).toLocaleString('pl-PL');
+            document.getElementById('last-check').textContent =
+                T()['status-last-check'] + ': ' + new Date(data.timestamp).toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'pl-PL');
         } catch (e) {
-            document.getElementById('last-check').textContent = 'Błąd sprawdzania';
+            document.getElementById('last-check').textContent = T()['status-error'];
         }
+        loadDiscord();
     }
 
     let historyLoaded = false;
@@ -66,7 +177,17 @@ export function initStatus() {
         try {
             const res = await fetch('/api/status?history=1', { cache: 'no-store' });
             const data = await res.json();
-            if (data.history) drawChart(data.history);
+            if (data.history) {
+                drawChart(data.history);
+                const online = data.history.filter(e => e.site === 'online').length;
+                const pct = Math.round(online / data.history.length * 100);
+                document.getElementById('overall-uptime').textContent = pct + '%';
+                document.getElementById('overall-uptime').style.color = colors.online;
+                const avg = Math.round(data.history.filter(e => e.ms).reduce((s, e) => s + e.ms, 0) / Math.max(1, data.history.filter(e => e.ms).length));
+                document.getElementById('avg-ms').textContent = avg + ' ' + T()['status-ms'];
+                document.getElementById('checks-count').textContent = data.history.length;
+                overall(data.history);
+            }
         } catch (e) {}
     }
 

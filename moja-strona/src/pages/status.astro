@@ -23,50 +23,112 @@ import '../styles/global.css';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body class="font-['Inter'] antialiased min-h-screen flex flex-col items-center justify-center px-6" style="color: var(--text); background: var(--bg);">
+<body class="font-['Inter'] antialiased min-h-screen flex flex-col items-center justify-center px-6 py-12" style="color: var(--text); background: var(--bg);">
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div class="absolute -top-60 -right-40 w-[600px] h-[600px] rounded-full bg-[#5865F2]/15 blur-[120px]"></div>
         <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#5865F2]/8 blur-[100px]"></div>
     </div>
 
-    <div class="relative z-10 w-full max-w-md">
+    <div class="relative z-10 w-full max-w-2xl">
         <a href="/" class="inline-block mb-8 font-extrabold text-lg tracking-tight no-underline" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">#GOODDAYS</a>
 
-        <div class="rounded-2xl border p-8" style="background: var(--card); border-color: var(--card-border);">
-            <h1 class="text-2xl font-bold tracking-tight mb-6 text-center" style="color: var(--text-bright); text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 60px rgba(255,255,255,0.15);">Status</h1>
+        <!-- Ogólny status -->
+        <div id="overall-card" class="rounded-2xl border p-6 mb-4 flex items-center gap-4 transition-colors" style="background: var(--card); border-color: var(--card-border);">
+            <div id="overall-icon" class="w-12 h-12 rounded-full flex items-center justify-center flex-none" style="background: var(--muted-2);">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div class="min-w-0">
+                <h1 id="overall-title" class="text-xl font-bold tracking-tight" style="color: var(--text-bright);" data-i18n="status-checking">Sprawdzanie…</h1>
+                <p id="overall-sub" class="text-sm mt-0.5" style="color: var(--muted);" data-i18n="status-checking">Sprawdzanie…</p>
+            </div>
+            <span id="overall-uptime" class="ml-auto text-2xl font-extrabold tabular-nums" style="color: var(--muted);">—</span>
+        </div>
 
-            <div class="space-y-4">
-                <div class="flex items-center justify-between p-4 rounded-xl border" style="background: var(--card); border-color: var(--card-border);">
-                    <span class="font-semibold text-sm">Strona główna</span>
-                    <div class="flex items-center gap-2">
-                        <span id="site-ms" class="text-xs" style="color: var(--muted);">— ms</span>
-                        <span id="site-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
-                    </div>
+        <!-- Usługi -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div class="rounded-2xl border p-5 flex items-center gap-4" style="background: var(--card); border-color: var(--card-border);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-none" style="background: #5865F2/15;">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#5865F2" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5v13.5H3.75z"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.75h16.5M7.5 5.25v13.5M16.5 5.25v13.5"/></svg>
                 </div>
-                <div class="flex items-center justify-between p-4 rounded-xl border" style="background: var(--card); border-color: var(--card-border);">
-                    <span class="font-semibold text-sm">API</span>
-                    <div class="flex items-center gap-2">
-                        <span id="api-ms" class="text-xs" style="color: var(--muted);">— ms</span>
-                        <span id="api-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
-                    </div>
+                <div class="min-w-0 flex-1">
+                    <p class="font-semibold text-sm" style="color: var(--text-bright);" data-i18n="status-site">Strona główna</p>
+                    <p id="site-detail" class="text-xs mt-0.5 truncate" style="color: var(--muted);">—</p>
                 </div>
-                <div class="flex items-center justify-between p-4 rounded-xl border" style="background: var(--card); border-color: var(--card-border);">
-                    <span class="font-semibold text-sm">Licznik odwiedzin</span>
-                    <div class="flex items-center gap-2">
-                        <span id="counter-num" class="text-xs" style="color: var(--muted);">—</span>
-                        <span id="counter-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
-                    </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="site-ms" class="text-sm font-semibold tabular-nums" style="color: var(--muted);">—</span>
+                    <span id="site-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
                 </div>
             </div>
 
-            <div id="chart" class="mt-6 h-16 flex items-end gap-1 overflow-x-auto" style="min-height: 64px;"></div>
-
-            <p id="last-check" class="mt-4 text-center text-xs" style="color: var(--muted-2);">Sprawdzanie…</p>
-
-            <div class="flex gap-3 mt-4">
-                <button id="refresh-btn" class="flex-1 px-5 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors">Odśwież teraz</button>
-                <a href="/" class="px-5 py-2.5 font-semibold text-sm rounded-full border transition-colors no-underline" style="color: var(--text-bright); background: var(--card); border-color: var(--card-border);">Wróć</a>
+            <div class="rounded-2xl border p-5 flex items-center gap-4" style="background: var(--card); border-color: var(--card-border);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-none" style="background: #5865F2/15;">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#5865F2" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125V21M6 15H3.75v-5.25a1.5 1.5 0 011.5-1.5h13.5a1.5 1.5 0 011.5 1.5V15H18M6 9.75V6.75a1.5 1.5 0 011.5-1.5h9a1.5 1.5 0 011.5 1.5v3"/></svg>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="font-semibold text-sm" style="color: var(--text-bright);" data-i18n="status-api">API</p>
+                    <p id="api-detail" class="text-xs mt-0.5 truncate" style="color: var(--muted);">—</p>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="api-ms" class="text-sm font-semibold tabular-nums" style="color: var(--muted);">—</span>
+                    <span id="api-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
+                </div>
             </div>
+
+            <div class="rounded-2xl border p-5 flex items-center gap-4" style="background: var(--card); border-color: var(--card-border);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-none" style="background: #5865F2/15;">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#5865F2" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-6 6M21 21l-6-6m4-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="font-semibold text-sm" style="color: var(--text-bright);" data-i18n="status-counter">Licznik odwiedzin</p>
+                    <p id="counter-detail" class="text-xs mt-0.5 truncate" style="color: var(--muted);">—</p>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="counter-num" class="text-sm font-semibold tabular-nums" style="color: var(--muted);">—</span>
+                    <span id="counter-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
+                </div>
+            </div>
+
+            <div class="rounded-2xl border p-5 flex items-center gap-4" style="background: var(--card); border-color: var(--card-border);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-none" style="background: #5865F2/15;">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#5865F2" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 8v8a2 2 0 002 2h12a2 2 0 002-2V8M4 8V6a2 2 0 012-2h12a2 2 0 012 2v2"/></svg>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="font-semibold text-sm" style="color: var(--text-bright);" data-i18n="status-discord">Discord</p>
+                    <p id="discord-detail" class="text-xs mt-0.5 truncate" style="color: var(--muted);">—</p>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="discord-ms" class="text-sm font-semibold tabular-nums" style="color: var(--muted);">—</span>
+                    <span id="discord-dot" class="w-3 h-3 rounded-full inline-block" style="background: var(--muted-2);"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wykres + statystyki -->
+        <div class="rounded-2xl border p-6 mb-4" style="background: var(--card); border-color: var(--card-border);">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-sm font-bold tracking-tight" style="color: var(--text-bright);" data-i18n="status-uptime">Uptime</h2>
+                <div class="flex items-center gap-3 text-xs" style="color: var(--muted);">
+                    <span data-i18n="status-avg-latency">Śr. odpowiedź</span>
+                    <span id="avg-ms" class="font-bold tabular-nums" style="color: var(--text-bright);">—</span>
+                    <span data-i18n="status-checks">kontroli</span>
+                    <span id="checks-count" class="font-bold tabular-nums" style="color: var(--text-bright);">—</span>
+                </div>
+            </div>
+            <svg id="chart" class="w-full" viewBox="0 0 600 80" preserveAspectRatio="none" style="height: 80px;">
+                <defs>
+                    <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#23a55a" stop-opacity="0.35"/>
+                        <stop offset="100%" stop-color="#23a55a" stop-opacity="0"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div id="chart-empty" class="hidden w-full flex items-center justify-center text-xs py-8" style="color: var(--muted-2);" data-i18n="status-no-history">Brak danych historycznych</div>
+            <p id="last-check" class="mt-3 text-center text-xs" style="color: var(--muted-2);" data-i18n="status-checking">Sprawdzanie…</p>
+        </div>
+
+        <div class="flex gap-3">
+            <button id="refresh-btn" class="flex-1 px-5 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors" data-i18n="status-refresh">Odśwież teraz</button>
+            <a href="/" class="px-5 py-2.5 font-semibold text-sm rounded-full border transition-colors no-underline" style="color: var(--text-bright); background: var(--card); border-color: var(--card-border);" data-i18n="status-back">Wróć</a>
         </div>
 
         <p class="text-center text-xs mt-6" style="color: var(--muted-2);">&copy; <span id="year">2026</span> Guplos PL</p>
@@ -74,7 +136,9 @@ import '../styles/global.css';
 
     <script>
         import { initStatus } from '../lib/status.js';
+        import { initLang } from '../lib/i18n.js';
         initStatus();
+        initLang();
     </script>
 </body>
 </html>
