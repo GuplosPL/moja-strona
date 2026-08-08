@@ -39,6 +39,17 @@ const activityTypesEn = {
     5: 'Competing in',
 };
 
+function setActivityIcon(src) {
+    const iconDiv = document.getElementById('activity-icon');
+    iconDiv.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    img.className = 'w-full h-full object-cover';
+    img.onerror = () => { img.remove(); };
+    iconDiv.appendChild(img);
+}
+
 function setDiscordPresence(data) {
     const user = data.discord_user;
     const status = data.discord_status;
@@ -75,21 +86,19 @@ function setDiscordPresence(data) {
 
     if (spotify) {
         activityDiv.classList.add('open');
-        const iconDiv = document.getElementById('activity-icon');
-        iconDiv.innerHTML = `<img src="https://i.scdn.co/image/${spotify.album_art_url.split('/').pop()}" alt="" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML=''">`;
+        setActivityIcon(`https://i.scdn.co/image/${encodeURIComponent(spotify.album_art_url.split('/').pop())}`);
         document.getElementById('activity-name').textContent = (getLang() === 'en' ? 'Listening to' : 'Słucha') + ' ' + spotify.song;
         document.getElementById('activity-detail').textContent = `${spotify.artist} · ${spotify.album}`;
     } else if (activity) {
         activityDiv.classList.add('open');
-        const iconDiv = document.getElementById('activity-icon');
         if (activity.assets && activity.assets.large_image) {
             const img = activity.assets.large_image;
             const src = img.startsWith('mp:')
                 ? `https://media.discordapp.net/${img.slice(3)}`
                 : `https://cdn.discordapp.com/app-assets/${activity.application_id}/${img}.png`;
-            iconDiv.innerHTML = `<img src="${src}" alt="" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML=''">`;
+            setActivityIcon(src);
         } else {
-            iconDiv.innerHTML = '';
+            document.getElementById('activity-icon').innerHTML = '';
         }
         const prefix = (getLang() === 'en' ? activityTypesEn : activityTypes)[activity.type] || '';
         document.getElementById('activity-name').textContent = prefix ? `${prefix} ${activity.name}` : activity.name;
@@ -134,6 +143,8 @@ export function initDiscord() {
             start();
         }
     });
+
+    window.addEventListener('langchange', fetchPresence);
 
     fetchPresence();
     start();

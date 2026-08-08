@@ -17,7 +17,7 @@ import { MAINTENANCE, MAINTENANCE_ETA } from '../lib/maintenance.js';
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 text-sm font-semibold" style="background: var(--card-hover); border-color: var(--card-border); color: var(--text-bright);">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="#5865F2" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m6-0.5a9.5 9.5 0 11-19 0 9.5 9.5 0 0119 0z"/></svg>
                         <span data-i18n="maintenance-eta">Przewidywany powrót</span>
-                        <span class="tabular-nums" style="color: var(--text-bright);">21:00</span>
+                        <span class="tabular-nums" style="color: var(--text-bright);">{MAINTENANCE_ETA}</span>
                     </div>
                 )}
                 <a href="/status" class="inline-block w-full px-5 py-2.5 bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold text-sm rounded-full transition-colors no-underline" data-i18n="maintenance-status">Sprawdź status strony</a>

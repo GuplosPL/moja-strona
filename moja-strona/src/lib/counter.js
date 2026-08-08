@@ -4,7 +4,8 @@ export function initCounter() {
     const counterEl = document.getElementById('visit-count');
     if (!counterEl) return;
     const visited = store.get('visited');
-    const action = visited ? '' : '?action=increment';
+    const declined = store.get('cookie-consent') === 'declined';
+    const action = visited || declined ? '' : '?action=increment';
 
     function getProof() {
         return new Promise(resolve => {
@@ -29,7 +30,7 @@ export function initCounter() {
             .then(r => r.json())
             .then(data => {
                 if (counterEl) counterEl.textContent = data.count;
-                if (!visited) store.set('visited', '1');
+                if (!visited && data.incremented) store.set('visited', '1');
             })
             .catch(() => {});
     }

@@ -15,7 +15,11 @@ export function initGallery() {
 
     const galleryItems = [...grid.querySelectorAll('.gallery-item')];
     const galleryCountEl = document.querySelector('[data-i18n="gallery-count"]');
-    if (galleryCountEl) galleryCountEl.textContent = galleryItems.length + ' ' + (getLang() === 'en' ? 'photos' : 'zdjęć');
+    function updateGalleryCount() {
+        if (galleryCountEl) galleryCountEl.textContent = galleryItems.length + ' ' + (getLang() === 'en' ? 'photos' : 'zdjęć');
+    }
+    updateGalleryCount();
+    window.addEventListener('langchange', updateGalleryCount);
     let currentIndex = 0;
     let lastThumb = null;
     let navTimeout = null;

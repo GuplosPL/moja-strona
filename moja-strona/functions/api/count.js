@@ -28,24 +28,24 @@ export async function onRequest(context) {
         const rateKey = `rl:${ip}`;
         const last = parseInt(await env.COUNTER.get(rateKey), 10) || 0;
         if (Date.now() - last < 1800000) {
-            return json({ count: current });
+            return json({ count: current, incremented: false });
         }
 
         const proof = request.headers.get('x-proof') || '';
         const [tsStr, nonce] = proof.split(':');
         const ts = parseInt(tsStr, 10);
         if (!ts || !nonce || isNaN(ts) || Math.abs(Date.now() - ts) > 120000) {
-            return json({ count: current });
+            return json({ count: current, incremented: false });
         }
         const hash = await sha256Hex(`${ts}:${nonce}`);
         if (!hash.startsWith('000')) {
-            return json({ count: current });
+            return json({ count: current, incremented: false });
         }
 
         await env.COUNTER.put(rateKey, String(Date.now()));
         const count = current + 1;
         await env.COUNTER.put(key, String(count));
-        return json({ count });
+        return json({ count, incremented: true });
     }
 
     return json({ count: current });

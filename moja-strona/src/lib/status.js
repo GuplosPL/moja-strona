@@ -9,9 +9,12 @@ export function initStatus() {
     };
     const T = () => translations[getLang()] || translations.pl;
 
+    const serviceStates = {};
+
     function setDot(id, status, pulse) {
         const dot = document.getElementById(id);
         const color = colors[status] || '#4e5058';
+        serviceStates[id] = status;
         dot.style.background = color;
         dot.style.boxShadow = '0 0 8px ' + color;
         if (pulse) dot.animate(
@@ -50,13 +53,9 @@ export function initStatus() {
 
         const last = history[history.length - 1];
         let worst = 'online';
-        if (document.getElementById('site-dot').style.background === colors.offline ||
-            document.getElementById('api-dot').style.background === colors.offline ||
-            document.getElementById('counter-dot').style.background === colors.offline) worst = 'offline';
-        else if (last.site === 'degraded' ||
-            document.getElementById('site-dot').style.background === colors.degraded ||
-            document.getElementById('api-dot').style.background === colors.degraded ||
-            document.getElementById('counter-dot').style.background === colors.degraded) worst = 'degraded';
+        const states = ['site-dot', 'api-dot', 'counter-dot'];
+        if (states.some(id => serviceStates[id] === 'offline')) worst = 'offline';
+        else if (last.site === 'degraded' || states.some(id => serviceStates[id] === 'degraded')) worst = 'degraded';
 
         const c = colors[worst];
         title.textContent = worst === 'online' ? T()['status-all-operational'] : worst === 'degraded' ? T()['status-degraded'] : T()['status-offline'];
@@ -80,10 +79,10 @@ export function initStatus() {
 
         const last = history.slice(-100);
         const W = 600, H = 80, PAD = 4;
-        const maxMs = Math.max(...last.map(e => e.ms || 80), 80);
+        const maxMs = Math.max(...last.map(e => e.ms ?? 80), 80);
         const pts = last.map((e, i) => {
             const x = PAD + (i / Math.max(1, last.length - 1)) * (W - 2 * PAD);
-            const h = e.site === 'online' ? Math.max(8, (e.ms || 0) / maxMs * (H - 2 * PAD)) : 4;
+            const h = e.site === 'online' ? Math.max(8, (e.ms ?? 0) / maxMs * (H - 2 * PAD)) : 4;
             const y = H - PAD - h;
             return [x, y, e];
         });
@@ -103,7 +102,6 @@ export function initStatus() {
             rect.setAttribute('rx', 1.5);
             rect.setAttribute('fill', colors[p[2].site] || '#4e5058');
             rect.setAttribute('opacity', '0.9');
-            const label = new Date(p[2].t).toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'pl-PL') + ' · ' + (p[2].ms ? p[2].ms + ' ms' : (T()['status-offline']));
             const el = rect;
             el.addEventListener('mouseenter', () => {
                 el.setAttribute('opacity', '1');
