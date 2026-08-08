@@ -11,12 +11,12 @@ export function initParticles() {
         window.tsParticles.load('particles-js', {
             fpsLimit: 60,
             particles: {
-                number: { value: 40, density: { enable: true } },
+                number: { value: 70, density: { enable: true } },
                 color: { value: color },
-                opacity: { value: 0.25, random: true },
+                opacity: { value: 0.3, random: true },
                 size: { value: 2, random: true },
-                move: { enable: true, speed: 0.4, direction: 'none', random: true },
-                links: { enable: true, distance: 150, color: color, opacity: 0.08, width: 1 },
+                move: { enable: true, speed: 0.5, direction: 'none', random: true },
+                links: { enable: true, distance: 140, color: color, opacity: 0.1, width: 1 },
             },
             interactivity: { events: { onHover: { enable: true, mode: 'grab' } }, modes: { grab: { distance: 150, links: { opacity: 0.15 } } } },
             background: { color: 'transparent' },
