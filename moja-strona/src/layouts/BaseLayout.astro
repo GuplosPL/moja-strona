@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
+import MaintenanceOverlay from '../components/MaintenanceOverlay.astro';
 
 interface NavLink { href: string; i18nKey: string; label: string; }
 
@@ -98,6 +99,7 @@ const {
     </div>
 
     <CookieBanner />
+    <MaintenanceOverlay />
 
     <script>
         import { initTheme } from '../lib/theme.js';

@@ -30,6 +30,10 @@ export const translations = {
         'cookie-text': 'Ta strona używa plików cookie i localStorage do zapamiętywania Twoich preferencji (motyw, język) oraz zliczania odwiedzin. Klikając „Akceptuję" zgadzasz się na ich użycie.',
         'cookie-accept': 'Akceptuję',
         'cookie-decline': 'Odrzuć',
+        // maintenance
+        'maintenance-title': 'Przerwa techniczna',
+        'maintenance-text': 'Strona jest chwilowo niedostępna z powodu przerwy technicznej. Pracujemy nad przywróceniem usług — sprawdź status strony, aby śledzić postęp prac.',
+        'maintenance-status': 'Sprawdź status strony',
         // status
         'status-title': 'Status',
         'status-all-operational': 'Wszystkie systemy działają',
@@ -163,6 +167,10 @@ export const translations = {
         'cookie-text': 'This site uses cookies and localStorage to remember your preferences (theme, language) and to count visits. By clicking "Accept" you agree to their use.',
         'cookie-accept': 'Accept',
         'cookie-decline': 'Decline',
+        // maintenance
+        'maintenance-title': 'Maintenance break',
+        'maintenance-text': 'The website is temporarily unavailable due to a maintenance break. We are working on restoring services — check the website status to track progress.',
+        'maintenance-status': 'Check website status',
         // status
         'status-title': 'Status',
         'status-all-operational': 'All systems operational',
